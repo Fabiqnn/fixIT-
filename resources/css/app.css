@@ -1,0 +1,123 @@
+@import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@font-face {
+    font-family: glacial;
+    src: url("../../public/assets/fonts/glacial-indifference.bold.otf");
+}
+
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+@source "../views";
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-monsterrat: Montserrat, "sans-serif";
+    --font-inter: Inter, "sans-serif";
+    --font-glacial: glacial, "sans-serif";
+
+    --color-greenPrimary: #4CAF4F;
+    --color-greenshade1: #388E3B;
+    --color-greenshade2: #388E3B;
+    --color-greenshade3: #237D31;
+
+    --color-D_grey: #4D4D4D;
+    --color-gray1: #DBDBDB;
+
+    --color-success: #2E7D31;
+    --color-warning: #FBC02D;
+    --color-error: #E53835;
+    --color-info : #2194F3;
+
+    --color-blackshade1: #263238;
+    --color-silver: #F5F7FA;
+}
+
+@layer components {
+    .sidebar-active {
+        background-color: #00a63e;
+        color: white;
+    }
+
+    .button1 {
+        border-radius: 0.25rem;
+        background-color: #388E3B;
+        padding-inline: 12px;
+        padding-block: 6px;
+        color: white;
+    }
+
+    .button1:hover {
+        background-color: #237D31;
+        transition: 200ms ease;
+    }
+
+    .button2 {
+        border-radius: 0.25rem;
+        background-color: white;
+        padding-inline: 12px;
+        padding-block: 6px;
+        box-shadow: inset 0 0 0 2px #388E3B
+    }
+    .button2:hover {
+        background-color: #388E3B;
+        color: white;
+        transition: 200ms ease;
+    }
+
+    .button-success {
+        border-radius: 0.25rem;
+        background-color: #2E7D31;
+        padding-inline: 12px;
+        padding-block: 6px;
+        color: white;
+    }
+
+    .button-success:hover {
+        background-color: #215E23;
+        transition: 200ms ease;
+    }
+
+    .button-warning {
+        border-radius: 0.25rem;
+        background-color: #FBC02D;
+        padding-inline: 12px;
+        padding-block: 6px;
+        color: white;
+    }
+
+    .button-success:hover {
+        background-color: #D29808;
+        transition: 200ms ease;
+    }
+
+    .button-info {
+        border-radius: 0.25rem;
+        background-color: #2194F3;
+        padding-inline: 12px;
+        padding-block: 6px;
+        color: white;
+    } 
+
+    .button-info:hover {
+        background-color: #157ED5;
+        transition: 200ms ease;
+    }
+
+    .button-error {
+        border-radius: 0.25rem;
+        background-color: #E53835;
+        padding-inline: 12px;
+        padding-block: 6px;
+        color: white;
+    }
+
+    .button-error:hover {
+        background-color: #B7201E;
+        transition: 200ms ease;
+    }
+}
