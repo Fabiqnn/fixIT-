@@ -13,7 +13,7 @@ Sebuah solusi terpadu untuk mempermudah pengelolaan dan perbaikan fasilitas di s
 1. Clone the project using Git
 
     ```bash
-    git clone https://github.com/Fabiqnn/fixIT.git
+    git clone https://github.com/Fabiqnn/fixIT-.git
     ```
 
 2. Navigate to the project directory
