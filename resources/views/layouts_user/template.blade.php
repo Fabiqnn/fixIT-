@@ -11,7 +11,7 @@
 
 </head>
 <body class="">
-    <div class="wrapper bg-white xl:px-0 mx-auto xl:max-w-[1400px] w-full max-w-full" >
+    <div class="wrapper bg-white" >
         {{-- header --}}
         @include('layouts_user.header')
 
