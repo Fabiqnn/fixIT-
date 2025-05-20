@@ -29,6 +29,12 @@ class AdminController extends Controller
 
         return view('admin.fasilitas.index', ['page' => $page, 'activeMenu' => $activeMenu]);
     }
+
+    public function tambah_ajax_fasilitas() {
+
+    }
+
+
     public function user()
     {
         $page = (object) [
