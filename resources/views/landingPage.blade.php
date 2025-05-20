@@ -42,7 +42,7 @@
         </div>
     </div>
 
-    <div name="card3" class="p-20 flex items-center gap-5 w-full max-w-[1400px] mx-auto autoShow">
+    <div name="card3" class="p-20 flex items-center gap-5 w-full max-w-[1400px] mx-auto autoShow2">
         <div>
             <img src="{{ asset('assets/landingpage2.png') }}" alt="">
         </div>
