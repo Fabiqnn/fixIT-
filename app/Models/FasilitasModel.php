@@ -15,10 +15,10 @@ class FasilitasModel extends Model
     protected $table = 'table_fasilitas';
     protected $primaryKey = 'fasilitas_id';
 
-    protected $fillable = ['gedung_id', 'nama_fasilitas', 'kode_fasilitas', 'tanggal_pengadaan', 'status', 'lantai', 'ruangan'];
+    protected $fillable = ['ruangan_id', 'nama_fasilitas', 'kode_fasilitas', 'tanggal_pengadaan', 'status'];
 
-    public function Gedung(): BelongsTo {
-        return $this->belongsTo(GedungModel::class, 'gedung_id', 'gedung_id');
+    public function ruangan(): BelongsTo {
+        return $this->belongsTo(RuanganModel::class, 'ruangan_id', 'ruangan_id');
     }
     
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class GedungModel extends Model
 {
@@ -15,7 +16,10 @@ class GedungModel extends Model
 
     protected $fillable = ['gedung_nama'];
 
-    public function fasilitas(): BelongsTo {
-        return $this->belongsTo(FasilitasModel::class);
+    public function ruangan(): HasMany {
+        return $this->hasMany(RuanganModel::class, 'gedung_id', 'gedung_id');
+    }
+    public function lantai (): HasMany {
+        return $this->hasMany(LantaiModel::class, 'gedung_id', 'gedung_id');
     }
 }
