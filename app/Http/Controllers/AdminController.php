@@ -30,7 +30,9 @@ class AdminController extends Controller
 
         $activeMenu = 'fasilitas';
 
-        return view('admin.fasilitas.index', ['page' => $page, 'activeMenu' => $activeMenu]);
+        $gedung = GedungModel::select('gedung_id', 'gedung_nama')->get();
+
+        return view('admin.fasilitas.index', ['page' => $page, 'activeMenu' => $activeMenu, 'gedung' => $gedung]);
     }
 
     public function list_fasilitas(Request $request) 

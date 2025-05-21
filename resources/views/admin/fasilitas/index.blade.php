@@ -3,34 +3,6 @@
 @section('header', $page->header)
 
 @section('content')
-    {{-- <div class="font-inter">
-        <div class="flex justify-between mb-20">
-            <h3 class="font-bold text-xl">Daftar Fasilitas Kampus</h3>
-            <div class="space-x-3">
-                <button class="button2">Import</button>
-                <a href="" class="button-info inline-flex justify-center items-center">Export</a>
-                <button class="button1" onclick="modalAction('{{ url('admin/fasilitas/create') }}')">Tambah Data
-                    Fasilitas</button>
-            </div>
-        </div>
-
-        <div id="filter" class="grid grid-cols-3 grid-rows-2 gap-2 items-start w-1/3">
-            <div class="row-span-2 flex items-center">
-                <label for="gedung_id" class="text-lg font-bold">Filter</label>
-            </div>
-            <div class="col-span-2 col-start-2">
-                <select id="gedung_id" name="gedung_id"
-                    class="border-1 border-success rounded w-full text-D_grey p-2 outline-none">
-                    <option value="">- Semua -</option>
-                    @foreach ($gedung as $g)
-                        <option value="{{ $g->gedung_id }}">{{ $g->gedung_nama }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div>
-                <small class="text-D_grey">Lokasi Fasilitas</small>
-            </div>
-        </div> --}}
         <div class="flex justify-between items-center my-5">
             <h1 class="font-bold text-xl">Daftar Fasilitas Kampus</h1>
             <div class="flex items-center gap-4">
@@ -39,9 +11,9 @@
                     <select id="gedung_id" name="gedung_id"
                         class="border border-success rounded text-D_grey p-2 outline-none w-50">
                         <option value="">- Semua -</option>
-                        {{-- @foreach ($gedung as $g)
+                        @foreach ($gedung as $g)
                             <option value="{{ $g->gedung_id }}">{{ $g->gedung_nama }}</option>
-                        @endforeach --}}
+                        @endforeach
                     </select>
                 </div>
                 <button class="button2 cursor-pointer w-"> Import</button>

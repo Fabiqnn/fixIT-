@@ -8,7 +8,7 @@
             <div>
                 <label class="block mb-1 font-semibold">Nama Fasilitas</label>
                 <input type="text" name="nama_fasilitas"
-                    class="w-full border border-green-200 rounded p-2 outline-none focus:ring-2 focus:ring-green-500"
+                    class="w-full border border-green-200 rounded p-2 outline-none"
                     placeholder="Nama Fasilitas" required>
             </div>
             <div>
