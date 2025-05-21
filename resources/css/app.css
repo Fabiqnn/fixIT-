@@ -131,6 +131,10 @@
         animation-timeline: view(70% 10%);
     }
 
+    .autoShow1 {
+        animation: autoShowAnimation 1s ease-in-out forwards;
+    }
+
     @keyframes autoShowAnimation {
         from {
             opacity: 0;

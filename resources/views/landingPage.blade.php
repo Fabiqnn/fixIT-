@@ -4,7 +4,7 @@
 
 @section('content')
     <div name="card1" class="bg-silver w-full">
-        <div class="flex items-center justify-between px-20 py-40 w-full max-w-[1400px] mx-auto">
+        <div class="flex items-center justify-between px-20 py-40 w-full max-w-[1400px] mx-auto autoShow1">
             <div class="space-y-2 tracking-wide">
                 <h1 class="text-6xl font-bold text-D_grey">Lapor Mudah,</h1>
                 <h1 class="text-6xl font-bold text-greenPrimary">Fasilitas Terjaga!</h1>

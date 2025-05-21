@@ -54,15 +54,12 @@
         </div>
     </div>
 
-    <div id="modalContainer"
-        class="fixed inset-0 z-50 flex justify-center items-center bg-black/50 backdrop-blur-sm hidden">
-        <div class="bg-white rounded-lg shadow-lg max-w-2xl w-full p-6 relative">
+    <div id="modalContainer" class="fixed inset-0 z-50 justify-center items-center bg-black/50 backdrop-blur-sm hidden">
+        <div class="bg-white rounded shadow-lg max-w-2xl w-full relative">
             <button onclick="closeModal()"
-                class="absolute top-3 right-4 text-gray-500 hover:text-gray-700 text-2xl font-bold cursor-pointer">
+                class="absolute top-4.5 right-6 text-white hover:text-gray-700 text-2xl font-bold cursor-pointer">
                 &times;
             </button>
-
-
             <div id="modalContent"></div>
         </div>
     </div>
@@ -76,6 +73,7 @@
                 .then(html => {
                     document.getElementById('modalContent').innerHTML = html;
                     document.getElementById('modalContainer').classList.remove('hidden');
+                    document.getElementById('modalContainer').classList.add('flex');
                 })
                 .catch(error => {
                     console.error('Error fetching modal:', error);
@@ -83,6 +81,7 @@
         }
 
         function closeModal() {
+            document.getElementById('modalContainer').classList.remove('flex');
             document.getElementById('modalContainer').classList.add('hidden');
             document.getElementById('modalContent').innerHTML = '';
         }

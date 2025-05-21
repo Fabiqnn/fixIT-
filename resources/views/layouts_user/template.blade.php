@@ -21,7 +21,7 @@
         </section>
         {{-- /content --}}
 
-            @include('layouts_user.footer')
+        @include('layouts_user.footer')
     </div>
 
 

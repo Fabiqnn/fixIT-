@@ -14,6 +14,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index']);
     Route::prefix('fasilitas')->group(function () {
         Route::get('/', [AdminController::class, 'fasilitas']);
+        Route::get('/list', [AdminController::class, 'list_fasilitas']);
         Route::get('/create', [AdminController::class, 'tambah_ajax_fasilitas']);
     });
     Route::get('/user', [AdminController::class, 'user']);
