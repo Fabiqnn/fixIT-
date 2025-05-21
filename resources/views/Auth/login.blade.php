@@ -35,26 +35,36 @@
 
                         <!-- No Induk -->
                         <div class="relative">
-                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-green-700 pointer-events-none">
-                                <i class="fa-regular fa-user"></i>
-                            </span>
-                            <input type="text" name="noInduk" id="noInduk" placeholder="No Induk"
-                                   class="w-full pl-10 pr-4 py-2 border-none ring-1 ring-greenPrimary rounded focus:outline-none focus:ring-green-700 text-sm placeholder:text-green-700">
-                            <small id="error-noInduk" class="text-red-500 text-sm"></small>
-                        </div>
+                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-green-700 pointer-events-none">
+                            <i class="fa-regular fa-user"></i>
+                        </span>
+                        <input type="text" name="noInduk" id="noInduk" placeholder="Nomor Induk"
+                            class="pl-10 w-full py-2 ring-1 ring-greenPrimary rounded focus:outline-none focus:ring-green-700 text-sm placeholder:text-green-700" />
+                            </div>
+                            <small id="error-noInduk" class="text-red-500 text-sm mt-1 block"></small>
 
-                        <!-- Password -->
-                        <div class="relative">
-                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-green-700 pointer-events-none">
-                                <i class="fa-solid fa-lock"></i>
-                            </span>
-                            <input type="password" name="pass" id="pass" placeholder="Password"
-                                   class="w-full pl-10 pr-12 py-2 border-none ring-1 ring-greenPrimary rounded focus:outline-none focus:ring-green-700 text-sm placeholder:text-green-700">
-                            <span class="absolute inset-y-0 right-0 flex items-center justify-center pr-3 text-green-700 w-10 cursor-pointer" id="show">
-                                <i class="fa-solid fa-eye"></i>
-                            </span>
-                            <small id="error-pass" class="text-red-500 text-sm"></small>
-                        </div>
+
+                       <!-- Password -->
+<div class="mb-4">
+    <div class="relative">
+        <!-- Ikon Lock -->
+        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-green-700 pointer-events-none">
+            <i class="fa-solid fa-lock"></i>
+        </span>
+
+        <!-- Input -->
+        <input type="password" name="pass" id="pass" placeholder="Password"
+               class="w-full pl-10 pr-12 py-2 border-none ring-1 ring-greenPrimary rounded focus:outline-none focus:ring-green-700 text-sm placeholder:text-green-700">
+
+        <!-- Eye Toggle -->
+        <span class="absolute inset-y-0 right-0 flex items-center justify-center pr-3 text-green-700 w-10 cursor-pointer" id="show">
+            <i class="fa-solid fa-eye"></i>
+        </span>
+        </div>
+
+            <!-- Error -->
+            <small id="error-pass" class="text-red-500 text-sm mt-1 block"></small>
+        </div>
 
                         <!-- Submit -->
                         <button type="submit"
