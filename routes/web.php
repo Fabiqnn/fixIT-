@@ -18,8 +18,13 @@ Route::prefix('admin')->group(function () {
         Route::get('/create', [AdminController::class, 'tambah_ajax_fasilitas']);
     });
     Route::get('/user', [AdminController::class, 'user']);
-    Route::get('/building', [AdminController::class, 'building']);
-    Route::get('/userCreateAjax', [AdminController::class, 'createAjax']);
+
+    Route::prefix('building')->group(function () {
+        Route::get('/', [AdminController::class, 'gedung']);
+        Route::get('/list', [AdminController::class, 'list_gedung']);
+        Route::get('/create', [AdminController::class, 'tambah_ajax_gedung']);
+        Route::post('/store', [AdminController::class, 'store']);
+    });
 });
 
 Route::get('/pelaporan', function () {
