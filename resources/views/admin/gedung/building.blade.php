@@ -22,16 +22,15 @@
             </div>
         </div>
         <div class="overflow-x-auto border-y-1 border-gray1">
-            <table id="tableGedung"
-                class="w-full table-fixed text-sm text-gray-800 border border-gray-200 rounded-md shadow-sm">
-                <thead class="bg-gray-100 text-xs text-gray-600 uppercase">
+            <table id="tableGedung" class="w-full table-fixed text-sm text-gray-800 rounded-md ">
+                <thead class="text-D_grey font-semibold uppercase text-xs">
                     <tr>
                         <th class="w-[50px] px-4 py-3 text-center">No</th>
                         <th class="px-4 py-3 text-left">Nama Gedung</th>
                         <th class="w-[220px] px-4 py-3 text-right">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="bg-white border-l-3">
                 </tbody>
             </table>
 
