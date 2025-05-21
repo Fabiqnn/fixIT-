@@ -38,7 +38,7 @@
              ">
             <h2 class="text-indigo-700 font-semibold mb-2">Upload Foto</h2>
             <label id="drop-area" x-ref="dropArea"
-                   class="cursor-pointer border-2 border-dashed border-gray-300 rounded-lg h-40 flex items-center justify-center text-gray-400 text-sm hover:border-green-500 hover:text-green-500 transition relative overflow-hidden">
+                   class="cursor-pointer border-2 border-dashed border-gray-300 rounded-lg h-40 flex items-center justify-center text-gray-400 text-sm hover:border-green-500 hover:text-green-500 transition relative ">
                 <span id="drop-text" x-ref="dropText" class="z-10">Drag and drop or click here to select file</span>
                 <input id="upload" x-ref="upload" name="foto" type="file" class="hidden" accept="image/*"
                        @change="

@@ -1,4 +1,4 @@
-<header class="sticky top-0 bg-white ">
+<header class="sticky top-0 bg-white z-50">
     <div class="w-full max-w-[1400px] mx-auto flex justify-between items-center px-20 py-2 transition-all duration-200 ease-in-out" id="header">
         <!-- Logo Kiri -->
         <div class="logo flex items-center gap-2">
