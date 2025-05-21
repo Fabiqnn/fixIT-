@@ -8,9 +8,14 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+
+    public function showLogin()
+{
+    return view('Auth.login');
+}
     public function login(Request $request)
     {
-        // Validasi input
+
         $validator = Validator::make($request->all(), [
             'noInduk' => 'required|string|min:10',
             'pass'    => 'required|string|min:6',
