@@ -132,4 +132,36 @@ class AdminController extends Controller
 
         return redirect('/admin/building')->with('success', 'Data gedung berhasil disimpan');
     }
+    public function edit_ajax(string $id)
+    {
+        $gedung = GedungModel::find($id);
+
+        if (!$gedung) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak ditemukan'
+            ]);
+        }
+
+        return view('admin.gedung.edit_ajax', ['gedung' => $gedung]);
+    }
+
+    public function update_ajax(Request $request, $id)
+    {
+        $request->validate([
+            'gedung_nama' => 'required|max:100'
+        ]);
+
+        $gedung = GedungModel::find($id);
+
+        if (!$gedung) {
+            return redirect('/admin/building')->with('error', 'Data tidak ditemukan');
+        }
+
+        $gedung->update([
+            'gedung_nama' => $request->gedung_nama
+        ]);
+
+        return redirect('/admin/building')->with('success', 'Data gedung berhasil diperbarui');
+    }
 }
