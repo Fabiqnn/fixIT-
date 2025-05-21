@@ -120,29 +120,6 @@ class AdminController extends Controller
             ->make(true);
     }
 
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         'gedung_nama' => 'required|string|max:100'
-    //     ]);
-
-    //     try {
-    //         GedungModel::create([
-    //             'gedung_nama' => $request->gedung_nama
-    //         ]);
-
-    //         return response()->json([
-    //             'status' => true,
-    //             'message' => 'Data gedung berhasil disimpan'
-    //         ]);
-    //     } catch (\Exception $e) {
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => 'Terjadi kesalahan saat menyimpan data',
-    //             'error' => $e->getMessage()
-    //         ]);
-    //     }
-    // }
     public function store(Request $request)
     {
         $request->validate([
