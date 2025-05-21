@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class UserModels extends Authenticatable
 {
     use Notifiable;
 
@@ -31,7 +31,7 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-    
+
     public function username()
     {
         return 'username';
