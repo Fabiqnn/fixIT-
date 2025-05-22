@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FasilitasModel;
 use App\Models\GedungModel;
+use App\Models\UserModel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -76,7 +77,7 @@ class AdminController extends Controller
 
         $activeMenu = 'user';
 
-        return view('admin.userManagement', ['page' => $page, 'activeMenu' => $activeMenu]);
+        return view('admin.user.userManagement', ['page' => $page, 'activeMenu' => $activeMenu]);
     }
     public function tes()
     {
@@ -109,12 +110,12 @@ class AdminController extends Controller
             ->addIndexColumn()
             ->addColumn('aksi', function ($item) {
                 return '
-        <div class="flex justify-end gap-2">
-            <button onclick="modalAction(\'' . url('/admin/building/' . $item->gedung_id . '/show') . '\')" class="px-3 py-1 button-info cursor-pointer">Detail</button>
-            <button onclick="modalAction(\'' . url('/admin/building/' . $item->gedung_id . '/edit_ajax') . '\')" class="px-3 py-1 button1 cursor-pointer">Edit</button>
-            <button onclick="modalAction(\'' . url('/admin/building/' . $item->gedung_id . '/delete_ajax') . '\')" class="px-3 py-1 button-error cursor-pointer">Hapus</button>
-        </div>
-    ';
+                <div class="flex justify-end gap-2">
+                    <button onclick="modalAction(\'' . url('/admin/building/' . $item->gedung_id . '/show') . '\')" class="px-3 py-1 button-info cursor-pointer">Detail</button>
+                    <button onclick="modalAction(\'' . url('/admin/building/' . $item->gedung_id . '/edit_ajax') . '\')" class="px-3 py-1 button1 cursor-pointer">Edit</button>
+                    <button onclick="modalAction(\'' . url('/admin/building/' . $item->gedung_id . '/delete_ajax') . '\')" class="px-3 py-1 button-error cursor-pointer">Hapus</button>
+                </div>
+            ';
             })
             ->rawColumns(['aksi'])
             ->make(true);
@@ -163,5 +164,30 @@ class AdminController extends Controller
         ]);
 
         return redirect('/admin/building')->with('success', 'Data gedung berhasil diperbarui');
+    }
+
+    public function list_user(Request $request)
+    {
+        $user = UserModel::select('user_id', 'nama_lengkap', 'level_id', 'email', 'nomor_telp')
+            ->with('level');
+
+        return DataTables::of($user)
+            ->addIndexColumn()
+
+            ->addColumn('level_nama', function ($item) {
+                return $item->level->level_nama ?? '-';
+            })
+
+            ->addColumn('aksi', function ($item) {
+                return '
+            <div class="flex justify-end gap-2">
+                <button onclick="modalAction(\'' . url('/admin/user/' . $item->user_id . '/show') . '\')" class="px-3 py-1 button-info cursor-pointer">Detail</button>
+                <button onclick="modalAction(\'' . url('/admin/user/' . $item->user_id . '/edit_ajax') . '\')" class="px-3 py-1 button1 cursor-pointer">Edit</button>
+                <button onclick="modalAction(\'' . url('/admin/user/' . $item->user_id . '/delete_ajax') . '\')" class="px-3 py-1 button-error cursor-pointer">Hapus</button>
+            </div>
+            ';
+            })
+            ->rawColumns(['aksi'])
+            ->make(true);
     }
 }

@@ -17,7 +17,10 @@ Route::prefix('admin')->group(function () {
         Route::get('/list', [AdminController::class, 'list_fasilitas']);
         Route::get('/create', [AdminController::class, 'tambah_ajax_fasilitas']);
     });
-    Route::get('/user', [AdminController::class, 'user']);
+    Route::prefix('user')->group(function () {
+        Route::get('/', [AdminController::class, 'user']);
+        Route::get('/list', [AdminController::class, 'list_user']);
+    });
 
     Route::prefix('building')->group(function () {
 
