@@ -26,10 +26,10 @@
                     <tr>
                         <th class="w-[50px] px-4 py-3 text-center">No</th>
                         <th class="px-4 py-3 text-left">Nama Lengkap</th>
-                        <th class="w-[220px] px-4 py-3 text-right">Nama Level</th>
-                        <th class="w-[220px] px-4 py-3 text-right">Email</th>
-                        <th class="w-[220px] px-4 py-3 text-right">No Telepon</th>
-                        <th class="w-[220px] px-4 py-3 text-right">Aksi</th>
+                        <th class="w-[220px] px-4 py-3">Role</th>
+                        <th class="w-[220px] px-4 py-3">Email</th>
+                        <th class="w-[220px] px-4 py-3">No Telepon</th>
+                        <th class="w-[220px] px-4 py-3">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white border-l-3">
@@ -80,37 +80,37 @@
                 },
                 columns: [{
                         data: "DT_RowIndex",
-                        className: "text-center",
+                        className: "w-[50px] px-4 py-3 text-center",
                         orderable: false,
                         searchable: false
                     },
                     {
                         data: "nama_lengkap",
-                        className: "text-left",
+                        className: "px-4 py-3 text-left",
                         orderable: true,
                         searchable: true
                     },
                     {
                         data: "level_nama",
-                        className: "text-right",
+                        className: "text-left",
                         orderable: false,
                         searchable: false
                     },
                     {
                         data: "email",
-                        className: "text-right",
+                        className: "text-left",
                         orderable: true,
                         searchable: true
                     },
                     {
                         data: "nomor_telp",
-                        className: "text-right",
+                        className: "text-left",
                         orderable: true,
                         searchable: true
                     },
                     {
                         data: "aksi",
-                        className: "text-right",
+                        className: "",
                         orderable: false,
                         searchable: false
                     }
