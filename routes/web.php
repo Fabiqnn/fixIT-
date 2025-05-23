@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\PanduanController;
 
 Route::get('/', function () {
     return view('landingpage');
@@ -38,5 +37,3 @@ Route::prefix('admin')->group(function () {
 Route::get('/pelaporan', function () {
     return view('user.laporankerusakan');
 });
-
-Route::get('/panduan', [PanduanController::class, 'index'])->name('guidance.index');
