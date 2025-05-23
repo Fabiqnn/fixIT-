@@ -25,46 +25,70 @@
 @push('js')
     <script>
         $(document).ready(function() {
-            $('#form-edit').on('submit', function(e) {
-                e.preventDefault();
-
-                $.ajax({
-                    url: $(this).attr('action'),
-                    method: 'POST',
-                    data: $(this).serialize(),
-                    success: function(response) {
-                        if (response.status) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Berhasil',
-                                text: response.message
-                            }).then(() => {
-                                $('#modalContainer').addClass('hidden');
-                                $('#modalContent').html('');
-                                dataGedung.ajax
-                                    .reload();
-                            });
-                        } else {
-                            let msg = response.message;
-                            if (response.msgField) {
-                                msg = Object.values(response.msgField).map(e => e[0]).join(
-                                    '\n');
+            $("#form-edit").validate({
+                rules: {
+                    gedung_nama: {
+                        required: true,
+                        minlength: 3,
+                        maxlength: 100
+                    }
+                },
+                messages: {
+                    gedung_nama: {
+                        required: "Nama gedung wajib diisi",
+                        minlength: "Minimal 3 karakter",
+                        maxlength: "Maksimal 100 karakter"
+                    }
+                },
+                submitHandler: function(form) {
+                    $.ajax({
+                        url: form.action,
+                        type: form.method,
+                        data: $(form).serialize(),
+                        success: function(response) {
+                            if (response.status) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil',
+                                    text: response.message
+                                }).then(() => {
+                                    $('#modalContainer').addClass('hidden');
+                                    $('#modalContent').html('');
+                                    dataGedung.ajax.reload(); // reload DataTable
+                                });
+                            } else {
+                                $('.error-text').text('');
+                                $.each(response.msgField, function(prefix, val) {
+                                    $('#error-' + prefix).text(val[0]);
+                                });
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal',
+                                    text: response.message
+                                });
                             }
+                        },
+                        error: function() {
                             Swal.fire({
                                 icon: 'error',
-                                title: 'Gagal',
-                                text: msg
+                                title: 'Terjadi Kesalahan',
+                                text: 'Data gagal diperbarui'
                             });
                         }
-                    },
-                    error: function() {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Terjadi Kesalahan',
-                            text: 'Data gagal diperbarui'
-                        });
-                    }
-                });
+                    });
+                    return false;
+                },
+                errorElement: 'span',
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function(element) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function(element) {
+                    $(element).removeClass('is-invalid');
+                }
             });
         });
     </script>

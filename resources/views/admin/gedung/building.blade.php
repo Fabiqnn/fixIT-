@@ -22,12 +22,12 @@
             </div>
         </div>
         <div class="overflow-x-auto border-y-1 border-gray1">
-            <table id="tableGedung" class="w-full table-fixed text-sm text-gray-800 rounded-md ">
+            <table class="min-w-full text-sm text-left text-gray-700" id="tableGedung">
                 <thead class="text-D_grey font-semibold uppercase text-xs">
                     <tr>
                         <th class="w-[50px] px-4 py-3 text-center">No</th>
                         <th class="px-4 py-3 text-left">Nama Gedung</th>
-                        <th class="w-[220px] px-4 py-3 text-right">Aksi</th>
+                        <th class="w-[160px] px-4 py-3 text-right">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white border-l-3">
@@ -93,7 +93,7 @@
                     },
                     {
                         data: "aksi",
-                        className: "text-center", // kamu bisa ubah ke text-center jika mau
+                        className: "text-center",
                         orderable: false,
                         searchable: false
                     }

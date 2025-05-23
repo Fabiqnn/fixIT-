@@ -31,14 +31,6 @@ return new class extends Migration
             $table->foreign('gedung_id')->references('gedung_id')->on('table_gedung');
             $table->foreign('id_lantai')->references('id_lantai')->on('table_lantai');
         });
-
-        Schema::table('fasilitas', function (Blueprint $table) { 
-            $table->dropForeign(['table_fasilitas_gedung_id_unique']);
-            $table->dropColumn('gedung_id');
-
-            $table->unsignedBigInteger('id_ruangan')->nullable();
-            $table->foreign('ruangan_id')->references('id_ruangan')->on('table_ruangan');
-        });
     }
 
     /**
