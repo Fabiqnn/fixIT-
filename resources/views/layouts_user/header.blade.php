@@ -22,7 +22,10 @@
                 </ul>
             </li>
             
-            <li><a href="#" class="hover:text-D_grey">Panduan</a></li>
+            {{-- <li><a href="#" class="hover:text-D_grey">Panduan</a></li> --}}
+            <li>
+        <a href="{{ url('/panduan') }}" class="hover:text-D_grey">Panduan</a>
+    </li>
             <li>
                 <button class="bg-greenPrimary text-white px-4 py-1 rounded hover:bg-greenshade1 transition">
                     Masuk
