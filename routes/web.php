@@ -4,8 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PanduanController;
+use App\Http\Controllers\StatusController;
 
->>>>>>> 3a72c06fa9fc9956198598d71dd354aeff4236c0
 
 Route::get('/', function () {
     return view('landingpage');
