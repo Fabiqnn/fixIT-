@@ -8,7 +8,8 @@ Route::get('/', function () {
     return view('landingpage');
 });
 
-Route::get('/login', [AuthController::class, 'login']);
+Route::get('/login', [AuthController::class, 'showLogin']);
+Route::post('/login', [AuthController::class, 'login']);
 
 Route::prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index']);
