@@ -13,7 +13,16 @@ class FasilitasSeeder extends Seeder
      */
     public function run(): void
     {
-        $data = [
+        // Kosongkan tabel fasilitas
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('table_fasilitas')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+        // Ambil semua ruangan_id yang tersedia
+        $ruanganIds = DB::table('table_ruangan')->pluck('id_ruangan')->toArray();
+
+        // Data dummy fasilitas
+        $dataFasilitas = [
             [
                 'nama_fasilitas' => 'Proyektor Aula Sipil',
                 'kode_fasilitas' => 'FSL001',
@@ -136,6 +145,13 @@ class FasilitasSeeder extends Seeder
             ],
         ];
 
-        DB::table('table_fasilitas')->insert($data);
+        // Tambahkan id_ruangan secara acak ke setiap entri
+        $dataFinal = array_map(function ($item) use ($ruanganIds) {
+            $item['ruangan_id'] = fake()->randomElement($ruanganIds); // Laravel >=9
+            return $item;
+        }, $dataFasilitas);
+
+        // Insert ke database
+        DB::table('table_fasilitas')->insert($dataFinal);
     }
 }

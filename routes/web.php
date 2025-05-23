@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\StatusController;
+use App\Http\Controllers\PanduanController;
+
+>>>>>>> 3a72c06fa9fc9956198598d71dd354aeff4236c0
 
 Route::get('/', function () {
     return view('landingpage');
@@ -18,6 +20,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/', [AdminController::class, 'fasilitas']);
         Route::get('/list', [AdminController::class, 'list_fasilitas']);
         Route::get('/create', [AdminController::class, 'tambah_ajax_fasilitas']);
+        Route::post('/store', [AdminController::class, 'store_fasilitas']);
     });
     Route::prefix('user')->group(function () {
         Route::get('/', [AdminController::class, 'user']);
@@ -39,4 +42,10 @@ Route::get('/pelaporan', function () {
     return view('user.laporankerusakan');
 });
 
+
+
 Route::get('/laporan', [StatusController::class, 'index']);
+
+
+Route::get('/panduan', [PanduanController::class, 'index'])->name('panduan.index');
+
