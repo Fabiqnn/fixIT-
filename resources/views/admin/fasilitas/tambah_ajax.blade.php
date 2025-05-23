@@ -1,4 +1,4 @@
-<form action="" method="POST" class="space-y-4 font-inter">
+<form action="{{ url('admin/fasilitas/store') }}" method="POST" class="space-y-4 font-inter" id="tambah-fasilitas">
     @csrf
     <div class="space-y-6">
         <div class="bg-green-700 text-white font-bold p-6 rounded-t mb-3">
@@ -32,3 +32,45 @@
         </div>
     </div>
 </form>
+
+@push('js')
+    <script>
+        $(document).ready(function() {
+            $('#tambah-fasilitas').on('submit', function(e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: $(this).attr('action'),
+                    method: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        if (response.status) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: response.message
+                            }).then(() => {
+                                $('#modalContainer').addClass('hidden');
+                                $('#modalContent').html('');
+                                dataGedung.ajax.reload();
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal',
+                                text: response.message
+                            });
+                        }
+                    },
+                    error: function() {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Terjadi Kesalahan',
+                            text: 'Data gagal disimpan'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+@endpush

@@ -32,7 +32,7 @@ return new class extends Migration
             $table->foreign('id_lantai')->references('id_lantai')->on('table_lantai');
         });
 
-        Schema::create('table_fasilitas', function (Blueprint $table) { 
+        Schema::table('fasilitas', function (Blueprint $table) { 
             $table->dropForeign(['table_fasilitas_gedung_id_unique']);
             $table->dropColumn('gedung_id');
 

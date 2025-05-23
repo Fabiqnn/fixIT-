@@ -31,30 +31,18 @@
                         <th class="p-4">Nama Fasilitas</th>
                         <th class="p-4">Kode Fasilitas</th>
                         <th class="p-4">Gedung</th>
+                        <th class="p-4">Lantai</th>
+                        <th class="p-4">Ruangan</th>
                         <th class="p-4">Tanggal Pengadaan</th>
                         <th class="p-4 text-center">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="border-l-3">
-                    <tr>
-                        <td class="p-4">1</td>
-                        <td class="p-4">AC</td>
-                        <td class="p-4">AC001</td>
-                        <td class="p-4">TI</td>
-                        <td class="p-4">10/09/2015</td>
-                        <td class="p-4 flex justify-evenly">
-                            <button class="button-info">Detail</button>
-                            <button class="button1">Edit</button>
-                            <button class="button-error">Hapus</button>
-                        </td>
-                    </tr>
-                </tbody>
             </table>
         </div>
     </div>
 
     <div id="modalContainer" class="fixed inset-0 z-50 justify-center items-center bg-black/50 backdrop-blur-sm hidden">
-        <div class="bg-white rounded shadow-lg max-w-2xl w-full relative">
+        <div class="bg-white rounded shadow-lg max-w-2xl w-full relative" id="modal-box">
             <button onclick="closeModal()"
                 class="absolute top-4.5 right-6 text-white hover:text-gray-700 text-2xl font-bold cursor-pointer">
                 &times;
@@ -72,7 +60,8 @@
                 .then(html => {
                     document.getElementById('modalContent').innerHTML = html;
                     document.getElementById('modalContainer').classList.remove('hidden');
-                    document.getElementById('modalContainer').classList.add('flex');
+                    document.getElementById('modalContainer').classList.add('flex', 'autoAppear');
+                    document.getElementById('modal-box').classList.add('autoShow3');
                 })
                 .catch(error => {
                     console.error('Error fetching modal:', error);

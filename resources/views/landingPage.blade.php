@@ -11,8 +11,8 @@
                 <h5 class="text-lg mt-5">Mari bersama wujudkan kampus yang lebih baik dengan fixIT!</h5>
                 <button class="bg-greenPrimary text-white px-10 py-3 rounded hover:bg-greenshade1 transition items-center text-lg">Masuk</button>
             </div>
-            <div class="w-full md:w-1/2 flex justify-center">
-                <img src="{{ asset('assets/landingpage1.png')}}" alt="" class="h-auto w-3/4">
+            <div class="w-full md:w-1/2 flex justify-end">
+                <img src="{{ asset('assets/landingpage1.png')}}" alt="" class="h-auto w-4/5">
             </div>
         </div>
     </div>

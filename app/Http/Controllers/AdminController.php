@@ -21,6 +21,7 @@ class AdminController extends Controller
         return view('admin.dashboard', ['page' => $page, 'activeMenu' => $activeMenu]);
     }
 
+    // fasilitas
     public function fasilitas()
     {
         $page = (object) [
@@ -37,7 +38,7 @@ class AdminController extends Controller
 
     public function list_fasilitas(Request $request)
     {
-        $fasilitas = FasilitasModel::select('fasilitas_id', 'nama_fasilitas', 'kode_fasilitas', 'gedung_id', 'tanggal_pengadaan')
+        $fasilitas = FasilitasModel::select('fasilitas_id', 'nama_fasilitas', 'kode_fasilitas', 'gedung_id', 'tanggal_pengadaan', 'lantai', 'ruangan')
             ->with('Gedung');
 
         if ($request->gedung_id) {
@@ -66,7 +67,21 @@ class AdminController extends Controller
         return view('admin.fasilitas.tambah_ajax', ['gedung' => $gedung]);
     }
 
+    public function store_fasilitas(Request $request) {
+        $request->validate([
+            'gedung_nama' => 'required|string|max:100'
+        ]);
 
+        GedungModel::create([
+            'gedung_nama' => $request->gedung_nama
+        ]);
+
+        return redirect('/admin/building')->with('success', 'Data gedung berhasil disimpan');
+    }
+
+
+
+    // user
     public function user()
     {
         $page = (object) [
