@@ -1,0 +1,54 @@
+@extends('layouts_user.template')
+
+@section('content')
+<div class="bg-green-700 text-white text-lg font-bold p-4 rounded-br-2xl">
+    Status Pelaporan
+</div>
+<div class="container mx-auto p-6 my-10 shadow-xl">
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white shadow-xl rounded-xl">
+            <thead class="bg-gray-100 text-gray-600 uppercase text-sm">
+                <tr>
+                    <th class="py-3 px-5 text-left">Kode Laporan</th>
+                    <th class="py-3 px-5 text-left">Fasilitas</th>
+                    <th class="py-3 px-5 text-left">Tanggal</th>
+                    <th class="py-3 px-5 text-left">Prioritas</th>
+                    <th class="py-3 px-5 text-left">Gedung</th>
+                    <th class="py-3 px-5 text-left">Deskripsi Tambahan</th>
+                    <th class="py-3 px-5 text-left">Detail</th>
+                    <th class="py-3 px-5 text-left">Status</th>
+                </tr>
+            </thead>
+            <tbody class="text-sm text-gray-700">
+                @for ($i = 0; $i < 5; $i++)
+                <tr class="border-t border-gray-200">
+                    <td class="py-3 px-5 font-bold">LP001</td>
+                    <td class="py-3 px-5">AC</td>
+                    <td class="py-3 px-5 text-gray-400">13 Maret 2004</td>
+                    <td class="py-3 px-5">IV</td>
+                    <td class="py-3 px-5">LSI 3 - JTI</td>
+                    <td class="py-3 px-5">AC agak kurang dingin</td>
+                    <td class="py-3 px-5">
+                        <button class="bg-green-500 text-white px-4 py-1 rounded-full hover:bg-green-600">Detail</button>
+                    </td>
+                    <td class="py-3 px-5">
+                        <span class="bg-green-500 text-white px-4 py-1 rounded-full">Diproses</span>
+                    </td>
+                </tr>
+                @endfor
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Static Pagination -->
+    <div class="flex justify-end mt-4 space-x-2">
+        <button class="text-gray-400" disabled>&lt;</button>
+        <button class="bg-green-500 text-white px-3 py-1 rounded">1</button>
+        <button class="bg-gray-200 px-3 py-1 rounded">2</button>
+        <button class="bg-gray-200 px-3 py-1 rounded">3</button>
+        <button class="text-gray-600">&gt;</button>
+    </div>
+
+    <p class="text-sm text-gray-500 mt-2">Showing 1–5 from 100 data</p>
+</div>
+@endsection

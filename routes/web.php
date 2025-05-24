@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FasilitasController;
+use App\Http\Controllers\PanduanController;
+use App\Http\Controllers\StatusController;
+
 
 Route::get('/', function () {
     return view('landingpage');
@@ -46,3 +49,11 @@ Route::prefix('admin')->group(function () {
 Route::get('/pelaporan', function () {
     return view('user.laporankerusakan');
 });
+
+
+
+Route::get('/laporan', [StatusController::class, 'index']);
+
+
+Route::get('/panduan', [PanduanController::class, 'index'])->name('panduan.index');
+
