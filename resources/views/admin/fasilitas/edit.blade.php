@@ -1,48 +1,61 @@
-<form action="{{ url('admin/fasilitas/store') }}" method="POST" class="space-y-4 font-inter" id="tambah-fasilitas">
+<form action="{{ url('admin/fasilitas/'. $fasilitas->fasilitas_id .'/update') }}" method="POST" class="space-y-4 font-inter" id="edit-fasilitas">
     @csrf
+    @method('PUT')
     <div class="space-y-6">
         <div class="bg-green-700 text-white font-bold p-6 rounded-t mb-3">
-            Tambah Data Fasilitas
+            edit Data Fasilitas
         </div>
         <div class="p-6 space-y-3">
             <div>
                 <label class="block mb-1 font-semibold">Nama Fasilitas</label>
                 <input type="text" name="nama_fasilitas"
-                    class="w-full border border-green-200 rounded p-2 outline-none"
-                    placeholder="Nama Fasilitas" required>
+                    class="w-full border border-green-200 rounded p-2 outline-none text-D_grey"
+                    placeholder="Nama Fasilitas" value="{{ $fasilitas->nama_fasilitas ?? '-' }}" required >
             </div>
             <div>
                 <label class="block mb-1 font-semibold">Kode Fasilitas</label>
-                <input type="text" name="kode_fasilitas" class="w-full border border-green-200 rounded p-2 outline-none "
-                    placeholder="Kode" required>
+                <input type="text" name="kode_fasilitas" class="w-full border border-green-200 rounded p-2 outline-none text-D_grey"
+                    placeholder="Kode" value="{{ $fasilitas->kode_fasilitas ?? '-' }}" required>
             </div>
             <div>
                 <label class="block mb-1 font-semibold">Gedung</label>
                 <select name="id_gedung" id="id_gedung" class="border-1 border-green-200 rounded w-full text-D_grey p-2 outline-none"  data-url="{{url('admin/fasilitas/get-lantai')}}" required>
-                    <option value="">- Pilih Gedung -</option>
                     @foreach ($gedung as $g)
-                        <option value="{{ $g->gedung_id }}">{{ $g->gedung_nama }}</option>
+                        <option {{$g->gedung_id == $fasilitas->ruangan->gedung->gedung_id ? 'selected' : ''}} value="{{$g->gedung_id}}">{{$g->gedung_nama}} </option>   
                     @endforeach
                 </select>
             </div>
             <div>
                 <label class="block mb-1 font-semibold">Lantai</label>
                 <select name="id_lantai" id="id_lantai" class="border-1 border-green-200 rounded w-full text-D_grey p-2 outline-none"  data-url="{{url('admin/fasilitas/get-ruangan')}}" required disabled>
-                    <option value="">- Pilih Gedung Terlebih Dahulu -</option>
+                    @foreach ($lantai as $l)
+                        <option {{$l->id_lantai == $fasilitas->ruangan->lantai->id_lantai ? 'selected' : ''}} value="{{$l->id_lantai}}">{{$l->nama_lantai}} </option>   
+                    @endforeach
                 </select>
             </div>
             <div>
                 <label class="block mb-1 font-semibold">Ruangan</label>
                 <select name="ruangan_id" id="ruangan_id" class="border-1 border-green-200 rounded w-full text-D_grey p-2 outline-none" required disabled>
-                    <option value="">- Pilih Gedung Terlebih Dahulu -</option>
+                    @foreach ($ruangan as $r)
+                        <option {{$r->id_ruangan == $fasilitas->ruangan->id_ruangan ? 'selected' : ''}} value="{{$r->id_ruangan}}">{{$r->kode_ruangan}} </option>   
+                    @endforeach
                 </select>
             </div>
             <div>
                 <label for="tanggal_pengadaan" class="block mb-1 font-semibold">Tanggal Pengadaan</label>
-                <input type="date" id="tanggal_pengadaan" name="tanggal_pengadaan" class="w-full border border-green-200 rounded p-2 outline-none text-D_grey">
+                <input type="date" id="tanggal_pengadaan" name="tanggal_pengadaan" class="w-full border border-green-200 rounded p-2 outline-none text-D_grey" value="{{$fasilitas->tanggal_pengadaan ?? '-'}}">
             </div>
-            <div class="flex justify-end mt-6">
-                <button type="submit" class="bg-green-700 text-white px-6 py-2 rounded hover:bg-green-800 transition cursor-pointer">Tambah</button>
+            <div>
+                <label class="block mb-1 font-semibold">Status Fasilitas</label>
+                <select name="status" id="status" class="border-1 border-green-200 rounded w-full text-D_grey p-2 outline-none">
+                    <option {{$fasilitas->status == 'baik' ? 'selected' : ''}} value="baik">Baik</option>
+                    <option {{$fasilitas->status == 'rusak' ? 'selected' : ''}} value="rusak">Rusak</option>
+                    <option {{$fasilitas->status == 'dalam perbaikan' ? 'selected' : ''}} value="dalam perbaikan">Dalam Perbaikan</option>
+                </select>
+            </div>
+            <div class="flex justify-end mt-6 space-x-3">
+                <button type="button" class="button-warning" onclick="closeModal()">Batal</button>
+                <button type="submit" class="button-info">Simpan</button>
             </div>
         </div>
     </div>
@@ -83,16 +96,16 @@
         });
     });
 
-    function initTambahValidasi() {  
+    function initEditValidasi() {  
         console.log('Validasi CUkimai')
         if (typeof $.fn.validate !== 'function') {
             console.error("jQuery Validate belum ter-load!");
             return;
         }
 
-        const form = $("#tambah-fasilitas");
+        const form = $("#edit-fasilitas");
         if (form.length === 0) {
-            console.error("Form #tambah-fasilitas tidak ditemukan di DOM.");
+            console.error("Form #edit-fasilitas tidak ditemukan di DOM.");
             return;
         }
 
@@ -114,6 +127,9 @@
                 tanggal_pengadaan: {
                     required: true,
                     date: true
+                }, 
+                status: {
+                    required: true,
                 }
             },
             submitHandler: function(form) {
