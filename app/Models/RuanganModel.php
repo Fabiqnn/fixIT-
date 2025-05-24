@@ -18,7 +18,17 @@ class RuanganModel extends Model
     public function gedung(): BelongsTo {
         return $this->belongsTo(GedungModel::class, 'gedung_id', 'gedung_id');
     }
+    
     public function lantai():BelongsTo {
         return $this->belongsTo(LantaiModel::class, 'id_lantai', 'id_lantai');
     }
+
+    public function getGedungName(): string {
+        return $this->gedung->gedung_nama;
+    }
+
+    public function getLantaiName(): string {
+        return $this->lantai->nama_lantai;
+    }
+
 }

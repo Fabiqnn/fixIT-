@@ -17,12 +17,13 @@
                 <!-- Dropdown Menu -->
                 <ul id="dropdownMenu"
                     class="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-lg hidden group-focus-within:block">
-                    <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Pelaporan</a></li>
-                    <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Riwayat</a></li>
+                    <li><a href="/pelaporan" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Pelaporan</a></li>
+                    <li><a href="/laporan" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Status Pelaporan</a></li>
                 </ul>
             </li>
             
-            <li><a href="#" class="hover:text-D_grey">Panduan</a></li>
+            <li><a href="{{ url('/panduan') }}" class="hover:text-D_grey">Panduan</a></li>
+            
             <li>
                 <button class="bg-greenPrimary text-white px-4 py-1 rounded hover:bg-greenshade1 transition">
                     Masuk
