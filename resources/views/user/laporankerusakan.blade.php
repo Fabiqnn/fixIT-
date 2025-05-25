@@ -60,22 +60,25 @@
         <!-- Form Inputs -->
         <div class="space-y-4">
             <!-- Fasilitas -->
-            <div x-data="{ open: false, selected: 'Pilih Fasilitas' }" class="relative">
-                <h2 class="text-indigo-700 font-semibold mb-1">Fasilitas</h2>
-                <button @click="open = !open"
-                        class="w-full bg-white border border-gray-300 rounded-md p-2 flex justify-between items-center focus:ring-2 focus:ring-green-500">
-                    <span x-text="selected"></span>
-                    <svg class="w-4 h-4 ml-2 text-gray-400" fill="none" stroke="currentColor" stroke-width="2"
-                         viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-                </button>
-                <ul x-show="open" @click.away="open = false"
-                    class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
-                    <li @click="selected = 'AC'; open = false" class="px-4 py-2 hover:bg-green-100 cursor-pointer">AC</li>
-                    <li @click="selected = 'Proyektor'; open = false" class="px-4 py-2 hover:bg-green-100 cursor-pointer">Proyektor</li>
-                    <li @click="selected = 'Kursi'; open = false" class="px-4 py-2 hover:bg-green-100 cursor-pointer">Kursi</li>
-                    <li @click="selected = 'Meja'; open = false" class="px-4 py-2 hover:bg-green-100 cursor-pointer">Meja</li>
-                </ul>
-            </div>
+        <div x-data="{ open: false, selected: 'Pilih Fasilitas' }" class="relative">
+            <h2 class="text-indigo-700 font-semibold mb-1">Fasilitas</h2>
+            <button @click="open = !open"
+                class="w-full bg-white border border-gray-300 rounded-md p-2 flex justify-between items-center focus:ring-2 focus:ring-green-500">
+                <span x-text="selected"></span>
+                <svg class="w-4 h-4 ml-2 text-gray-400" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <ul x-show="open" @click.away="open = false"
+                class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
+                @foreach ($fasilitas as $item)
+                <li @click="selected = '{{ $item->nama_fasilitas }}'; open = false"
+                        class="px-4 py-2 text-gray-800 hover:bg-green-100 cursor-pointer">
+                {{ $item->nama_fasilitas }}
+            </li>
+                @endforeach
+            </ul>
+        </div>
+
 
             <!-- Gedung, Ruangan, Lantai -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">

@@ -15,11 +15,15 @@ class GedungModel extends Model
     protected $primaryKey = 'gedung_id';
 
     protected $fillable = ['gedung_nama'];
+    public $timestamps = false;
 
-    public function ruangan(): HasMany {
+
+    public function ruangan(): HasMany
+    {
         return $this->hasMany(RuanganModel::class, 'gedung_id', 'gedung_id');
     }
-    public function lantai (): HasMany {
+    public function lantai(): HasMany
+    {
         return $this->hasMany(LantaiModel::class, 'gedung_id', 'gedung_id');
     }
 }

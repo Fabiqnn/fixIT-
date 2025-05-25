@@ -9,10 +9,10 @@ class UserModels extends Authenticatable
 {
     use Notifiable;
 
-    protected $table = 'table_users'; 
+    protected $table = 'table_users';
     protected $primaryKey = 'user_id';
 
-    public $timestamps = true; 
+    public $timestamps = true;
 
     protected $fillable = [
         'level_id',
@@ -35,5 +35,19 @@ class UserModels extends Authenticatable
     public function username()
     {
         return 'username';
+    }
+    public function level()
+    {
+        return $this->belongsTo(LevelModel::class, 'level_id');
+    }
+
+    public function jurusan()
+    {
+        return $this->belongsTo(JurusanModel::class, 'jurusan_id');
+    }
+
+    public function prodi()
+    {
+        return $this->belongsTo(ProdiModel::class, 'prodi_id');
     }
 }
