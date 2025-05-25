@@ -45,7 +45,7 @@ class FasilitasSeeder extends Seeder
                 'nama_fasilitas' => 'Papan Tulis Digital',
                 'kode_fasilitas' => 'FSL004',
                 'tanggal_pengadaan' => '2022-03-12',
-                'status' => 'perlu perbaikan',
+                'status' => 'dalam perbaikan',
             ],
             [
                 'nama_fasilitas' => 'Printer 3D',
@@ -81,7 +81,7 @@ class FasilitasSeeder extends Seeder
                 'nama_fasilitas' => 'Whiteboard',
                 'kode_fasilitas' => 'FSL010',
                 'tanggal_pengadaan' => '2019-04-25',
-                'status' => 'perlu perbaikan',
+                'status' => 'dalam perbaikan',
             ],
             [
                 'nama_fasilitas' => 'Mic Wireless',
@@ -111,7 +111,7 @@ class FasilitasSeeder extends Seeder
                 'nama_fasilitas' => 'Kursi Ergonomis',
                 'kode_fasilitas' => 'FSL015',
                 'tanggal_pengadaan' => '2020-06-17',
-                'status' => 'perlu perbaikan',
+                'status' => 'dalam perbaikan',
             ],
             [
                 'nama_fasilitas' => 'Laptop Peminjaman',
@@ -135,7 +135,7 @@ class FasilitasSeeder extends Seeder
                 'nama_fasilitas' => 'Genset',
                 'kode_fasilitas' => 'FSL019',
                 'tanggal_pengadaan' => '2019-12-30',
-                'status' => 'perlu perbaikan',
+                'status' => 'dalam perbaikan',
             ],
             [
                 'nama_fasilitas' => 'Modul Praktikum',

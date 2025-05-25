@@ -1,8 +1,8 @@
 @extends('layouts.template')
 
-@section('title', 'Admin')
+@section('title', $page->title)
 
-@section('header', 'User Manajemen')
+@section('header', $page->header)
 @section('content')
     <div class="font-inter">
         <div class="flex justify-between items-center my-5">
@@ -15,7 +15,7 @@
                         <option value="">- Semua -</option>
                     </select>
                 </div>
-                <button class="button1 cursor-pointer" onclick="modalAction('{{ url('/admin/userCreateAjax') }}')">
+                <button class="button1 cursor-pointer" onclick="modalAction('{{ url('/admin/user/create') }}')">
                     <span class="text-xl mr-2">+</span> Tambah
                 </button>
             </div>
@@ -38,7 +38,7 @@
         </div>
     </div>
     <div id="modalContainer" class="fixed inset-0 z-50 justify-center items-center bg-black/50 backdrop-blur-sm hidden">
-        <div class="bg-white rounded shadow-lg max-w-2xl w-full relative">
+        <div class="bg-white rounded shadow-lg max-w-7xl w-full relative">
             <button onclick="closeModal()"
                 class="absolute top-4.5 right-6 text-white hover:text-gray-700 text-2xl font-bold cursor-pointer">
                 &times;
@@ -57,6 +57,21 @@
                     document.getElementById('modalContent').innerHTML = html;
                     document.getElementById('modalContainer').classList.remove('hidden');
                     document.getElementById('modalContainer').classList.add('flex');
+                    document.getElementById('modalContainer').classList.add('autoAppear');
+
+                    document.querySelectorAll('#modalContent script').forEach((script) => {
+                        $.globalEval(script.innerText || script.textContent || script.innerHTML);
+                    });
+
+                    if (typeof initTambahValidasi === "function") {
+                        initTambahValidasi();
+                    }
+                    if (typeof initEditValidasi === "function") {
+                        initEditValidasi();
+                    }
+                    if (typeof initDeleteValidasi === "function") {
+                        initDeleteValidasi();
+                    }
                 })
                 .catch(error => {
                     console.error('Error fetching modal:', error);
