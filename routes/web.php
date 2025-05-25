@@ -8,6 +8,7 @@ use App\Http\Controllers\PanduanController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\GedungController;
 use App\Http\Controllers\UserManajemenController;
+use App\Http\Controllers\PelaporanController;
 
 
 Route::get('/', function () {
@@ -57,10 +58,7 @@ Route::prefix('admin')->group(function () {
     });
 });
 
-Route::get('/pelaporan', function () {
-    return view('user.laporankerusakan');
-});
-
+Route::get('/pelaporan', [PelaporanController::class, 'index']);
 
 
 Route::get('/laporan', [StatusController::class, 'index']);
