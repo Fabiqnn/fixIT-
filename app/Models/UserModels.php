@@ -10,21 +10,21 @@ class UserModels extends Authenticatable
     use Notifiable;
 
     protected $table = 'table_users';
-    protected $primaryKey = 'user_id';
+    protected $primaryKey = 'no_induk';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
-    public $timestamps = true;
+    public $timestamps = false; 
 
     protected $fillable = [
+        'no_induk',
+        'password',
         'level_id',
         'prodi_id',
         'jurusan_id',
-        'username',
-        'password',
         'nama_lengkap',
         'email',
         'nomor_telp',
-        'nip',
-        'nim',
     ];
 
     protected $hidden = [
@@ -32,10 +32,6 @@ class UserModels extends Authenticatable
         'remember_token',
     ];
 
-    public function username()
-    {
-        return 'username';
-    }
     public function level()
     {
         return $this->belongsTo(LevelModel::class, 'level_id');
