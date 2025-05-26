@@ -25,10 +25,19 @@
             <li><a href="{{ url('/panduan') }}" class="hover:text-D_grey">Panduan</a></li>
             
             <li>
-                <button class="bg-greenPrimary text-white px-4 py-1 rounded hover:bg-greenshade1 transition">
-                    Masuk
-                </button>
-            </li>
+    @if(Auth::check())
+        <div class="bg-greenPrimary text-white px-4 py-1 rounded text-left leading-tight">
+            <div class="text-sm font-semibold">{{ Auth::user()->nama_lengkap }}</div>
+            <div class="text-xs text-white/80">{{ Auth::user()->no_induk }}</div>
+        </div>
+    @else
+        <a href="{{ url('login') }}" class="bg-greenPrimary text-white px-4 py-1 rounded hover:bg-greenshade1 transition inline-block">
+            Masuk
+        </a>
+    @endif
+</li>
+
+
         </ul>
     </div>
 </header>

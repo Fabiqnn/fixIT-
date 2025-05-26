@@ -9,6 +9,7 @@ use App\Http\Controllers\StatusController;
 use App\Http\Controllers\GedungController;
 use App\Http\Controllers\UserManajemenController;
 use App\Http\Controllers\PelaporanController;
+use App\Http\Controllers\MahasiswaController;
 
 
 Route::get('/', function () {
@@ -68,6 +69,6 @@ Route::get('/laporan', [StatusController::class, 'index']);
 Route::get('/panduan', [PanduanController::class, 'index'])->name('panduan.index');
 
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
-// Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
+Route::get('/dashboard', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
 // Route::get('/dosen/dashboard', [DosenController::class, 'index'])->name('dosen.dashboard');
 
