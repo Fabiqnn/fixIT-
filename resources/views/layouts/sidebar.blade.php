@@ -54,7 +54,7 @@
                 </svg>
                 Fasilitas</a></li>
         <li><a href="{{ url('admin/building') }}"
-                class="flex items-center gap-2 px-3 py-2 hover:bg-green-600 hover:text-white rounded {{ $activeMenu == 'building' ? 'sidebar-active' : '' }}">
+                class="flex items-center gap-2 px-3 py-2 hover:bg-green-600 hover:text-white rounded {{ $activeMenu == 'gedung' ? 'sidebar-active' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                     fill="#000000">
                     <path

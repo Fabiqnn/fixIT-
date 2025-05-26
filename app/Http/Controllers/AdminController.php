@@ -2,7 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FasilitasModel;
+use App\Models\GedungModel;
+use App\Models\UserModels;
+use Illuminate\Database\Console\Migrations\StatusCommand;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Validator;
+
+
 
 class AdminController extends Controller
 {
@@ -16,51 +24,5 @@ class AdminController extends Controller
         $activeMenu = 'dashboard';
 
         return view('admin.dashboard', ['page' => $page, 'activeMenu' => $activeMenu]);
-    }
-
-    public function fasilitas()
-    {
-        $page = (object) [
-            'title' => 'Fasilitas',
-            'header' => 'Manajemen Fasilitas'
-        ];
-
-        $activeMenu = 'fasilitas';
-
-        return view('admin.fasilitas.index', ['page' => $page, 'activeMenu' => $activeMenu]);
-    }
-    public function user()
-    {
-        $page = (object) [
-            'title' => 'User',
-            'header' => 'User Management'
-        ];
-
-        $activeMenu = 'user';
-
-        return view('admin.userManagement', ['page' => $page, 'activeMenu' => $activeMenu]);
-    }
-    public function tes()
-    {
-
-
-        return view('admin.userCreateAjax');
-    }
-
-    public function createAjax()
-    {
-        return view('admin.userCreateAjax');
-    }
-
-    public function building()
-    {
-        $page = (object) [
-            'title' => 'Building',
-            'header' => 'Building Management'
-        ];
-
-        $activeMenu = 'building';
-
-        return view('admin.building', ['page' => $page, 'activeMenu' => $activeMenu]);
     }
 }
