@@ -15,12 +15,23 @@
                 </button>
             
                 <!-- Dropdown Menu -->
-                <ul id="dropdownMenu"
-                    class="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-lg hidden group-focus-within:block">
-                    <li><a href="/pelaporan" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Pelaporan</a></li>
-                    <li><a href="/laporan" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Status Pelaporan</a></li>
-                </ul>
-            </li>
+            <ul id="dropdownMenu"
+                class="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-lg hidden group-focus-within:block z-50">
+                <li><a href="/pelaporan" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Pelaporan</a></li>
+                <li><a href="/laporan" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Status Pelaporan</a></li>
+                
+                @if(Auth::check())
+                    <li>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100">
+                                Logout
+                            </button>
+                        </form>
+                    </li>
+                @endif
+            </ul>
+
             
             <li><a href="{{ url('/panduan') }}" class="hover:text-D_grey">Panduan</a></li>
             

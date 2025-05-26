@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
@@ -10,11 +10,6 @@ use App\Http\Controllers\GedungController;
 use App\Http\Controllers\UserManajemenController;
 use App\Http\Controllers\PelaporanController;
 use App\Http\Controllers\MahasiswaController;
-
-
-Route::get('/', function () {
-    return view('landingpage');
-});
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 
@@ -72,3 +67,12 @@ Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard')
 Route::get('/dashboard', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
 // Route::get('/dosen/dashboard', [DosenController::class, 'index'])->name('dosen.dashboard');
 
+Route::post('/logout', function () {
+    Auth::logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+    return redirect('/');
+})->name('logout');
+
+
+Route::get('/', [AuthController::class, 'landing'])->name('landing');
