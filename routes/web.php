@@ -15,7 +15,8 @@ Route::get('/', function () {
     return view('landingpage');
 });
 
-Route::get('/login', [AuthController::class, 'showLogin']);
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::prefix('admin')->group(function () {
@@ -65,3 +66,8 @@ Route::get('/laporan', [StatusController::class, 'index']);
 
 
 Route::get('/panduan', [PanduanController::class, 'index'])->name('panduan.index');
+
+Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+// Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
+// Route::get('/dosen/dashboard', [DosenController::class, 'index'])->name('dosen.dashboard');
+

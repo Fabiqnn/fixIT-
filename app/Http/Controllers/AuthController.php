@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Models\UserModels;
@@ -15,44 +15,48 @@ class AuthController extends Controller
         return view('Auth.login');
     }
 
-    public function login(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'noInduk' => 'required|string|min:10', // Sesuaikan panjang minimal sesuai kebutuhan
-            'pass'    => 'required|string|min:6',
-        ]);
+   public function login(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'noInduk' => 'required|string|min:10',
+        'pass'    => 'required|string|min:5',
+    ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'status'   => false,
-                'message'  => 'Validasi gagal',
-                'msgField' => $validator->errors()
-            ]);
-        }
-
-        $noInduk = $request->noInduk;
-
-        // Cari user berdasarkan nip atau nim
-        $user = UserModels::where('nip', $noInduk)
-                    ->orWhere('nim', $noInduk)
-                    ->first();
-
-        if (!$user || !Hash::check($request->pass, $user->password)) {
-            return response()->json([
-                'status'   => false,
-                'message'  => 'No Induk atau password salah',
-                'msgField' => [
-                    'noInduk' => ['No Induk atau password salah.']
-                ]
-            ]);
-        }
-
-        Auth::login($user);
-
+    if ($validator->fails()) {
+        Log::info('Validation failed:', $validator->errors()->toArray());
         return response()->json([
-            'status'   => true,
-            'message'  => 'Login berhasil',
-            'redirect' => route('dashboard') // Sesuaikan dengan route tujuan setelah login
+            'status'   => false,
+            'message'  => 'Validasi gagal',
+            'msgField' => $validator->errors()
         ]);
     }
+
+    $user = UserModels::where('no_induk', $request->noInduk)->first();
+
+    if (!$user || !Hash::check($request->pass, $user->password)) {
+        return response()->json([
+            'status'   => false,
+            'message'  => 'Nomor Induk atau password salah',
+            'msgField' => [
+                'noInduk' => ['Nomor Induk atau password salah.']
+            ]
+        ]);
+    }
+
+    Auth::login($user);
+
+    $redirect = match((int) $user->level_id) {
+        1 => route('admin.dashboard'),
+        2 => route('mahasiswa.dashboard'),
+        3 => route('dosen.dashboard'),
+        default => route('dashboard')
+    };
+
+    return response()->json([
+        'status'   => true,
+        'message'  => 'Login berhasil',
+        'redirect' => $redirect
+    ]);
+}
+
 }

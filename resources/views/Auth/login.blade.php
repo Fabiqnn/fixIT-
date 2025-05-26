@@ -38,7 +38,7 @@
                         <span class="absolute left-3 top-1/2 -translate-y-1/2 text-green-700 pointer-events-none">
                             <i class="fa-regular fa-user"></i>
                         </span>
-                        <input type="text" name="noInduk" id="noInduk" placeholder="Nomor Induk"
+                        <input type="text" name="noInduk" id="noInduk" placeholder="Masukkan Nomor Induk"
                             class="pl-10 w-full py-2 ring-1 ring-greenPrimary rounded focus:outline-none focus:ring-green-700 text-sm placeholder:text-green-700" />
                             </div>
                             <small id="error-noInduk" class="text-red-500 text-sm mt-1 block"></small>
@@ -63,7 +63,7 @@
         </div>
 
             <!-- Error -->
-            <small id="error-pass" class="text-red-500 text-sm mt-1 block"></small>
+            <small id="error-general" class="text-red-500 text-sm text-center block"></small>
         </div>
 
                         <!-- Submit -->
@@ -136,6 +136,23 @@
                 }
             });
         });
+        
+        if (response.status === false) {
+    if (response.msgField) {
+        $.each(response.msgField, function (field, message) {
+            $('#error-' + field).text(message[0]);
+        });
+    }
+    if (response.message) {
+        $('#error-general').text(response.message);
+    }
+    Swal.fire({
+        icon: 'error',
+        title: 'Login Gagal',
+        text: response.message
+    });
+}
+
     </script>
 </body>
 </html>
