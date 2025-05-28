@@ -96,8 +96,7 @@
         });
     });
 
-    function initEditValidasi() {  
-        console.log('Validasi CUkimai')
+    function initEditValidasi() { 
         if (typeof $.fn.validate !== 'function') {
             console.error("jQuery Validate belum ter-load!");
             return;

@@ -48,7 +48,14 @@
         const mainContent = document.getElementById('mainContent');
         let sidebarVisible = true;
         const overlay = document.getElementById('overlay');
+        const dropdownSidebar = document.getElementById('bangunan');
 
+        function toggleMenu(menuId) {
+            const menu = document.getElementById(menuId);
+            const parent = menu.closest('.group');
+            menu.classList.toggle('hidden');
+            parent.classList.toggle('open');
+        }
 
         function toggleSidebar(show) {
             const isMobile = window.innerWidth < 640;

@@ -4,7 +4,7 @@
 
 @section('content')
         <div class="flex justify-between items-center my-5">
-            <h1 class="font-bold text-xl">Daftar Fasilitas Kampus</h1>
+            <h1 class="font-bold text-xl">Daftar Lantai Kampus</h1>
             <div class="flex items-center gap-4">
                 <div class="flex items-center gap-2">
                     <label for="gedung_id" class="text-lg font-bold">Filter</label>
@@ -17,24 +17,19 @@
                     </select>
                 </div>
                 <button class="button2 cursor-pointer w-"> Import</button>
-                <button class="button1 cursor-pointer" onclick="modalAction('{{ url('/admin/fasilitas/create') }}')">
+                <button class="button1 cursor-pointer" onclick="modalAction('{{ url('/admin/lantai/create') }}')">
                     <i class="fa-solid fa-plus"></i> Tambah
                 </button>
             </div>
         </div>
 
         <div class="overflow-x-auto border-y-1 border-gray1">
-            <table class="min-w-full text-sm text-left text-gray-700" id="table_fasilitas">
+            <table class="min-w-full text-sm text-left text-gray-700" id="table_lantai">
                 <thead class="text-D_grey font-semibold uppercase text-xs">
                     <tr>
                         <th class="p-4">No</th>
-                        <th class="p-4">Nama Fasilitas</th>
-                        <th class="p-4">Kode Fasilitas</th>
+                        <th class="p-4">Nama Lantai</th>
                         <th class="p-4">Gedung</th>
-                        <th class="p-4">Lantai</th>
-                        <th class="p-4">Ruangan</th>
-                        <th class="p-4">Tanggal Pengadaan</th>
-                        <th class="p-4">Status</th>
                         <th class="p-4 text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -94,12 +89,12 @@
             document.getElementById('modalContent').innerHTML = '';
         }
         
-        var dataFasilitas;
+        var dataLantai;
         $(document).ready(function() {
-            dataFasilitas = $('#table_fasilitas').DataTable({
+            dataLantai = $('#table_lantai').DataTable({
                 serverSide: true,
                 ajax: {
-                    "url": "{{ url('admin/fasilitas/list') }}",
+                    "url": "{{ url('admin/lantai/list') }}",
                     "type": "GET",
                     "dataType": "json",
                     "data": function(d) {
@@ -113,16 +108,11 @@
                     orderable: false,
                     searchable: false
                 }, {
-                    data: "nama_fasilitas",
+                    data: "nama_lantai",
                     className: "",
                     // orderable: true, jika ingin kolom ini bisa diurutkan
                     orderable: true,
                     // searchable: true, jika ingin kolom ini bisa dicari
-                    searchable: true
-                }, {
-                    data: "kode_fasilitas",
-                    className: "",
-                    orderable: true,
                     searchable: true
                 }, {
                     // mengambil data level hasil dari ORM berelasi
@@ -130,27 +120,7 @@
                     className: "",
                     orderable: false,
                     searchable: false
-                }, {
-                    data: "kode_ruangan",
-                    className: "",
-                    orderable: false,
-                    searchable: false
-                }, {
-                    data: "nama_lantai",
-                    className: "",
-                    orderable: false,
-                    searchable: false
-                }, {
-                    data: "tanggal_pengadaan",
-                    className: "",
-                    orderable: false,
-                    searchable: false
-                }, {
-                    data: "status",
-                    className: "",
-                    orderable: false,
-                    searchable: false
-                }, {
+                },{
                     data: "aksi",
                     className: "",
                     orderable: false,
@@ -159,7 +129,7 @@
             });
 
             $('#gedung_id').on('change', function() {
-            dataFasilitas.ajax.reload();
+            dataLantai.ajax.reload();
             });
         });
     </script>

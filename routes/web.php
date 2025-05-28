@@ -7,9 +7,11 @@ use App\Http\Controllers\FasilitasController;
 use App\Http\Controllers\PanduanController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\GedungController;
+use App\Http\Controllers\LantaiController;
 use App\Http\Controllers\UserManajemenController;
 use App\Http\Controllers\PelaporanController;
 use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\RuanganController;
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 
@@ -52,6 +54,31 @@ Route::prefix('admin')->group(function () {
         Route::put('/update_ajax/{id}', [GedungController::class, 'update_ajax']);
         Route::get('/{id}/delete_ajax', [GedungController::class, 'confirm']);
         Route::delete('/delete_ajax/{id}', [GedungController::class, 'delete_ajax']);
+    });
+
+    Route::prefix('lantai')->group(function () {
+        Route::get('/', [LantaiController::class, 'index']);
+        Route::get('/list', [LantaiController::class, 'list']);
+        Route::get('/create', [LantaiController::class, 'tambah_ajax']);
+        Route::post('/store', [LantaiController::class, 'store']);
+        Route::get('/{id}/show', [LantaiController::class, 'show']);
+        Route::get('/{id}/edit', [LantaiController::class, 'edit']);
+        Route::put('/{id}/update', [LantaiController::class, 'update']);
+        Route::get('/{id}/delete_ajax', [LantaiController::class, 'confirm']);
+        Route::delete('/{id}/delete_ajax', [LantaiController::class, 'delete_ajax']);
+    });
+
+    Route::prefix('ruangan')->group(function () {
+        Route::get('/', [RuanganController::class, 'index']);
+        Route::get('/list', [RuanganController::class, 'list']);
+        Route::get('/create', [RuanganController::class, 'tambah_ajax']);
+        Route::post('/store', [RuanganController::class, 'store']);
+        Route::get('/{id}/show', [RuanganController::class, 'show']);
+        Route::get('/{id}/edit', [RuanganController::class, 'edit']);
+        Route::put('/{id}/update', [RuanganController::class, 'update']);
+        Route::get('/{id}/delete_ajax', [RuanganController::class, 'confirm']);
+        Route::delete('/{id}/delete_ajax', [RuanganController::class, 'delete_ajax']);
+        Route::get('/get-lantai/{gedung_id}', [RuanganController::class, 'getLantai']);
     });
 });
 
