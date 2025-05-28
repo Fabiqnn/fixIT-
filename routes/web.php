@@ -15,8 +15,8 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::prefix('admin')->group(function () {
-    Route::get('/', [AdminController::class, 'index']);
+Route::middleware('auth')->prefix('admin')->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::prefix('fasilitas')->group(function () {
         Route::get('/', [FasilitasController::class, 'fasilitas']);
         Route::get('/list', [FasilitasController::class, 'list_fasilitas']);
@@ -55,16 +55,19 @@ Route::prefix('admin')->group(function () {
     });
 });
 
-Route::get('/pelaporan', [PelaporanController::class, 'index']);
 
 
-Route::get('/laporan', [StatusController::class, 'index']);
+
+
 
 
 Route::get('/panduan', [PanduanController::class, 'index'])->name('panduan.index');
 
-Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
-Route::get('/dashboard', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
+    Route::get('/laporan', [StatusController::class, 'index']);
+    Route::get('/pelaporan', [PelaporanController::class, 'index']);
+});
 // Route::get('/dosen/dashboard', [DosenController::class, 'index'])->name('dosen.dashboard');
 
 Route::post('/logout', function () {
