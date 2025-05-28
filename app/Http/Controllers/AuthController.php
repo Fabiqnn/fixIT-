@@ -17,8 +17,8 @@ class AuthController extends Controller
             $user = Auth::user();
 
             return match ((int) $user->level_id) {
-                1 => redirect()->route('admin.dashboard'),
-                2 => redirect()->route('mahasiswa.dashboard'),
+                1 => redirect()->route('mahasiswa.dashboard'),
+                2 => redirect()->route('admin.dashboard'),
                 3 => redirect()->route('dosen.dashboard'),
                 default => redirect()->route('dashboard'),
             };
