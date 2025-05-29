@@ -15,7 +15,7 @@ class PelaporanController extends Controller
 {
     public function index()
     {
-        return view('user.laporankerusakan', [
+        return view('user.Laporan.create', [
             'fasilitas' => FasilitasModel::all(),
             'gedung'    => GedungModel::all(),
             'ruangan'   => RuanganModel::all(),

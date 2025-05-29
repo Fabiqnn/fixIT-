@@ -5,17 +5,17 @@
     Laporan Kerusakan
 </div>
 
-@include('laporan.partials.errors')
+@include('user.laporan.partials.errors')
 
 <form action="{{ route('laporan.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="p-8">
         <div class="grid md:grid-cols-2 gap-8">
-            @include('laporan.partials.upload')
-            @include('laporan.partials.dropdown')
+            @include('user.laporan.partials.upload')
+            @include('user.laporan.partials.dropdown')
         </div>
 
-        @include('laporan.partials.deskripsi')
+        @include('user.laporan.partials.deskripsi')
 
         <div class="mt-8 flex justify-end">
             <button class="bg-green-700 text-white px-6 py-2 rounded-md hover:bg-green-800 transition" type="submit">
@@ -27,5 +27,5 @@
 @endsection
 
 @push('js')
-    @include('laporan.partials.scripts')
+    @include('user.laporan.partials.script')
 @endpush
