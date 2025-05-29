@@ -34,9 +34,9 @@ class GedungController extends Controller
             ->addColumn('aksi', function ($item) {
                 return '
                 <div class="flex justify-end gap-2">
-                    <button onclick="modalAction(\'' . url('/admin/building/' . $item->gedung_id . '/show') . '\')" class="px-3 py-1 button-info cursor-pointer">Detail</button>
-                    <button onclick="modalAction(\'' . url('/admin/building/' . $item->gedung_id . '/edit_ajax') . '\')" class="px-3 py-1 button1 cursor-pointer">Edit</button>
-                    <button onclick="modalAction(\'' . url('/admin/building/' . $item->gedung_id . '/delete_ajax') . '\')" class="px-3 py-1 button-error cursor-pointer">Hapus</button>
+                    <button onclick="modalAction(\'' . url('/admin/gedung/' . $item->gedung_id . '/show') . '\')" class="px-3 py-1 button-info cursor-pointer">Detail</button>
+                    <button onclick="modalAction(\'' . url('/admin/gedung/' . $item->gedung_id . '/edit_ajax') . '\')" class="px-3 py-1 button1 cursor-pointer">Edit</button>
+                    <button onclick="modalAction(\'' . url('/admin/gedung/' . $item->gedung_id . '/delete_ajax') . '\')" class="px-3 py-1 button-error cursor-pointer">Hapus</button>
                 </div>
             ';
             })
