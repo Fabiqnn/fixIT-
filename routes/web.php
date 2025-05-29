@@ -94,6 +94,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
     Route::get('/laporan', [StatusController::class, 'index']);
     Route::get('/pelaporan', [PelaporanController::class, 'index']);
+    Route::get('/ajax/lantai', [PelaporanController::class, 'getLantai']);
+    Route::get('/ajax/ruangan', [PelaporanController::class, 'getRuangan']);
+    Route::get('/ajax/fasilitas', [PelaporanController::class, 'getFasilitas']);
+    Route::post('/laporan', [PelaporanController::class, 'store'])->name('laporan.store');
+
+
 });
 // Route::get('/dosen/dashboard', [DosenController::class, 'index'])->name('dosen.dashboard');
 
