@@ -15,7 +15,7 @@
         </div>
     </div>
 @else
-    <form action="{{ url('/admin/user/' . $user->user_id . '/delete_ajax') }}" method="POST" id="form-delete-user">
+    <form action="{{ url('/admin/user/' . $user->no_induk . '/delete_ajax') }}" method="POST" id="form-delete-user">
         @csrf
         @method('DELETE')
         <div class="space-y-6">

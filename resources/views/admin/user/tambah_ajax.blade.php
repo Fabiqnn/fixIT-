@@ -8,10 +8,11 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-sm font-semibold mb-1">Username</label>
-                    <input type="text" name="username"
+                    <label class="block text-sm font-semibold mb-1">No Induk</label>
+                    <input type="text" name="no_induk"
                         class="w-full border border-green-300 rounded p-2 outline-none focus:ring-2 focus:ring-green-500"
                         required>
+                    <span id="error-no_induk" class="text-red-500 text-sm block mt-1"></span>
                 </div>
 
                 <div>
@@ -19,11 +20,9 @@
                     <input type="password" name="password"
                         class="w-full border border-green-300 rounded p-2 outline-none focus:ring-2 focus:ring-green-500"
                         required>
+                    <span id="error-password" class="text-red-500 text-sm block mt-1"></span>
                 </div>
             </div>
-
-
-
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -35,7 +34,8 @@
 
                 <div>
                     <label class="block mb-1 font-semibold">Level</label>
-                    <select name="level_id" class="w-full border border-green-200 rounded p-2 outline-none" required>
+                    <select name="level_id" id="level_id"
+                        class="w-full border border-green-200 rounded p-2 outline-none" required>
                         <option value="">-- Pilih Level --</option>
                         @foreach ($level as $l)
                             <option value="{{ $l->level_id }}">{{ $l->level_nama }}</option>
@@ -45,10 +45,10 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="section-mahasiswa" style="display: none;">
                 <div>
                     <label class="block mb-1 font-semibold">Jurusan</label>
-                    <select name="jurusan_id" class="w-full border border-green-200 rounded p-2 outline-none" required>
+                    <select name="jurusan_id" class="w-full border border-green-200 rounded p-2 outline-none">
                         <option value="">-- Pilih Jurusan --</option>
                         @foreach ($jurusan as $j)
                             <option value="{{ $j->jurusan_id }}">{{ $j->jurusan_nama }}</option>
@@ -59,7 +59,7 @@
 
                 <div>
                     <label class="block mb-1 font-semibold">Prodi</label>
-                    <select name="prodi_id" class="w-full border border-green-200 rounded p-2 outline-none" required>
+                    <select name="prodi_id" class="w-full border border-green-200 rounded p-2 outline-none">
                         <option value="">-- Pilih Prodi --</option>
                         @foreach ($prodi as $p)
                             <option value="{{ $p->prodi_id }}">{{ $p->prodi_nama }}</option>
@@ -74,26 +74,14 @@
                     <label class="block mb-1 font-semibold">Email</label>
                     <input type="email" name="email"
                         class="w-full border border-green-200 rounded p-2 outline-none">
+                    <span id="error-email" class="text-red-500 text-sm block mt-1"></span>
                 </div>
 
                 <div>
                     <label class="block mb-1 font-semibold">Nomor Telepon</label>
                     <input type="text" name="nomor_telp"
                         class="w-full border border-green-200 rounded p-2 outline-none">
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <label class="block mb-1 font-semibold">NIP</label>
-                    <input type="text" name="nip"
-                        class="w-full border border-green-200 rounded p-2 outline-none">
-                </div>
-
-                <div>
-                    <label class="block mb-1 font-semibold">NIM</label>
-                    <input type="text" name="nim"
-                        class="w-full border border-green-200 rounded p-2 outline-none">
+                    <span id="error-nomor_telp" class="text-red-500 text-sm block mt-1"></span>
                 </div>
             </div>
 
@@ -108,13 +96,19 @@
 </form>
 
 <script>
+    const MAHASISWA_LEVEL_ID = 1;
+
     function initTambahValidasi() {
         const form = $("#tambah-user");
-        if (form.length === 0) return;
+        $('#level_id').on('change', function() {
+            const isMahasiswa = parseInt($(this).val()) === MAHASISWA_LEVEL_ID;
+            $('#section-mahasiswa').toggle(isMahasiswa);
+            $('select[name="jurusan_id"], select[name="prodi_id"]').prop('required', isMahasiswa);
+        });
 
         form.validate({
             rules: {
-                username: {
+                no_induk: {
                     required: true,
                     minlength: 3
                 },
@@ -125,21 +119,27 @@
                 nama_lengkap: {
                     required: true
                 },
-                email: {
-                    email: true
-                },
                 level_id: {
                     required: true
                 },
                 jurusan_id: {
-                    required: true
+                    required: function() {
+                        return parseInt($('#level_id').val()) === MAHASISWA_LEVEL_ID;
+                    }
                 },
                 prodi_id: {
-                    required: true
+                    required: function() {
+                        return parseInt($('#level_id').val()) === MAHASISWA_LEVEL_ID;
+                    }
+                },
+                email: {
+                    email: true
+                },
+                nomor_telp: {
+                    maxlength: 15
                 }
             },
             submitHandler: function(form) {
-                console.log("Mengirim via AJAX...");
                 $.ajax({
                     url: form.action,
                     type: form.method,
@@ -167,7 +167,7 @@
                     error: function() {
                         Swal.fire({
                             icon: 'error',
-                            title: 'Error',
+                            title: 'Terjadi Kesalahan',
                             text: 'Gagal menyimpan data.'
                         });
                     }
@@ -176,4 +176,6 @@
             }
         });
     }
+
+    $(document).ready(initTambahValidasi);
 </script>

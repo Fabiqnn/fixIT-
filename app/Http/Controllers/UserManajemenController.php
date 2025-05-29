@@ -28,34 +28,10 @@ class UserManajemenController extends Controller
 
         return view('admin.user.index', ['page' => $page, 'activeMenu' => $activeMenu]);
     }
-    public function list(Request $request)
-    {
-        $user = UserModels::select('user_id', 'nama_lengkap', 'level_id', 'email', 'nomor_telp')
-            ->with('level');
-
-        return DataTables::of($user)
-            ->addIndexColumn()
-
-            ->addColumn('level_nama', function ($item) {
-                return $item->level->level_nama ?? '-';
-            })
-
-            ->addColumn('aksi', function ($item) {
-                return '
-            <div class="flex justify-end gap-2">
-                <button onclick="modalAction(\'' . url('/admin/user/' . $item->user_id . '/show') . '\')" class="px-3 py-1 button-info cursor-pointer">Detail</button>
-                <button onclick="modalAction(\'' . url('/admin/user/' . $item->user_id . '/edit_ajax') . '\')" class="px-3 py-1 button1 cursor-pointer">Edit</button>
-                <button onclick="modalAction(\'' . url('/admin/user/' . $item->user_id . '/delete_ajax') . '\')" class="px-3 py-1 button-error cursor-pointer">Hapus</button>
-            </div>
-            ';
-            })
-            ->rawColumns(['aksi'])
-            ->make(true);
-    }
 
     public function list_user(Request $request)
     {
-        $user = UserModels::select('user_id', 'nama_lengkap', 'level_id', 'email', 'nomor_telp')
+        $user = UserModels::select('no_induk', 'nama_lengkap', 'level_id', 'email', 'nomor_telp')
             ->with('level');
 
         return DataTables::of($user)
@@ -67,16 +43,17 @@ class UserManajemenController extends Controller
 
             ->addColumn('aksi', function ($item) {
                 return '
-            <div class="flex justify-end gap-2">
-                <button onclick="modalAction(\'' . url('/admin/user/' . $item->user_id . '/show') . '\')" class="px-3 py-1 button-info cursor-pointer">Detail</button>
-                <button onclick="modalAction(\'' . url('/admin/user/' . $item->user_id . '/edit_ajax') . '\')" class="px-3 py-1 button1 cursor-pointer">Edit</button>
-                <button onclick="modalAction(\'' . url('/admin/user/' . $item->user_id . '/delete_ajax') . '\')" class="px-3 py-1 button-error cursor-pointer">Hapus</button>
-            </div>
-            ';
+        <div class="flex justify-end gap-2">
+            <button onclick="modalAction(\'' . url('/admin/user/' . $item->no_induk . '/show') . '\')" class="px-3 py-1 button-info cursor-pointer">Detail</button>
+            <button onclick="modalAction(\'' . url('/admin/user/' . $item->no_induk . '/edit_ajax') . '\')" class="px-3 py-1 button1 cursor-pointer">Edit</button>
+            <button onclick="modalAction(\'' . url('/admin/user/' . $item->no_induk . '/delete_ajax') . '\')" class="px-3 py-1 button-error cursor-pointer">Hapus</button>
+        </div>
+        ';
             })
             ->rawColumns(['aksi'])
             ->make(true);
     }
+
 
     public function tambah_ajax()
     {
@@ -97,20 +74,22 @@ class UserManajemenController extends Controller
         return view('admin.user.edit_ajax', ['user' => $user, 'jurusan' => $jurusan, 'prodi' => $prodi, 'level' => $role]);
     }
 
-    public function update_ajax(Request $request, $id)
+    public function update_ajax(Request $request, $no_induk)
     {
         if ($request->ajax() || $request->wantsJson()) {
+            $MAHASISWA_LEVEL_ID = 3;
+
             $rules = [
-                'username' => 'required|string|min:3|unique:table_users,username,' . $id . ',user_id',
                 'nama_lengkap' => 'required|string|max:100',
                 'level_id' => 'required|integer',
-                'jurusan_id' => 'required|integer',
-                'prodi_id' => 'required|integer',
                 'email' => 'nullable|email|max:100',
                 'nomor_telp' => 'nullable|string|max:15',
-                'nip' => 'nullable|string|max:30',
-                'nim' => 'nullable|string|max:30',
             ];
+
+            if ((int) $request->level_id === $MAHASISWA_LEVEL_ID) {
+                $rules['jurusan_id'] = 'required|integer';
+                $rules['prodi_id'] = 'required|integer';
+            }
 
             if ($request->filled('password')) {
                 $rules['password'] = 'min:6';
@@ -126,7 +105,7 @@ class UserManajemenController extends Controller
                 ]);
             }
 
-            $user = UserModels::find($id);
+            $user = UserModels::where('no_induk', $no_induk)->first();
 
             if (!$user) {
                 return response()->json([
@@ -136,12 +115,9 @@ class UserManajemenController extends Controller
             }
 
             $data = $request->only([
-                'username',
                 'nama_lengkap',
                 'email',
                 'nomor_telp',
-                'nip',
-                'nim',
                 'level_id',
                 'jurusan_id',
                 'prodi_id'
@@ -155,7 +131,7 @@ class UserManajemenController extends Controller
 
             return response()->json([
                 'status' => true,
-                'message' => 'Data user berhasil diupdate'
+                'message' => 'Data user berhasil diperbarui'
             ]);
         }
     }
@@ -163,17 +139,23 @@ class UserManajemenController extends Controller
     public function store(Request $request)
     {
         if ($request->ajax() || $request->wantsJson()) {
-            $validator = Validator::make($request->all(), [
-                'username' => 'required|unique:table_users,username',
-                'password' => 'required|min:6',
-                'nama_lengkap' => 'required|string|max:100',
-                'level_id' => 'required|integer',
-                'jurusan_id' => 'required|integer',
-                'prodi_id' => 'required|integer',
-                'email' => 'nullable|email|max:100',
-                'nomor_telp' => 'nullable|string|max:15',
+            $MAHASISWA_LEVEL_ID = 3;
 
-            ]);
+            $rules = [
+                'no_induk' => 'required|string|max:20|unique:table_users,no_induk',
+                'password' => 'required|string|min:6',
+                'nama_lengkap' => 'required|string|max:255',
+                'level_id' => 'required|integer',
+                'email' => 'nullable|email|max:255',
+                'nomor_telp' => 'nullable|string|max:15',
+            ];
+
+            if ((int) $request->level_id === $MAHASISWA_LEVEL_ID) {
+                $rules['jurusan_id'] = 'required|integer';
+                $rules['prodi_id'] = 'required|integer';
+            }
+
+            $validator = Validator::make($request->all(), $rules);
 
             if ($validator->fails()) {
                 return response()->json([
@@ -184,16 +166,14 @@ class UserManajemenController extends Controller
             }
 
             UserModels::create([
-                'username' => $request->username,
+                'no_induk' => $request->no_induk,
                 'password' => bcrypt($request->password),
                 'nama_lengkap' => $request->nama_lengkap,
                 'email' => $request->email,
                 'nomor_telp' => $request->nomor_telp,
-                'nip' => $request->nip,
-                'nim' => $request->nim,
                 'level_id' => $request->level_id,
-                'jurusan_id' => $request->jurusan_id,
-                'prodi_id' => $request->prodi_id
+                'jurusan_id' => $request->jurusan_id ?? null,
+                'prodi_id' => $request->prodi_id ?? null,
             ]);
 
             return response()->json([
@@ -202,6 +182,7 @@ class UserManajemenController extends Controller
             ]);
         }
     }
+
 
     public function confirm($id)
     {
