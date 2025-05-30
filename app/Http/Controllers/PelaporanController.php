@@ -57,7 +57,7 @@ class PelaporanController extends Controller
 {
     $request->validate([
         'fasilitas_id' => 'required|exists:table_fasilitas,fasilitas_id',
-        'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // max 2MB
+        'foto' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         'deskripsi' => 'required|string|max:2000',
     ]);
 
@@ -79,7 +79,7 @@ class PelaporanController extends Controller
         $lastNumber = (int) str_replace('LAP-', '', $lastKode->kode_laporan);
         $newNumber = $lastNumber + 1;
     } else {
-        $newNumber = 1; // Jika belum ada data, mulai dari 1
+        $newNumber = 1; 
     }
 
     // Format kode laporan baru, misal: LAP-001
