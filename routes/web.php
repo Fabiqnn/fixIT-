@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\UserManajemenController;
 use App\Http\Controllers\PelaporanController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\RuanganController;
+use App\Http\Controllers\TeknisiController;
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 
@@ -82,7 +84,18 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     });
 });
 
-
+Route::middleware('auth')->group(function () {
+    Route::prefix('teknisi')->group(function () {
+        Route::get('/', [TeknisiController::class, 'index'])->name('teknisi.dashboard');
+        Route::get('/tugasDiproses', [TeknisiController::class, 'sedangDiproses']);
+        Route::get('/list_diproses', [TeknisiController::class, 'list_diproses']);
+        Route::get('/list_selesai', [TeknisiController::class, 'list_selesai']);
+        Route::get('/selesai', [TeknisiController::class, 'selesai']);
+        Route::get('/list_diproses/{id}/show', [TeknisiController::class, 'show']);
+        Route::get('/laporan/{id}/confirm_tuntas', [TeknisiController::class, 'confirmTuntas']);
+        Route::post('/laporan/{id}/selesai', [TeknisiController::class, 'markTuntas']);
+    });
+});
 
 
 
@@ -98,8 +111,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/ajax/ruangan', [PelaporanController::class, 'getRuangan']);
     Route::get('/ajax/fasilitas', [PelaporanController::class, 'getFasilitas']);
     Route::post('/laporan', [PelaporanController::class, 'store'])->name('laporan.store');
-
-
 });
 // Route::get('/dosen/dashboard', [DosenController::class, 'index'])->name('dosen.dashboard');
 
