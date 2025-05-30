@@ -8,7 +8,7 @@ class StatusController extends Controller
 {
     public function index()
 {
-    return view('user.statusPelaporan');
+    return view('user.status.statusPelaporan');
 }
 
 }

@@ -110,7 +110,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/ajax/lantai', [PelaporanController::class, 'getLantai']);
     Route::get('/ajax/ruangan', [PelaporanController::class, 'getRuangan']);
     Route::get('/ajax/fasilitas', [PelaporanController::class, 'getFasilitas']);
-    Route::post('/laporan', [PelaporanController::class, 'store'])->name('laporan.store');
+    Route::post('/pelaporan', [PelaporanController::class, 'store'])->name('laporan.store');
 });
 // Route::get('/dosen/dashboard', [DosenController::class, 'index'])->name('dosen.dashboard');
 
