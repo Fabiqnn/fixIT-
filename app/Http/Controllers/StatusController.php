@@ -15,7 +15,7 @@ class StatusController extends Controller
 
     $laporan = LaporanModel::with(['fasilitas.ruangan.lantai.gedung'])
     ->where('no_induk', Auth::user()->no_induk)
-    ->get();
+    ->paginate(5);
 
    
     return view('user.status.statusPelaporan', compact('laporan'));

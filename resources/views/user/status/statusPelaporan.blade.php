@@ -43,14 +43,12 @@
     </div>
 
     <!-- Static Pagination -->
-    <div class="flex justify-end mt-4 space-x-2">
-        <button class="text-gray-400" disabled>&lt;</button>
-        <button class="bg-green-500 text-white px-3 py-1 rounded">1</button>
-        <button class="bg-gray-200 px-3 py-1 rounded">2</button>
-        <button class="bg-gray-200 px-3 py-1 rounded">3</button>
-        <button class="text-gray-600">&gt;</button>
+    <div class="mt-4">
+    {{ $laporan->links() }}
     </div>
 
-    <p class="text-sm text-gray-500 mt-2">Showing 1–5 from 100 data</p>
-</div>
+    <p class="text-sm text-gray-500 mt-2">
+    Showing {{ $laporan->firstItem() }}–{{ $laporan->lastItem() }} from {{ $laporan->total() }} data
+    </p>
+
 @endsection
