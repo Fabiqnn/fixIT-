@@ -20,35 +20,35 @@
                 </tr>
             </thead>
             <tbody class="text-sm text-gray-700">
-                @for ($i = 0; $i < 5; $i++)
+                @foreach ($laporan as $item)
                 <tr class="border-t border-gray-200">
-                    <td class="py-3 px-5 font-bold">LP001</td>
-                    <td class="py-3 px-5">AC</td>
-                    <td class="py-3 px-5 text-gray-400">13 Maret 2004</td>
-                    <td class="py-3 px-5">IV</td>
-                    <td class="py-3 px-5">LSI 3 - JTI</td>
-                    <td class="py-3 px-5">AC agak kurang dingin</td>
+                    <td class="py-3 px-5 font-bold">{{ $item->kode_laporan }}</td>
+                    <td class="py-3 px-5">{{ $item->fasilitas->nama_fasilitas ?? 'N/A' }}</td>
+                    <td class="py-3 px-5 text-gray-400">{{ \Carbon\Carbon::parse($item->tanggal_laporan)->translatedFormat('d F Y') }}</td>
+                    <td class="py-3 px-5">{{ $item->prioritas ?? '-' }}</td> 
+                    <td class="py-3 px-5">{{ $item->fasilitas->ruangan->lantai->gedung->gedung_nama }}</td>
+                    <td class="py-3 px-5">{{ $item->deskripsi_kerusakan }}</td>
                     <td class="py-3 px-5">
                         <button class="bg-green-500 text-white px-4 py-1 rounded-full hover:bg-green-600">Detail</button>
                     </td>
                     <td class="py-3 px-5">
-                        <span class="bg-green-500 text-white px-4 py-1 rounded-full">Diproses</span>
+                        <span class="bg-green-500 text-white px-4 py-1 rounded-full">
+                            {{ ucfirst($item->status_perbaikan) }}
+                        </span>
                     </td>
                 </tr>
-                @endfor
+                @endforeach
             </tbody>
         </table>
     </div>
 
     <!-- Static Pagination -->
-    <div class="flex justify-end mt-4 space-x-2">
-        <button class="text-gray-400" disabled>&lt;</button>
-        <button class="bg-green-500 text-white px-3 py-1 rounded">1</button>
-        <button class="bg-gray-200 px-3 py-1 rounded">2</button>
-        <button class="bg-gray-200 px-3 py-1 rounded">3</button>
-        <button class="text-gray-600">&gt;</button>
+    <div class="mt-4">
+    {{ $laporan->links() }}
     </div>
 
-    <p class="text-sm text-gray-500 mt-2">Showing 1–5 from 100 data</p>
-</div>
+    <p class="text-sm text-gray-500 mt-2">
+    Showing {{ $laporan->firstItem() }}–{{ $laporan->lastItem() }} from {{ $laporan->total() }} data
+    </p>
+
 @endsection

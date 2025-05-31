@@ -19,7 +19,7 @@ class AuthController extends Controller
             return match ((int) $user->level_id) {
                 1 => redirect()->route('mahasiswa.dashboard'),
                 2 => redirect()->route('admin.dashboard'),
-                3 => redirect()->route('dosen.dashboard'),
+                3 => redirect()->route('teknisi.dashboard'),
                 default => redirect()->route('dashboard'),
             };
         }
@@ -66,10 +66,10 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        $redirect = match((int) $user->level_id) {
+        $redirect = match ((int) $user->level_id) {
             1 => route('mahasiswa.dashboard'),
             2 => route('admin.dashboard'),
-            3 => route('dosen.dashboard'),
+            3 => route('teknisi.dashboard'),
             default => route('dashboard')
         };
 
