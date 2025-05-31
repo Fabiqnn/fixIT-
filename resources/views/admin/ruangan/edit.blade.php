@@ -14,7 +14,7 @@
             </div>
             <div>
                 <label class="block mb-1 font-semibold">Gedung</label>
-                <select name="id_gedung" id="id_gedung" class="border-1 border-green-200 rounded w-full text-D_grey p-2 outline-none" required>
+                <select name="id_gedung" id="id_gedung" class="border-1 border-green-200 rounded w-full text-D_grey p-2 outline-none" data-url="{{url('admin/ruangan/get-lantai')}}" required>
                     @foreach ($gedung as $g)
                         <option {{$g->gedung_id == $ruangan->gedung->gedung_id ? 'selected' : ''}} value="{{$g->gedung_id}}">{{$g->gedung_nama}} </option>   
                     @endforeach
@@ -22,7 +22,7 @@
             </div>
             <div>
                 <label class="block mb-1 font-semibold">Lantai</label>
-                <select name="id_lantai" id="id_lantai" class="border-1 border-green-200 rounded w-full text-D_grey p-2 outline-none" required>
+                <select name="id_lantai" id="id_lantai" class="rounded w-full text-D_grey p-2 outline-none bg-gray-200" required disabled>
                     @foreach ($lantai as $l)
                         <option {{$l->id_lantai == $ruangan->lantai->id_lantai ? 'selected' : ''}} value="{{$l->id_lantai}}">{{$l->nama_lantai}} </option>   
                     @endforeach
@@ -42,6 +42,28 @@
     </div>
 </form>
 <script>
+    $(document).ready(function () {
+        $('#id_gedung').on('change', function () {
+            let gedung_id = $(this).val();
+            let base_url = $(this).data('url');
+            $('#id_lantai').prop('disabled', true).html('<option>Loading...</option>');
+            $('#id_lantai').removeClass("bg-gray-200");
+            $('#id_lantai').addClass("border-1 border-green-200");
+            
+            if (gedung_id) {
+                $.get(`${base_url}/${gedung_id}`, function (data) {
+                    $('#id_lantai').empty().append('<option value="">Pilih Lantai</option>');
+                    $('#id_lantai').removeClass("bg-gray-200");
+                    $('#id_lantai').addClass("border-1 border-green-200");
+                    $.each(data, function (key, value) {
+                        $('#id_lantai').append(`<option value="${value.id_lantai}">${value.nama_lantai}</option>`);
+                    });
+                    $('#id_lantai').prop('disabled', false);
+                });
+            }
+        });
+    });
+
     function initEditValidasi() { 
         if (typeof $.fn.validate !== 'function') {
             console.error("jQuery Validate belum ter-load!");
