@@ -1,17 +1,18 @@
 <?php
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\FasilitasController;
+use App\Http\Controllers\admin\FasilitasController;
 use App\Http\Controllers\PanduanController;
 use App\Http\Controllers\StatusController;
-use App\Http\Controllers\GedungController;
-use App\Http\Controllers\LantaiController;
-use App\Http\Controllers\UserManajemenController;
+use App\Http\Controllers\admin\GedungController;
+use App\Http\Controllers\admin\LantaiController;
+use App\Http\Controllers\admin\PelaporanController as AdminPelaporanController;
+use App\Http\Controllers\admin\UserManajemenController;
 use App\Http\Controllers\PelaporanController;
 use App\Http\Controllers\MahasiswaController;
-use App\Http\Controllers\RuanganController;
+use App\Http\Controllers\admin\RuanganController;
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 
@@ -79,6 +80,20 @@ Route::middleware('auth')->prefix('admin')->group(function () {
         Route::get('/{id}/delete_ajax', [RuanganController::class, 'confirm']);
         Route::delete('/{id}/delete_ajax', [RuanganController::class, 'delete_ajax']);
         Route::get('/get-lantai/{gedung_id}', [RuanganController::class, 'getLantai']);
+    });
+
+    Route::prefix('pelaporan')->group(function () {
+        Route::get('/', [AdminPelaporanController::class, 'index']);
+        Route::get('/list-pending', [AdminPelaporanController::class, 'list_pending']);
+        Route::get('/list-acc', [AdminPelaporanController::class, 'list_acc']);
+        Route::get('/list-dec', [AdminPelaporanController::class, 'list_dec']);
+        Route::get('/{id}/show', [AdminPelaporanController::class, 'show']);
+        Route::get('/{id}/acc', [AdminPelaporanController::class, 'acc']);
+        Route::put('/{id}/up_acc', [AdminPelaporanController::class, 'update_acc']);
+        Route::get('/{id}/dec', [AdminPelaporanController::class, 'dec']);
+        Route::put('/{id}/up_dec', [AdminPelaporanController::class, 'update_dec']);
+        // Route::get('/{id}/edit', [AdminPelaporanController::class, 'edit']);
+        // Route::put('/{id}/update', [AdminPelaporanController::class, 'update']);
     });
 });
 

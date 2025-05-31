@@ -27,7 +27,7 @@
             </div>
             <div>
                 <label class="block mb-1 font-semibold">Lantai</label>
-                <select name="id_lantai" id="id_lantai" class="border-1 border-green-200 rounded w-full text-D_grey p-2 outline-none"  data-url="{{url('admin/fasilitas/get-ruangan')}}" required disabled>
+                <select name="id_lantai" id="id_lantai" class=" rounded w-full text-D_grey p-2 outline-none bg-gray-200"  data-url="{{url('admin/fasilitas/get-ruangan')}}" required disabled>
                     @foreach ($lantai as $l)
                         <option {{$l->id_lantai == $fasilitas->ruangan->lantai->id_lantai ? 'selected' : ''}} value="{{$l->id_lantai}}">{{$l->nama_lantai}} </option>   
                     @endforeach
@@ -35,7 +35,7 @@
             </div>
             <div>
                 <label class="block mb-1 font-semibold">Ruangan</label>
-                <select name="ruangan_id" id="ruangan_id" class="border-1 border-green-200 rounded w-full text-D_grey p-2 outline-none" required disabled>
+                <select name="ruangan_id" id="ruangan_id" class=" rounded w-full text-D_grey p-2 outline-none bg-gray-200" required disabled>
                     @foreach ($ruangan as $r)
                         <option {{$r->id_ruangan == $fasilitas->ruangan->id_ruangan ? 'selected' : ''}} value="{{$r->id_ruangan}}">{{$r->kode_ruangan}} </option>   
                     @endforeach
@@ -66,11 +66,15 @@
             let gedung_id = $(this).val();
             let base_url = $(this).data('url');
             $('#id_lantai').prop('disabled', true).html('<option>Loading...</option>');
-            $('#id_ruangan').prop('disabled', true).html('<option>-- Pilih Ruangan --</option>');
+            $('#id_ruangan').prop('disabled', true).html('<option>Pilih Ruangan</option>');
+            $('#id_lantai').removeClass("bg-gray-200");
+            $('#id_lantai').addClass("border-1 border-green-200");
             
             if (gedung_id) {
                 $.get(`${base_url}/${gedung_id}`, function (data) {
-                    $('#id_lantai').empty().append('<option value="">-- Pilih Lantai --</option>');
+                    $('#id_lantai').empty().append('<option value="">Pilih Lantai</option>');
+                    $('#id_lantai').removeClass("bg-gray-200");
+                    $('#id_lantai').addClass("border-1 border-green-200");
                     $.each(data, function (key, value) {
                         $('#id_lantai').append(`<option value="${value.id_lantai}">${value.nama_lantai}</option>`);
                     });
@@ -83,10 +87,14 @@
             let id_lantai = $(this).val();
             let base_url = $(this).data('url');
             $('#ruangan_id').prop('disabled', true).html('<option>Loading...</option>');
+            $('#ruangan_id').removeClass("bg-gray-300");
+            $('#ruangan_id').addClass("border-1 border-green-200");
 
             if (id_lantai) {
                 $.get(`${base_url}/${id_lantai}`, function (data) {
-                    $('#ruangan_id').empty().append('<option value="">-- Pilih Ruangan --</option>');
+                    $('#ruangan_id').empty().append('<option value="">Pilih Ruangan</option>');
+                    $('#ruangan_id').removeClass("bg-gray-300");
+                    $('#ruangan_id').addClass("border-1 border-green-200");
                     $.each(data, function (key, value) {
                         $('#ruangan_id').append(`<option value="${value.id_ruangan}">${value.kode_ruangan}</option>`);
                     });

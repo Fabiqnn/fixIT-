@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\admin\FasilitasModel;
+use App\Models\admin\GedungModel;
+use App\Models\admin\LantaiModel;
+use App\Models\admin\RuanganModel;
 use Illuminate\Http\Request;
-use App\Models\FasilitasModel;
-use App\Models\GedungModel;
-use App\Models\RuanganModel;
-use App\Models\LantaiModel;
 
 class PelaporanController extends Controller
 {
