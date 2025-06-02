@@ -125,7 +125,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/ajax/ruangan', [PelaporanController::class, 'getRuangan']);
     Route::get('/ajax/fasilitas', [PelaporanController::class, 'getFasilitas']);
     Route::post('/pelaporan', [PelaporanController::class, 'store'])->name('laporan.store');
-    Route::get('/profil', [ProfileController::class, 'index'])->name('profil');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::get('/profile/edit_ajax/{id}', [ProfileController::class, 'edit_ajax'])->name('profile.edit_ajax');
+    Route::put('/profile/update_ajax/{no_induk}', [ProfileController::class, 'update_ajax'])->name('profile.update_ajax');
+
 });
 // Route::get('/dosen/dashboard', [DosenController::class, 'index'])->name('dosen.dashboard');
 

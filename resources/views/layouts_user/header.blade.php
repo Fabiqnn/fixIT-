@@ -31,7 +31,7 @@
                         <ul id="userDropdownMenu"
                             class="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-lg hidden z-50">
                             <li>
-                                <a href="{{ url('/profil') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profil</a>
+                                <a href="{{ url('/profile') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profil</a>
                             </li>
                             <li>
                                 <form action="{{ route('logout') }}" method="POST">
