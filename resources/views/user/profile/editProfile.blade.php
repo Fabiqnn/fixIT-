@@ -2,7 +2,7 @@
     $isMahasiswa = $user->level_id == 1;
 @endphp
 
-<form action="{{ url('update_ajax/' . $user->no_induk) }}" method="POST" id="form-edit"
+<form action="{{ url('/profile/update_ajax/' . $user->no_induk) }}" method="POST" id="form-edit"
     class="space-y-4 font-inter">
     @csrf
     @method('PUT')
