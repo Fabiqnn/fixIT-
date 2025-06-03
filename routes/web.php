@@ -16,6 +16,7 @@ use App\Http\Controllers\PelaporanController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\admin\RuanganController;
 use App\Http\Controllers\TeknisiController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 
@@ -131,8 +132,6 @@ Route::middleware('auth')->group(function () {
 
 
 
-
-
 Route::get('/panduan', [PanduanController::class, 'index'])->name('panduan.index');
 
 Route::middleware('auth')->group(function () {
@@ -143,6 +142,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/ajax/ruangan', [PelaporanController::class, 'getRuangan']);
     Route::get('/ajax/fasilitas', [PelaporanController::class, 'getFasilitas']);
     Route::post('/pelaporan', [PelaporanController::class, 'store'])->name('laporan.store');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::get('/profile/edit_ajax/{id}', [ProfileController::class, 'edit_ajax'])->name('profile.edit_ajax');
+    Route::put('/profile/update_ajax/{id}', [ProfileController::class, 'update_ajax'])->name('profile.update_ajax');
+
 });
 // Route::get('/dosen/dashboard', [DosenController::class, 'index'])->name('dosen.dashboard');
 

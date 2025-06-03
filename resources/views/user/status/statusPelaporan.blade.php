@@ -12,7 +12,6 @@
                     <th class="py-3 px-5 text-left">Kode Laporan</th>
                     <th class="py-3 px-5 text-left">Fasilitas</th>
                     <th class="py-3 px-5 text-left">Tanggal</th>
-                    <th class="py-3 px-5 text-left">Prioritas</th>
                     <th class="py-3 px-5 text-left">Gedung</th>
                     <th class="py-3 px-5 text-left">Deskripsi Tambahan</th>
                     <th class="py-3 px-5 text-left">Detail</th>
@@ -25,7 +24,6 @@
                     <td class="py-3 px-5 font-bold">{{ $item->kode_laporan }}</td>
                     <td class="py-3 px-5">{{ $item->fasilitas->nama_fasilitas ?? 'N/A' }}</td>
                     <td class="py-3 px-5 text-gray-400">{{ \Carbon\Carbon::parse($item->tanggal_laporan)->translatedFormat('d F Y') }}</td>
-                    <td class="py-3 px-5">{{ $item->prioritas ?? '-' }}</td> 
                     <td class="py-3 px-5">{{ $item->fasilitas->ruangan->lantai->gedung->gedung_nama }}</td>
                     <td class="py-3 px-5">{{ $item->deskripsi_kerusakan }}</td>
                     <td class="py-3 px-5">
