@@ -4,21 +4,23 @@
         ☰
     </button>
     <h1 class="text-xl font-semibold">@yield('header', 'Dashboard')</h1>
+
     <ul class="flex gap-4 ml-auto">
         <li class="hidden md:flex items-center gap-2">
-            <!-- Icon user -->
-            <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32" fill="#000000">
-                <path
-                    d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z" />
-            </svg>
+            <!-- Foto Profil -->
+            @if ($authUser->foto)
+                <img src="{{ asset('uploads/foto/' . $authUser->foto) }}"
+                    class="w-10 h-10 rounded-full object-cover border border-gray-300 shadow">
+            @else
+                <img src="{{ asset('uploads/foto/default-avatar.jpg') }}" alt="Default Avatar"
+                    class="w-10 h-10 rounded-full object-cover border border-gray-300 shadow">
+            @endif
 
             <!-- Username + role -->
             <div class="flex flex-col leading-tight text-sm">
-                <span class="font-semibold text-gray-800">username</span>
-                <span class="text-gray-500">Teknisi</span>
+                <span class="font-semibold text-gray-800">{{ $authUser->nama_lengkap ?? 'Guest' }}</span>
+                <span class="text-gray-500">{{ $authUser->level->level_nama ?? 'Tidak diketahui' }}</span>
             </div>
         </li>
-
-
     </ul>
 </header>

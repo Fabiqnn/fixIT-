@@ -14,7 +14,7 @@ class UserModels extends Authenticatable
     public $incrementing = false;
     protected $keyType = 'string';
 
-    public $timestamps = false; 
+    public $timestamps = false;
 
     protected $fillable = [
         'no_induk',
@@ -25,6 +25,7 @@ class UserModels extends Authenticatable
         'nama_lengkap',
         'email',
         'nomor_telp',
+        'foto',
     ];
 
     protected $hidden = [
