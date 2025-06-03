@@ -91,7 +91,6 @@ class PelaporanController extends Controller
             })
             ->addColumn('aksi', function ($pelaporan) {
                 $btn = '<button onclick="modalAction(\'' . url('/admin/pelaporan/'. $pelaporan->laporan_id . '/show') . '\')" class="button-info">Detail</button> ';
-                $btn .= '<button onclick="modalAction(\'' . url('/admin/pelaporan/'. $pelaporan->laporan_id . '/acc') . '\')" class="button1">Terima</button> ';
                 $btn .= '<button onclick="modalAction(\'' . url('/admin/pelaporan/'. $pelaporan->laporan_id . '/dec') . '\')" class="button-error">Tolak</button> ';
                 return $btn;
             })
@@ -128,7 +127,6 @@ class PelaporanController extends Controller
             ->addColumn('aksi', function ($pelaporan) {
                 $btn = '<button onclick="modalAction(\'' . url('/admin/pelaporan/'. $pelaporan->laporan_id . '/show') . '\')" class="button-info">Detail</button> ';
                 $btn .= '<button onclick="modalAction(\'' . url('/admin/pelaporan/'. $pelaporan->laporan_id . '/acc') . '\')" class="button1">Terima</button> ';
-                $btn .= '<button onclick="modalAction(\'' . url('/admin/pelaporan/'. $pelaporan->laporan_id . '/dec') . '\')" class="button-error">Tolak</button> ';
                 return $btn;
             })
             ->rawColumns(['aksi'])

@@ -10,6 +10,7 @@ use App\Http\Controllers\StatusController;
 use App\Http\Controllers\admin\GedungController;
 use App\Http\Controllers\admin\LantaiController;
 use App\Http\Controllers\admin\PelaporanController as AdminPelaporanController;
+use App\Http\Controllers\admin\PrioritasController;
 use App\Http\Controllers\admin\UserManajemenController;
 use App\Http\Controllers\PelaporanController;
 use App\Http\Controllers\MahasiswaController;
@@ -97,6 +98,22 @@ Route::middleware('auth')->prefix('admin')->group(function () {
         Route::put('/{id}/up_dec', [AdminPelaporanController::class, 'update_dec']);
         // Route::get('/{id}/edit', [AdminPelaporanController::class, 'edit']);
         // Route::put('/{id}/update', [AdminPelaporanController::class, 'update']);
+    });
+
+    Route::prefix('prioritas')->group(function () {
+        Route::get('/', [PrioritasController::class, 'index']);
+        Route::get('/list-kriteria', [PrioritasController::class, 'list_kriteria']);
+        Route::get('/list-alternatif', [PrioritasController::class, 'list_alternatif']);
+        Route::get('/list-penilaian', [PrioritasController::class, 'list_penilaian']);
+        Route::get('/create-alternatif', [PrioritasController::class, 'tambah_alternatif']);
+        Route::post('/store-alternatif', [PrioritasController::class, 'store_alternatif']);
+        Route::get('/get-laporan/{id}', [PrioritasController::class, 'getLaporan']);
+        Route::get('/{id}/edit-kriteria', [PrioritasController::class, 'edit_kriteria']);
+        Route::put('/{id}/update-kriteria', [PrioritasController::class, 'update_kriteria']);
+        Route::get('/{id}/edit-alternatif', [PrioritasController::class, 'edit_alternatif']);
+        Route::put('/{id}/update-alternatif', [PrioritasController::class, 'update_alternatif']);
+        Route::get('/{id}/delete-alternatif', [PrioritasController::class, 'delete']);
+        Route::delete('/{id}/delete-confirm', [PrioritasController::class, 'confirm']);
     });
 });
 

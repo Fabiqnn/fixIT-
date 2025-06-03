@@ -21,7 +21,7 @@
         @method('PUT')
         <div class="space-y-6">
             <div class="bg-green-700 text-white font-bold p-6 rounded-t mb-3">
-                Hapus Data Lantai
+                Acc Data Laporan
             </div>
             <div class="p-5 flex flex-col justify-center gap-6">
                 <div class="p-5 bg-info text-blackshade1 rounded space-y-3">

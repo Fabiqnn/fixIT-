@@ -21,7 +21,7 @@
         @method('PUT')
         <div class="space-y-6">
             <div class="bg-green-700 text-white font-bold p-6 rounded-t mb-3">
-                Hapus Data Lantai
+                Tolak Data Laporan
             </div>
             <div class="p-5 flex flex-col justify-center gap-6">
                 <div class="p-5 bg-warning text-blackshade1 rounded space-y-3">
@@ -83,7 +83,7 @@
                 </div>
                 <div class="flex justify-end space-x-4">
                     <button type="button" class="button-warning" onclick="closeModal()">Batal</button>
-                    <button type="submit" class="button-info">Ya, Terima</button>
+                    <button type="submit" class="button-info">Ya, Tolak</button>
                 </div>
             </div>
         </div>
