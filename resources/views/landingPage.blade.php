@@ -87,7 +87,9 @@
         <div class="p-20 space-y-3 w-full max-w-[1400px] mx-auto autoShow2">
             <h1 class="text-4xl font-bold text-D_grey">Kampus lebih baik dimulai dari langkah kecil.</h1>
             <h4 class="text-xl">Yuk, mulai dari laporanmu hari ini!.</h4>
-            <button class="bg-greenPrimary text-white px-[16px] py-[8px] rounded hover:bg-greenshade1 transition items-center mt-5">Masuk</button>
+            <a href="{{ url('login') }}" class="bg-greenPrimary text-white px-4 py-1 rounded hover:bg-greenshade1 transition inline-block">
+                Ingin Melapor?
+            </a>
         </div>
     </div>
 @endsection

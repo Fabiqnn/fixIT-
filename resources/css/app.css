@@ -149,6 +149,14 @@
         animation: autoAppear 300ms;
     }
 
+    .is-invalid {
+        border: 1px solid #E53835;
+    }
+
+    .error {
+        color: #E53835;
+    }
+
     @keyframes autoAppear {
         from {
             opacity: 0;

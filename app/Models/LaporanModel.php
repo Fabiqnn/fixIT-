@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\admin\FasilitasModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
