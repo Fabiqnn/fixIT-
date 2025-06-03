@@ -52,6 +52,7 @@
     }
 
     .button1:hover {
+        cursor: pointer;
         background-color: #237D31;
         transition: 200ms ease;
     }
@@ -64,6 +65,7 @@
         box-shadow: inset 0 0 0 2px #388E3B
     }
     .button2:hover {
+        cursor: pointer;
         background-color: #388E3B;
         color: white;
         transition: 200ms ease;
@@ -78,6 +80,7 @@
     }
 
     .button-success:hover {
+        cursor: pointer;
         background-color: #215E23;
         transition: 200ms ease;
     }
@@ -90,7 +93,8 @@
         color: white;
     }
 
-    .button-success:hover {
+    .button-warning:hover {
+        cursor: pointer;
         background-color: #D29808;
         transition: 200ms ease;
     }
@@ -104,6 +108,7 @@
     } 
 
     .button-info:hover {
+        cursor: pointer;
         background-color: #157ED5;
         transition: 200ms ease;
     }
@@ -117,7 +122,56 @@
     }
 
     .button-error:hover {
+        cursor: pointer;
         background-color: #B7201E;
         transition: 200ms ease;
+    }
+
+    .autoShow {
+        animation: autoShowAnimation both;
+        animation-timeline: view(70% 5%);
+    }
+
+    .autoShow2 {
+        animation: autoShowAnimation both;
+        animation-timeline: view(70% 10%);
+    }
+
+    .autoShow1 {
+        animation: autoShowAnimation 1s ease-in-out forwards;
+    }
+
+    .autoShow3 {
+        animation: autoShowAnimation 400ms ease-in-out forwards;
+    }
+
+    .autoAppear {
+        animation: autoAppear 300ms;
+    }
+
+    .is-invalid {
+        border: 1px solid #E53835;
+    }
+
+    .error {
+        color: #E53835;
+    }
+
+    @keyframes autoAppear {
+        from {
+            opacity: 0;
+        } to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes autoShowAnimation {
+        from {
+            opacity: 0;
+            transform: translateY(200px);
+        } to {
+            opacity: 1;
+            transform: translate(0);
+        }
     }
 }

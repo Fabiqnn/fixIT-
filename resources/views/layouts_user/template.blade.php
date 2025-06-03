@@ -11,7 +11,7 @@
 
 </head>
 <body class="">
-    <div class="wrapper bg-white xl:px-0 mx-auto xl:max-w-[1400px] w-full max-w-full" >
+    <div class="wrapper bg-white" >
         {{-- header --}}
         @include('layouts_user.header')
 
@@ -21,12 +21,17 @@
         </section>
         {{-- /content --}}
 
-            @include('layouts_user.footer')
+        @include('layouts_user.footer')
     </div>
 
 
     {{-- jquery --}}
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    {{-- jquery validation --}}
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @stack('js')
    
 </body>
