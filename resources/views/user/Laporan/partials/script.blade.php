@@ -18,28 +18,29 @@ function dropdownForm() {
         fasilitasList: [],
 
         async loadLantai() {
-            this.lantai_id = '';
-            this.selectedLantaiText = '';
-            const res = await fetch(`/ajax/lantai?gedung_id=${this.gedung_id}`);
-            this.lantaiList = await res.json();
-            this.ruanganList = [];
-            this.fasilitasList = [];
-        },
+        this.lantai_id = '';
+        this.selectedLantaiText = '';
+        const res = await fetch(`{{ url('/ajax/lantai') }}?gedung_id=${this.gedung_id}`);
+        this.lantaiList = await res.json();
+        this.ruanganList = [];
+        this.fasilitasList = [];
+    },
 
-        async loadRuangan() {
-            this.ruangan_id = '';
-            this.selectedRuanganText = '';
-            const res = await fetch(`/ajax/ruangan?gedung_id=${this.gedung_id}&lantai_id=${this.lantai_id}`);
-            this.ruanganList = await res.json();
-            this.fasilitasList = [];
-        },
+    async loadRuangan() {
+        this.ruangan_id = '';
+        this.selectedRuanganText = '';
+        const res = await fetch(`{{ url('/ajax/ruangan') }}?gedung_id=${this.gedung_id}&lantai_id=${this.lantai_id}`);
+        this.ruanganList = await res.json();
+        this.fasilitasList = [];
+    },
 
-        async loadFasilitas() {
-            this.fasilitas_id = '';
-            this.selectedFasilitasText = '';
-            const res = await fetch(`/ajax/fasilitas?ruangan_id=${this.ruangan_id}`);
-            this.fasilitasList = await res.json();
-        },
+    async loadFasilitas() {
+        this.fasilitas_id = '';
+        this.selectedFasilitasText = '';
+        const res = await fetch(`{{ url('/ajax/fasilitas') }}?ruangan_id=${this.ruangan_id}`);
+        this.fasilitasList = await res.json();
+    },
+
 
         init() {
              @if (session('success'))

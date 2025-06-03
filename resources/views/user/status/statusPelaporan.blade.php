@@ -45,8 +45,8 @@
     {{ $laporan->links() }}
     </div>
 
-    <p class="text-sm text-gray-500 mt-2">
+    {{-- <p class="text-sm text-gray-500 mt-2">
     Showing {{ $laporan->firstItem() }}–{{ $laporan->lastItem() }} from {{ $laporan->total() }} data
-    </p>
+    </p> --}}
 
 @endsection

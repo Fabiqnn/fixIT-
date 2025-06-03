@@ -13,8 +13,8 @@
             <li class="relative group">
                 <button id="dropdownToggle" class="hover:text-D_grey focus:outline-none">Menu</button>
                 <ul id="dropdownMenu" class="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-lg hidden group-focus-within:block z-50">
-                    <li><a href="/pelaporan" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Pelaporan</a></li>
-                    <li><a href="/laporan" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Status Pelaporan</a></li>
+                    <li><a href="{{ url('/pelaporan')}}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Pelaporan</a></li>
+                    <li><a href="{{ url('/laporan')}}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Status Pelaporan</a></li>
                 </ul>
             </li>
 
