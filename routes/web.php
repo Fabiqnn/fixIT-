@@ -25,6 +25,9 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/profile', [AdminController::class, 'profile'])->name('profile.show');
+    Route::get('/profile/{id}/edit', [AdminController::class, 'edit_profile']);
+    Route::put('/profile/update_ajax/{id}', [AdminController::class, 'update_profile']);
     Route::prefix('fasilitas')->group(function () {
         Route::get('/', [FasilitasController::class, 'fasilitas']);
         Route::get('/list', [FasilitasController::class, 'list_fasilitas']);
@@ -146,7 +149,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::get('/profile/edit_ajax/{id}', [ProfileController::class, 'edit_ajax'])->name('profile.edit_ajax');
     Route::put('/profile/update_ajax/{no_induk}', [ProfileController::class, 'update_ajax'])->name('profile.update_ajax');
-
 });
 // Route::get('/dosen/dashboard', [DosenController::class, 'index'])->name('dosen.dashboard');
 
