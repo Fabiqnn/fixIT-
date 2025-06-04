@@ -163,10 +163,10 @@
                                 icon: 'success',
                                 title: 'Berhasil',
                                 text: response.message,
-                                timer: 1500,
-                                showConfirmButton: false,
+                                showConfirmButton: true,
+                            }).then(() => {
+                                location.reload();
                             });
-                            location.reload();
                         } else {
                             $.each(response.msgField, function(field, messages) {
                                 $('#error-' + field).text(messages[0]);

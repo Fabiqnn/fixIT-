@@ -25,7 +25,7 @@ class ProfileController extends Controller
         $prodi = ProdiModel::select('prodi_id', 'prodi_nama')->get();
         $role = LevelModel::select('level_id', 'level_nama')->get();
 
-        return view('admin.user.edit_ajax', ['user' => $user, 'jurusan' => $jurusan, 'prodi' => $prodi, 'level' => $role]);
+        return view('user.profile.editProfile', ['user' => $user, 'jurusan' => $jurusan, 'prodi' => $prodi, 'level' => $role]);
     }
 
     public function update_ajax(Request $request, $no_induk)
