@@ -147,6 +147,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/ajax/fasilitas', [PelaporanController::class, 'getFasilitas']);
     Route::post('/pelaporan', [PelaporanController::class, 'store'])->name('laporan.store');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::get('/status/{id}/show', [StatusController::class, 'show'])->name('show.detail');
     Route::get('/profile/edit_ajax/{id}', [ProfileController::class, 'edit_ajax'])->name('profile.edit_ajax');
     Route::put('/profile/update_ajax/{no_induk}', [ProfileController::class, 'update_ajax'])->name('profile.update_ajax');
 });

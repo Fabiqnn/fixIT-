@@ -12,15 +12,16 @@
 
             <!-- Dropdown Menu -->
             <li class="relative group">
-                <button id="dropdownToggle" class="hover:text-D_grey focus:outline-none">Menu</button>
+                <button id="dropdownToggle" class="hover:text-D_grey focus:outline-none cursor-pointer">Menu</button>
                 <ul id="dropdownMenu"
                     class="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-lg hidden group-focus-within:block z-50">
                     <li><a href="{{ url('/pelaporan') }}"
                             class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Pelaporan</a></li>
-                    <li><a href="{{ url('/laporan') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Status
-                            Pelaporan</a></li>
+                    <li><a href="{{ url('/laporan') }}"
+                            class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Status Pelaporan</a></li>
                 </ul>
             </li>
+
 
             <li><a href="{{ url('/panduan') }}" class="hover:text-D_grey">Panduan</a></li>
 
@@ -29,7 +30,7 @@
                     <!-- User Dropdown -->
                     <div class="relative group">
                         <button id="userDropdownToggle"
-                            class=" text-white px-4 py-1 rounded text-left leading-tight focus:outline-none flex gap-4">
+                            class=" text-white px-4 py-1 rounded text-left leading-tight focus:outline-none flex gap-4 cursor-pointer">
                             @if ($authUser->foto)
                                 <img src="{{ asset('uploads/foto/' . $authUser->foto) }}"
                                     class="w-10 h-10 rounded-full object-cover border border-gray-300 shadow">
@@ -45,16 +46,16 @@
 
                         </button>
                         <ul id="userDropdownMenu"
-                            class="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-lg hidden z-50">
+                            class="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-lg hidden z-50 ">
                             <li>
                                 <a href="{{ url('/profile') }}"
-                                    class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profil</a>
+                                    class="block px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer">Profil</a>
                             </li>
                             <li>
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
                                     <button type="submit"
-                                        class="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100">
+                                        class="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100 cursor-pointer">
                                         Logout
                                     </button>
                                 </form>
