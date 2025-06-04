@@ -94,6 +94,12 @@
                     <span id="error-nomor_telp" class="text-red-500 text-sm block mt-1"></span>
                 </div>
             </div>
+            <div>
+                <label class="block mb-1 font-semibold">Foto Profil</label>
+                <input type="file" name="foto" accept="image/*"
+                    class="w-full border border-green-200 rounded p-2 outline-none">
+                <span id="error-foto" class="text-red-500 text-sm block mt-1"></span>
+            </div>
 
             <div class="flex justify-end mt-6">
                 <button type="submit"
@@ -154,7 +160,10 @@
                 $.ajax({
                     url: form.action,
                     type: form.method,
-                    data: $(form).serialize(),
+                    data: new FormData(form),
+                    processData: false,
+                    contentType: false,
+
                     success: function(response) {
                         if (response.status) {
                             closeModal();
@@ -163,10 +172,10 @@
                                 icon: 'success',
                                 title: 'Berhasil',
                                 text: response.message,
-                                timer: 1500,
-                                showConfirmButton: false,
+                                showConfirmButton: true,
+                            }).then(() => {
+                                location.reload();
                             });
-                            location.reload();
                         } else {
                             $.each(response.msgField, function(field, messages) {
                                 $('#error-' + field).text(messages[0]);
