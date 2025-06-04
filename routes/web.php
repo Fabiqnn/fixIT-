@@ -15,6 +15,7 @@ use App\Http\Controllers\admin\UserManajemenController;
 use App\Http\Controllers\PelaporanController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\admin\RuanganController;
+use App\Http\Controllers\admin\SPKController;
 use App\Http\Controllers\TeknisiController;
 use App\Http\Controllers\ProfileController;
 
@@ -158,3 +159,4 @@ Route::post('/logout', function () {
 
 
 Route::get('/', [AuthController::class, 'landing'])->name('landing');
+Route::get('/test-tabelKeputusan', [SPKController::class, 'operasiMABAC']);

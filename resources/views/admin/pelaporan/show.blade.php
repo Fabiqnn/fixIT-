@@ -43,7 +43,7 @@
             <div class="space-y-5">
                 <label class="font-semibold">Foto Kerusakan</label>
                 <div class="p-3 w-full border border-success rounded min-h-30">
-                    <h1>{{asset('') ?? '-'}} </h1>
+                    <img src="{{asset('/' . $pelaporan->foto_kerusakan) ?? '-'}}" alt="">
                 </div>
             </div>
             <div class="space-y-5">

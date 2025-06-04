@@ -54,49 +54,60 @@ class PelaporanController extends Controller
     }
 
     public function store(Request $request)
-{
-    $request->validate([
-        'fasilitas_id' => 'required|exists:table_fasilitas,fasilitas_id',
-        'foto' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-        'deskripsi' => 'required|string|max:2000',
-    ]);
+    {
+        $request->validate([
+            'fasilitas_id' => 'required|exists:table_fasilitas,fasilitas_id',
+            'foto' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'deskripsi' => 'required|string|max:2000',
+        ]);
 
-    $user = Auth::user();
-    $fotoPath = null;
+        $user = Auth::user();
+        $fotoPath = null;
 
-    if ($request->hasFile('foto')) {
-        $fotoPath = $request->file('foto')->store('kerusakan', 'public');
+        if ($request->hasFile('foto')) {
+            $foto = $request->file('foto');
+            $filename = uniqid() . '.' . $foto->getClientOriginalExtension();
+            $destinationPath = public_path('uploads/kerusakan');
+
+            // Buat folder jika belum ada
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+
+            $foto->move($destinationPath, $filename);
+
+            // Simpan path relatif dari file untuk ditampilkan nanti
+            $fotoPath = 'uploads/kerusakan/' . $filename;
+        }
+
+        // Ambil kode laporan terakhir
+        $lastKode = DB::table('table_laporan')
+            ->select('kode_laporan')
+            ->orderByDesc('kode_laporan')
+            ->first();
+
+        if ($lastKode) {
+            // Misal lastKode = "LAP-007", ambil angka 007
+            $lastNumber = (int) str_replace('LAP-', '', $lastKode->kode_laporan);
+            $newNumber = $lastNumber + 1;
+        } else {
+            $newNumber = 1;
+        }
+
+        // Format kode laporan baru, misal: LAP-001
+        $newKodeLaporan = 'LAP-' . str_pad($newNumber, 3, '0', STR_PAD_LEFT);
+
+        DB::table('table_laporan')->insert([
+            'kode_laporan' => $newKodeLaporan,
+            'no_induk' => $user->no_induk,
+            'fasilitas_id' => $request->fasilitas_id,
+            'tanggal_laporan' => now(),
+            'deskripsi_kerusakan' => $request->deskripsi,
+            'status_perbaikan' => 'diproses',
+            'status_acc' => 'pending',
+            'foto_kerusakan' => $fotoPath,
+        ]);
+
+        return redirect()->back()->with('success', 'Laporan berhasil dikirim!');
     }
-
-    // Ambil kode laporan terakhir
-    $lastKode = DB::table('table_laporan')
-        ->select('kode_laporan')
-        ->orderByDesc('kode_laporan')
-        ->first();
-
-    if ($lastKode) {
-        // Misal lastKode = "LAP-007", ambil angka 007
-        $lastNumber = (int) str_replace('LAP-', '', $lastKode->kode_laporan);
-        $newNumber = $lastNumber + 1;
-    } else {
-        $newNumber = 1; 
-    }
-
-    // Format kode laporan baru, misal: LAP-001
-    $newKodeLaporan = 'LAP-' . str_pad($newNumber, 3, '0', STR_PAD_LEFT);
-
-    DB::table('table_laporan')->insert([
-        'kode_laporan' => $newKodeLaporan,
-        'no_induk' => $user->no_induk,
-        'fasilitas_id' => $request->fasilitas_id,
-        'tanggal_laporan' => now(),
-        'deskripsi_kerusakan' => $request->deskripsi,
-        'status_perbaikan' => 'diproses',
-        'status_acc' => 'pending',
-        'foto_kerusakan' => $fotoPath,
-    ]);
-
-    return redirect()->back()->with('success', 'Laporan berhasil dikirim!');
-}
-
 }
