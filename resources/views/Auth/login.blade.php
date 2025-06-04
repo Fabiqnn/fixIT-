@@ -128,10 +128,6 @@
             });
         });
 
-        // This block seems to be a duplicate and can be removed or integrated into the success callback.
-        // I've kept it commented out as per your request not to change essential code,
-        // but it's redundant with the success callback's error handling.
-        /*
         if (response.status === false) {
             if (response.msgField) {
                 $.each(response.msgField, function(field, message) {
@@ -147,7 +143,7 @@
                 text: response.message
             });
         }
-        */
+     
     </script>
 </body>
 
