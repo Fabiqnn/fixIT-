@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\admin\FasilitasModel;
 use App\Models\admin\GedungModel;
 use App\Models\admin\PelaporanModel;
+use App\Models\LaporanModel;
 use App\Models\SPK\AlternatifModel;
 use App\Models\SPK\KriteriaModel;
 use App\Models\SPK\PenilaianModel;
@@ -90,12 +91,17 @@ class PrioritasController extends Controller
         foreach ($penilaian as $item) {
             $altId = $item->alternatif_id;
             $altName = $item->alternatif->laporan->fasilitas->nama_fasilitas ?? 'Alternatif-' . $altId;
+            $idFasilitas = $item->alternatif->laporan->fasilitas_id;
+
+            $K1 = LaporanModel::where('fasilitas_id', $idFasilitas)
+                ->distinct('no_induk')
+                ->count('no_induk');
 
             if (!isset($matrix[$altId])) {
                 $matrix[$altId] = [
                     'alternatif_id' => $altId,
                     'alternatif' => $altName,
-                    'K1' => '-',
+                    'K1' => $K1,
                     'K2' => '-',
                     'K3' => '-',
                     'K4' => '-',
@@ -146,7 +152,8 @@ class PrioritasController extends Controller
                 'laporan_id' => 'required|exists:table_laporan,laporan_id',
                 'K2' => 'required|integer|min:1|max:5', // Skala kerusakan
                 'K3' => 'required|integer|min:1|max:5', // Dampak pembelajaran
-                'K4' => 'required|numeric|min:0', // Estimasi biaya perbaikan
+                'K4' => 'required|numeric|min:0|max: 18446744073709551615', // Estimasi biaya perbaikan
+                'K5' => 'required|numeric|min:0|max: 5', // Estimasi biaya perbaikan
             ];
         }
         $validator = Validator::make($request->all(), $rules);
@@ -166,7 +173,8 @@ class PrioritasController extends Controller
         $penilaianData = [
             ['kriteria_id' => 2, 'nilai' => $request->K2],
             ['kriteria_id' => 3, 'nilai' => $request->K3],
-            ['kriteria_id' => 4, 'nilai' => $request->K4]
+            ['kriteria_id' => 4, 'nilai' => $request->K4],
+            ['kriteria_id' => 5, 'nilai' => $request->K5]
         ];
 
         foreach ($penilaianData as $data) {

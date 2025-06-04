@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('rekomendasi_id');
             $table->unsignedBigInteger('alternatif_id')->unique();
             $table->float('nilai_akhir');
+            $table->integer('ranking');
             $table->timestamp('periode');
             $table->timestamps();
         });
