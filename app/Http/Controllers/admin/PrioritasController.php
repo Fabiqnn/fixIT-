@@ -47,7 +47,10 @@ class PrioritasController extends Controller
     public function list_alternatif()
     {
         $alternatif = AlternatifModel::select('alternatif_id', 'laporan_id')
-            ->with(['laporan.fasilitas.ruangan.gedung', 'laporan.fasilitas.ruangan.lantai', 'laporan.fasilitas.ruangan']);
+            ->with(['laporan.fasilitas.ruangan.gedung', 'laporan.fasilitas.ruangan.lantai', 'laporan.fasilitas.ruangan'])
+            ->whereHas('laporan', function($query) {
+                $query->whereNull('status_perbaikan');
+            });
 
         return DataTables::of($alternatif)
             ->addIndexColumn()
@@ -137,12 +140,19 @@ class PrioritasController extends Controller
 
         $pelaporan = PelaporanModel::selectRaw('MIN(laporan_id) as laporan_id, MIN(kode_laporan) as kode_laporan, fasilitas_id')
             ->where('status_acc', 'disetujui')
+            ->whereNull('status_perbaikan')
             ->whereNotIn('fasilitas_id', $usedFasilitas)
             ->groupBy('fasilitas_id')
             ->with(['fasilitas.ruangan.lantai', 'fasilitas.ruangan.gedung'])
             ->get();
 
-        return view('admin.prioritas.tambah-alternatif', ['pelaporan' => $pelaporan]);
+        $namaFasilitas = [];
+        foreach ($pelaporan as $p) {
+            $fasilitas = $p->fasilitas->nama_fasilitas;
+            $namaFasilitas[$p->laporan_id] = $fasilitas;
+        }
+
+        return view('admin.prioritas.tambah-alternatif', ['pelaporan' => $pelaporan, 'namaFasilitas' => $namaFasilitas]);
     }
 
     public function store_alternatif(Request $request)

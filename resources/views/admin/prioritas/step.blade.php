@@ -99,6 +99,7 @@
         </div>
         <div class="flex justify-end space-x-4">
             <button type="button" class="button-warning" onclick="closeModal()">Kembali</button>
+            <button type="button" class="button-info" onclick="modalAction('{{url('/admin/prioritas/tugaskan')}}')">Tugaskan Teknisi</button>
         </div>
     </div>
 </div>

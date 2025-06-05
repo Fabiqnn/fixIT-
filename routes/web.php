@@ -111,7 +111,9 @@ Route::middleware('auth')->prefix('admin')->group(function () {
         Route::get('/list-penilaian', [PrioritasController::class, 'list_penilaian']);
         Route::get('/create-alternatif', [PrioritasController::class, 'tambah_alternatif']);
         Route::post('/store-alternatif', [PrioritasController::class, 'store_alternatif']);
-        Route::get('/step', [SPKController::class, 'operasiMABAC']);
+        Route::get('/process', [SPKController::class, 'operasiMABAC']);
+        Route::get('/tugaskan', [SPKController::class, 'deploy_tech']);
+        Route::post('/deploy', [SPKController::class, 'deploy_store']);
         Route::get('/get-laporan/{id}', [PrioritasController::class, 'getLaporan']);
         Route::get('/{id}/edit-kriteria', [PrioritasController::class, 'edit_kriteria']);
         Route::put('/{id}/update-kriteria', [PrioritasController::class, 'update_kriteria']);

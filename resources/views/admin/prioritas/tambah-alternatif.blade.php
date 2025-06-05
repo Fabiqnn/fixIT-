@@ -10,7 +10,7 @@
                 <select name="laporan_id" id="laporan_id" class="border-1 border-green-200 rounded w-full text-D_grey p-2 outline-none" data-url="{{url('admin/prioritas/get-laporan')}}" required>
                     <option value="">Pilih Laporan</option>
                     @foreach ($pelaporan as $p)
-                        <option value="{{ $p->laporan_id }}">{{ $p->kode_laporan }}</option>
+                        <option value="{{ $p->laporan_id }}">{{ $namaFasilitas[$p->laporan_id] }}</option>
                     @endforeach
                 </select>
             </div>

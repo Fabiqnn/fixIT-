@@ -8,7 +8,7 @@
             <h1 class="font-bold text-xl">Daftar Kriteria</h1>
             <div class="flex items-center gap-4">
                 <div class="flex items-center gap-2">
-                    <button class="button1 cursor-pointer" onclick="modalAction('{{ url('/admin/prioritas/step') }}')">
+                    <button class="button1 cursor-pointer" onclick="modalAction('{{ url('/admin/prioritas/process') }}')">
                         <span class="text-xl mr-2">+</span> Buat Tabel Rekomendasi
                     </button>
                 </div>
@@ -130,6 +130,10 @@
 
                     if (typeof initEditValidasi === "function") {
                         initEditValidasi();
+                    }
+
+                    if (typeof initTugaskanValidasi === "function") {
+                        initTugaskanValidasi();
                     }
                 })
                 .catch(error => {

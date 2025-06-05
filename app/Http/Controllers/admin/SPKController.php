@@ -4,9 +4,13 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\LaporanModel;
+use App\Models\PeriodeModel;
+use App\Models\RekomendasiModel;
 use App\Models\SPK\AlternatifModel;
 use App\Models\SPK\PenilaianModel;
 use App\Services\MabacService;
+use Illuminate\Http\Request;
+
 
 class SPKController extends Controller
 {
@@ -69,6 +73,71 @@ class SPKController extends Controller
 
         $hasil_rank = $mabac->prosesMabac($tabelKeputusan);
 
+        session(['hasilRekomendasi' => $hasil_rank]);
         return view('admin.prioritas.step', ['hasil' => $hasil_rank, 'namaFasilitas' => $namaFasilitas]);
+    }
+
+    public function deploy_tech() {
+        $alternatif = AlternatifModel::with('laporan.fasilitas')->get();
+        $periode = PeriodeModel::all();
+        $hasilRekomendasi = session('hasilRekomendasi');
+
+        $namaFasilitas = [];
+        foreach ($alternatif as $alt) {
+            $fasilitas = $alt->laporan->fasilitas->nama_fasilitas ?? 'Nama Fasilitas Tidak Diketahui'; 
+            $namaFasilitas[$alt->alternatif_id] = $fasilitas;
+        }
+
+        return view('admin.prioritas.deploy', ['hasil' => $hasilRekomendasi, 'namaFasilitas' => $namaFasilitas, 'periode' => $periode]);
+    }
+
+    public function deploy_store(Request $request) {
+        if ($request->ajax() || $request->wantsJson()) {
+            if (!$request->has('arr_rekomendasi')) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Field arr_rekomendasi tidak ditemukan dalam request.'
+                ]);
+            }
+
+            try {
+                $data = json_decode($request->input('arr_rekomendasi'), true);
+
+                foreach ($data as $item) {
+                    if (!isset($item['alternatif_id'], $item['ranking'], $item['nilai_q'])) {
+                        return response()->json([
+                            'status' => false,
+                            'message' => 'Format data salah'
+                        ]);
+                    } else {
+                        $alternatif = AlternatifModel::with('laporan')->where('alternatif_id', $item['alternatif_id'])->first(); 
+                        RekomendasiModel::create([
+                            'alternatif_id' => $item['alternatif_id'],
+                            'nilai_akhir' => $item['nilai_q'],
+                            'ranking' => $item['ranking'],
+                            'periode_id' => $request->input('periode'),
+                        ]);
+                        LaporanModel::find($alternatif->laporan->laporan_id)->update([
+                            'status_perbaikan' => 'diproses'
+                        ]);
+                        PenilaianModel::truncate();
+                    }
+                }
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data Rekomendasi Berhasil Tersimpan'
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Tidak berhasil memproses data'
+                ]);
+            }
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'Bukan merupakan json'
+        ]);
     }
 }
