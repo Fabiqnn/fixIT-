@@ -35,15 +35,7 @@
 
                 <div>
                     <label class="block mb-1 font-semibold">Level</label>
-                    <select name="level_id" id="level_id"
-                        class="w-full border border-green-200 rounded p-2 outline-none" required>
-                        <option value="">-- Pilih Level --</option>
-                        @foreach ($level as $l)
-                            <option value="{{ $l->level_id }}" {{ $user->level_id == $l->level_id ? 'selected' : '' }}>
-                                {{ $l->level_nama }}
-                            </option>
-                        @endforeach
-                    </select>
+                    <input type="text" name="level" value="{{ $user->level_id == 1 ? 'User' : ($user->level_id == 2 ? 'Admin' : ($user->level_id == 3 ? 'Teknisi' : 'Tidak diketahui')) }}"  class="w-full border border-green-200 rounded p-2 outline-none" readonly>
                     <span id="error-level_id" class="text-red-500 text-sm block mt-1"></span>
                 </div>
             </div>
