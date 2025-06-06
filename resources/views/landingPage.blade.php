@@ -9,10 +9,10 @@
                 <h1 class="text-6xl font-bold text-D_grey">Lapor Mudah,</h1>
                 <h1 class="text-6xl font-bold text-greenPrimary">Fasilitas Terjaga!</h1>
                 <h5 class="text-lg mt-5">Mari bersama wujudkan kampus yang lebih baik dengan fixIT!</h5>
-                <button class="bg-greenPrimary text-white px-10 py-3 rounded hover:bg-greenshade1 transition items-center text-lg">Masuk</button>
+               
             </div>
-            <div class="w-full md:w-1/2 flex justify-center">
-                <img src="{{ asset('assets/landingpage1.png')}}" alt="" class="h-auto w-3/4">
+            <div class="w-full md:w-1/2 flex justify-end">
+                <img src="{{ asset('assets/landingpage1.png')}}" alt="" class="h-auto w-4/5">
             </div>
         </div>
     </div>
@@ -87,7 +87,9 @@
         <div class="p-20 space-y-3 w-full max-w-[1400px] mx-auto autoShow2">
             <h1 class="text-4xl font-bold text-D_grey">Kampus lebih baik dimulai dari langkah kecil.</h1>
             <h4 class="text-xl">Yuk, mulai dari laporanmu hari ini!.</h4>
-            <button class="bg-greenPrimary text-white px-[16px] py-[8px] rounded hover:bg-greenshade1 transition items-center mt-5">Masuk</button>
+            <a href="{{ url('login') }}" class="bg-greenPrimary text-white px-4 py-1 rounded hover:bg-greenshade1 transition inline-block">
+                Ingin Melapor?
+            </a>
         </div>
     </div>
 @endsection

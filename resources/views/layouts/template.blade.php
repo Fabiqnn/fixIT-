@@ -26,7 +26,14 @@
             </main>
         </div>
     </div>
+    {{-- jquery --}}
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    {{-- jquery validation --}}
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.min.js"></script>
+
+    
     <script>
         $.ajaxSetup({
             headers: {
@@ -41,7 +48,14 @@
         const mainContent = document.getElementById('mainContent');
         let sidebarVisible = true;
         const overlay = document.getElementById('overlay');
+        const dropdownSidebar = document.getElementById('bangunan');
 
+        function toggleMenu(menuId) {
+            const menu = document.getElementById(menuId);
+            const parent = menu.closest('.group');
+            menu.classList.toggle('hidden');
+            parent.classList.toggle('open');
+        }
 
         function toggleSidebar(show) {
             const isMobile = window.innerWidth < 640;
@@ -92,17 +106,6 @@
         }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    @if (session('success'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil',
-                text: "{{ session('success') }}",
-                timer: 2000,
-                showConfirmButton: false
-            });
-        </script>
-    @endif
     @stack('js')
 
 </body>
