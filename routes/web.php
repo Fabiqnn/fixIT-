@@ -127,13 +127,15 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::prefix('teknisi')->group(function () {
         Route::get('/', [TeknisiController::class, 'index'])->name('teknisi.dashboard');
-        Route::get('/tugasDiproses', [TeknisiController::class, 'sedangDiproses']);
         Route::get('/list_diproses', [TeknisiController::class, 'list_diproses']);
         Route::get('/list_selesai', [TeknisiController::class, 'list_selesai']);
         Route::get('/selesai', [TeknisiController::class, 'selesai']);
         Route::get('/list_diproses/{id}/show', [TeknisiController::class, 'show']);
         Route::get('/laporan/{id}/confirm_tuntas', [TeknisiController::class, 'confirmTuntas']);
         Route::post('/laporan/{id}/selesai', [TeknisiController::class, 'markTuntas']);
+        Route::get('/profile', [TeknisiController::class, 'profile'])->name('profile.show');
+        Route::get('/profile/{id}/edit', [TeknisiController::class, 'edit_profile']);
+        Route::put('/profile/update_ajax/{id}', [TeknisiController::class, 'update_profile']);
     });
 });
 

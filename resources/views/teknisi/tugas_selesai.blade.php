@@ -12,13 +12,14 @@
 
         <div class="overflow-x-auto border-y-1 border-gray1">
             <table class="min-w-full text-sm text-left text-gray-700" id="tableLaporan">
+
                 <thead class="text-D_grey font-semibold uppercase text-xs">
                     <tr>
                         <th class="w-[50px] px-4 py-3 text-center">No</th>
-                        <th class="px-2 py-3">Kode Laporan</th>
-                        <th class="px-4 py-3 text-left">No Induk</th>
                         <th class="px-4 py-3">Fasilitas</th>
+                        <th class="px-4 py-3">Ruangan</th>
                         <th class="px-4 py-3">Gedung</th>
+                        <th class="px-4 py-3">Lantai</th>
                         <th class="px-4 py-3">Tanggal</th>
                         <th class="px-4 py-3">Status</th>
                         <th class="px-4 py-3">Aksi</th>
@@ -81,19 +82,16 @@
                         searchable: false
                     },
                     {
-                        data: "kode_laporan"
-                    },
-                    {
-                        data: "no_induk",
-                        className: "text-left",
-                        orderable: false,
-                        searchable: false
-                    },
-                    {
                         data: "fasilitas_nama"
                     },
                     {
+                        data: "ruangan_nama"
+                    },
+                    {
                         data: "gedung_nama"
+                    },
+                    {
+                        data: "lantai"
                     },
                     {
                         data: "tanggal_laporan"
@@ -107,6 +105,7 @@
                         searchable: false
                     }
                 ]
+
             });
 
             $('#filter_status').change(function() {

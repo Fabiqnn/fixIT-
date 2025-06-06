@@ -17,14 +17,6 @@
         </li>
 
         <li>
-            <a href="{{ url('teknisi/tugasDiproses') }}"
-                class="flex items-center gap-2 px-3 py-2 hover:bg-green-600 hover:text-white rounded {{ $activeMenu == 'tugasDiproses' ? 'bg-green-600 text-white' : '' }}">
-                <i class="fa-solid fa-cart-shopping w-5"></i>
-                Tugas Diproses
-            </a>
-        </li>
-
-        <li>
             <a href="{{ url('teknisi/selesai') }}"
                 class="flex items-center gap-2 px-3 py-2 hover:bg-green-600 hover:text-white rounded {{ $activeMenu == 'selesai' ? 'bg-green-600 text-white' : '' }}">
                 <i class="fa-solid fa-chart-line w-5"></i>
