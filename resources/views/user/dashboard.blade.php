@@ -37,7 +37,7 @@
     </div>
 
     <!-- Sidebar & Detail Panel -->
-    <div class="h-[calc(100vh-14rem)] mx-3 border border-gray-300 p-0 rounded-lg shadow-md flex overflow-hidden">
+    <div class="h-[calc(100vh-14rem)] mx-3 border border-gray-300 p-0 rounded-lg shadow-md flex overflow-hidden mb-5">
         <!-- Sidebar -->
         <div class="w-1/3 max-w-sm bg-white flex flex-col h-full">
             <div class="p-4 border-b font-semibold text-green-700 text-lg">Menu</div>
@@ -64,7 +64,6 @@
                 <p class="text-lg">Pilih salah satu item dari menu di kiri.</p>
             </div>
         </div>
-    </div>
 
     <script>
         function showDetail(itemId) {
