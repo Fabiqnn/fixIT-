@@ -14,7 +14,7 @@
 
 <body class="min-h-screen flex items-center justify-center bg-silver p-4">
     <div class="flex flex-col md:flex-row w-full max-w-6xl shadow-md rounded-lg overflow-hidden">
-        <div class="w-full md:w-1/2 bg-[#f0f3f7]">
+        <div class="w-full md:w-1/2 bg-[#f0f3f7] hidden md:block"> 
             <img src="{{ asset('assets/login1.png') }}" alt="Login Illustration" class="object-cover h-48 md:h-full w-full">
         </div>
 
