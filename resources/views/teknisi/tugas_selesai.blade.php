@@ -7,6 +7,12 @@
         <div class="flex justify-between items-center my-5">
             <h1 class="font-bold text-xl">Daftar Laporan</h1>
             <div class="flex items-center gap-4">
+                <select id="filter_periode" class="border p-2 rounded">
+                    <option value="">-- Semua Periode --</option>
+                    @foreach ($periodeList as $periode)
+                        <option value="{{ $periode->periode_id }}">{{ $periode->nama_periode }}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
 
@@ -22,6 +28,8 @@
                         <th class="px-4 py-3">Lantai</th>
                         <th class="px-4 py-3">Tanggal</th>
                         <th class="px-4 py-3">Status</th>
+                        <th class="px-4 py-3">Periode</th>
+
                         <th class="px-4 py-3">Aksi</th>
                     </tr>
                 </thead>
@@ -73,7 +81,9 @@
                     type: "GET",
                     data: function(d) {
                         d.status_perbaikan = $('#filter_status').val();
+                        d.periode_id = $('#filter_periode').val();
                     }
+
                 },
                 columns: [{
                         data: "DT_RowIndex",
@@ -100,6 +110,10 @@
                         data: "status_perbaikan"
                     },
                     {
+                        data: "periode_nama"
+                    },
+
+                    {
                         data: "aksi",
                         orderable: false,
                         searchable: false
@@ -111,6 +125,10 @@
             $('#filter_status').change(function() {
                 dataLaporan.ajax.reload();
             });
+            $('#filter_periode').change(function() {
+                dataLaporan.ajax.reload();
+            });
+
         });
     </script>
 @endpush

@@ -42,9 +42,9 @@ class TeknisiController extends Controller
             'title' => 'Tugas Diproses',
             'header' => 'Tugas Diproses'
         ];
-
+        $periodeList = DB::table('table_periode')->orderBy('tanggal_mulai', 'desc')->get();
         $activeMenu = 'selesai';
-        return view('teknisi.tugas_selesai', ['page' => $page, 'activeMenu' => $activeMenu]);
+        return view('teknisi.tugas_selesai', ['page' => $page, 'activeMenu' => $activeMenu], compact('periodeList'));
     }
 
 
@@ -138,8 +138,14 @@ class TeknisiController extends Controller
             ->where('status_perbaikan', 'tuntas')
             ->groupBy('fasilitas_id');
 
-        $query = LaporanModel::with('fasilitas.ruangan.gedung')
+        $query = LaporanModel::with(['fasilitas.ruangan.gedung', 'rekomendasi.periode'])
             ->whereIn('laporan_id', $subquery);
+
+        if ($request->has('periode_id') && $request->periode_id != '') {
+            $query->whereHas('rekomendasi', function ($q) use ($request) {
+                $q->where('periode_id', $request->periode_id);
+            });
+        }
 
 
 
@@ -157,6 +163,10 @@ class TeknisiController extends Controller
             ->addColumn('lantai', function ($row) {
                 return $row->fasilitas->ruangan->lantai->nama_lantai ?? '-';
             })
+            ->addColumn('periode_nama', function ($row) {
+                return $row->rekomendasi->periode->nama_periode ?? '-';
+            })
+
             ->addColumn('aksi', function ($row) {
                 $url = url('/teknisi/list_diproses/' . $row->laporan_id . '/show');
                 return '<button onclick="modalAction(\'' . $url . '\')" class="px-3 py-1 button-info cursor-pointer">Detail</button>';
@@ -182,7 +192,7 @@ class TeknisiController extends Controller
         FasilitasModel::find($fasilitasId)->update([
             'status' => 'baik'
         ]);
-        
+
         if ($updated === 0) {
             return response()->json([
                 'success' => false,
