@@ -3,12 +3,13 @@
 @section('content')
 <div class="">
     <div class="bg-green-700 text-white text-lg font-bold p-4">
-        <div class="w-full max-w-[1400px] mx-auto px-20">
+        <div class="w-full max-w-[1400px] mx-auto px-2 sm:px-6 md:px-8 lg:px-12 xl:px-20">
             <h1>Laporan Kerusakan</h1>
         </div>
     </div>
     
-    <div class="w-full max-w-[1400px] mx-auto px-20">
+    <div class="w-full max-w-[1400px] mx-auto px-2 sm:px-6 md:px-8 lg:px-12 xl:px-20">
+
         @include('user.laporan.partials.errors')
         
         <form action="{{ route('laporan.store') }}" method="POST" enctype="multipart/form-data">
