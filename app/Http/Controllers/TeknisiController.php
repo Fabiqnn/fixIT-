@@ -180,7 +180,10 @@ class TeknisiController extends Controller
                     ->orWhereNull('status_perbaikan');
             })
             ->update(['status_perbaikan' => 'tuntas']);
-
+        FasilitasModel::find($fasilitasId)->update([
+            'status' => 'baik'
+        ]);
+        
         if ($updated === 0) {
             return response()->json([
                 'success' => false,

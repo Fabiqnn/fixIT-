@@ -131,17 +131,12 @@ class PrioritasController extends Controller
 
     public function tambah_alternatif () 
     {
-        $usedFasilitas = AlternatifModel::with('laporan')
-            ->get()
-            ->pluck('laporan.fasilitas_id')
-            ->filter()
-            ->unique()
-            ->toArray();
-
         $pelaporan = PelaporanModel::selectRaw('MIN(laporan_id) as laporan_id, MIN(kode_laporan) as kode_laporan, fasilitas_id')
             ->where('status_acc', 'disetujui')
             ->whereNull('status_perbaikan')
-            ->whereNotIn('fasilitas_id', $usedFasilitas)
+            ->whereHas('fasilitas', function($query) {
+                $query->where('status', '!=', 'dalam perbaikan');
+            })
             ->groupBy('fasilitas_id')
             ->with(['fasilitas.ruangan.lantai', 'fasilitas.ruangan.gedung'])
             ->get();
@@ -178,6 +173,9 @@ class PrioritasController extends Controller
 
         $alternatif = AlternatifModel::create([
             'laporan_id' => $request->laporan_id
+        ]);
+        FasilitasModel::find($alternatif->laporan->fasilitas->fasilitas_id)->update([
+            'status' => 'dalam perbaikan'
         ]);
 
         $penilaianData = [

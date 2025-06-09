@@ -16,6 +16,7 @@ use App\Http\Controllers\PelaporanController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\admin\RuanganController;
 use App\Http\Controllers\admin\SPKController;
+use App\Http\Controllers\admin\PeriodeController;
 use App\Http\Controllers\TeknisiController;
 use App\Http\Controllers\ProfileController;
 
@@ -121,6 +122,17 @@ Route::middleware('auth')->prefix('admin')->group(function () {
         Route::put('/{id}/update-alternatif', [PrioritasController::class, 'update_alternatif']);
         Route::get('/{id}/delete-alternatif', [PrioritasController::class, 'delete']);
         Route::delete('/{id}/delete-confirm', [PrioritasController::class, 'confirm']);
+    });
+
+    Route::prefix('periode')->group(function () {
+        Route::get('/', [PeriodeController::class, 'index']);
+        Route::get('/list', [PeriodeController::class, 'list']);
+        Route::get('/create', [PeriodeController::class, 'create']);
+        Route::post('/store', [PeriodeController::class, 'store']);
+        Route::get('/{id}/delete', [PeriodeController::class, 'delete']);
+        Route::delete('/{id}/confirm', [PeriodeController::class, 'confirm']);
+        Route::get('/{id}/edit', [PeriodeController::class, 'edit']);
+        Route::put('/{id}/update', [PeriodeController::class, 'update']);
     });
 });
 

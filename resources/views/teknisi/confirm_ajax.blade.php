@@ -28,7 +28,9 @@
 
 <script>
     function submitTuntas(id) {
-        fetch(`/teknisi/laporan/${id}/selesai`, {
+        const url = `{{ url('/teknisi/laporan') }}/${id}/selesai`;
+
+        fetch(url, {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',

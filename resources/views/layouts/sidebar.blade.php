@@ -31,7 +31,10 @@
         <li class="relative group">
             <button onclick="toggleMenu('menuBangunan')"
                 class="flex justify-between items-center w-full px-3 py-2 rounded hover:bg-green-600 cursor-pointer mb-1">
-                <span class="flex gap-2 items-center"><i class="fa-solid fa-building-columns" style="width: 24px"></i>
+                <span class="flex gap-2 items-center">
+                    <div class="w-[24px] text-center">
+                        <i class="fa-solid fa-building-columns"></i>
+                    </div>
                     Bangunan</span>
                 <svg class="w-4 h-4 transform transition-transform group-[.open]:rotate-90"
                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -71,6 +74,13 @@
                 Fasilitas</a></li>
             </ul>
         </li>
+        <li><a href="{{ url('admin/periode') }}"
+                class="flex items-center gap-2 px-3 py-2 hover:bg-green-600 hover:text-white rounded {{ $activeMenu == 'periode' ? 'sidebar-active' : '' }}"
+                onclick="setActive(this)">
+                <div class="text-center w-[24px]">
+                    <i class="fa-solid fa-clock" style="width: 100%"></i>
+                </div>
+                Periode</a></li>
         <li><a href="{{ url('admin/pelaporan') }}"
                 class="flex items-center gap-2 px-3 py-2 hover:bg-green-600 hover:text-white rounded {{ $activeMenu == 'laporan' ? 'sidebar-active' : '' }}"
                 onclick="setActive(this)">

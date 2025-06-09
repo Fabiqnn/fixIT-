@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\admin\FasilitasModel;
 use App\Models\LaporanModel;
 use App\Models\PeriodeModel;
 use App\Models\RekomendasiModel;
@@ -110,14 +111,14 @@ class SPKController extends Controller
                             'message' => 'Format data salah'
                         ]);
                     } else {
-                        $alternatif = AlternatifModel::with('laporan')->where('alternatif_id', $item['alternatif_id'])->first(); 
+                        $alternatif = AlternatifModel::with('laporan.fasilitas')->where('alternatif_id', $item['alternatif_id'])->first(); 
                         RekomendasiModel::create([
                             'alternatif_id' => $item['alternatif_id'],
                             'nilai_akhir' => $item['nilai_q'],
                             'ranking' => $item['ranking'],
                             'periode_id' => $request->input('periode'),
                         ]);
-                        LaporanModel::find($alternatif->laporan->laporan_id)->update([
+                        LaporanModel::where('fasiltas_id', $alternatif->laporan->fasilitas->fasilitas_id)->where('status_acc', 'disetujui')->update([
                             'status_perbaikan' => 'diproses'
                         ]);
                         PenilaianModel::truncate();

@@ -5,6 +5,13 @@
             Tambah Data Alternatif
         </div>
         <div class="p-6 space-y-3">
+            <div class="p-5 bg-warning text-blackshade1 rounded space-y-3">
+                <div class="flex space-x-5 items-center">
+                    <i class="fa-solid fa-ban "></i>
+                    <h1 class="font-semibold">KONFIRMASI!!!</h1>
+                </div>
+                <p>Jika pekerjaan teknisi belum tuntas seutuhnya, akan ada kemungkinan fasilitas yang sedang diperbaiki tidak muncul dalam pilihan</p>
+            </div>
             <div>
                 <label class="block mb-1 font-semibold">Pilih Laporan</label>
                 <select name="laporan_id" id="laporan_id" class="border-1 border-green-200 rounded w-full text-D_grey p-2 outline-none" data-url="{{url('admin/prioritas/get-laporan')}}" required>
