@@ -103,7 +103,6 @@ class PelaporanController extends Controller
             'fasilitas_id' => $request->fasilitas_id,
             'tanggal_laporan' => now(),
             'deskripsi_kerusakan' => $request->deskripsi,
-            'status_perbaikan' => 'diproses',
             'status_acc' => 'pending',
             'foto_kerusakan' => $fotoPath,
         ]);

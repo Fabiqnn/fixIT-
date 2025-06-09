@@ -176,8 +176,7 @@ class TeknisiController extends Controller
     {
         $updated = LaporanModel::where('fasilitas_id', $fasilitasId)
             ->where(function ($q) {
-                $q->where('status_perbaikan', 'diproses')
-                    ->orWhereNull('status_perbaikan');
+                $q->where('status_perbaikan', 'diproses');
             })
             ->update(['status_perbaikan' => 'tuntas']);
         FasilitasModel::find($fasilitasId)->update([

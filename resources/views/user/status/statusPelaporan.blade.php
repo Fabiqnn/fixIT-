@@ -69,8 +69,9 @@
         buttons.forEach(button => {
             button.addEventListener('click', function () {
                 const id = this.getAttribute('data-id');
+                const url = `{{ url('status/') }}/${id}/show`
 
-                fetch(`/status/${id}/show`)
+                fetch(url)
                     .then(response => {
                         if (!response.ok) throw new Error('Network response was not ok');
                         return response.text();
