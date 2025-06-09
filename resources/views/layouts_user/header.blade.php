@@ -6,9 +6,11 @@
        id="header-content">
 
     <div class="flex items-center gap-2">
+        <a href="{{url('/')}}">
       <img src="{{ asset('assets/mechanic-hijau-tua.png') }}" alt="logo"
            class="h-9 sm:h-10 md:h-12 w-auto object-contain">
-
+        </a>
+        
       <a href="{{ url('/') }}"
          class="hidden sm:block font-glacial text-[22px] sm:text-[24px] md:text-[25px] font-bold text-gray-800">
          fixIT!
