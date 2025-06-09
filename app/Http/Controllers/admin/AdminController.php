@@ -10,22 +10,63 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+
 
 
 
 class AdminController extends Controller
 {
+
     public function index()
     {
+        $periodeData = DB::table('table_periode')
+            ->orderBy('periode_id')
+            ->get();
+
+        $data = [];
+        foreach ($periodeData as $periode) {
+            $data[$periode->nama_periode] = ['tuntas' => 0, 'diproses' => 0];
+        }
+
+        // Ambil data laporan
+        $rows = DB::table('table_periode as p')
+            ->leftJoin('table_rekomendasi as r', 'r.periode_id', '=', 'p.periode_id')
+            ->leftJoin('table_alternatif as a', 'a.alternatif_id', '=', 'r.alternatif_id')
+            ->leftJoin('table_laporan as l', 'l.laporan_id', '=', 'a.laporan_id')
+            ->select('p.nama_periode', 'l.status_perbaikan', DB::raw('COUNT(*) as jumlah'))
+            ->whereNotNull('l.status_perbaikan')
+            ->groupBy('p.nama_periode', 'l.status_perbaikan')
+            ->get();
+
+        foreach ($rows as $row) {
+            $periode = $row->nama_periode;
+            $status = strtolower($row->status_perbaikan);
+
+            if (isset($data[$periode])) {
+                $data[$periode][$status] = $row->jumlah;
+            }
+        }
+
+        $labels = array_keys($data);
+        $tuntas = array_column($data, 'tuntas');
+        $diproses = array_column($data, 'diproses');
+
         $page = (object) [
             'title' => 'Dashboard',
-            'header' => 'Dashboard'
+            'header' => 'Status Perbaikan per Periode'
         ];
 
         $activeMenu = 'dashboard';
 
-        return view('admin.dashboard', ['page' => $page, 'activeMenu' => $activeMenu]);
+        return view('admin.dashboard', compact('labels', 'tuntas', 'diproses', 'page', 'activeMenu'));
     }
+
+
+
+
+
+
     public function profile()
     {
         $user = auth()->user();
