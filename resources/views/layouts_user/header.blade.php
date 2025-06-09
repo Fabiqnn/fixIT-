@@ -92,14 +92,43 @@
       </li>
     </ul>
 
-    {{-- Tombol "Masuk" tetap tampil di layar kecil --}}
+    {{-- Tombol Profil / Masuk di layar kecil --}}
     <div class="sm:hidden">
-      @if (!Auth::check())
+        @if (Auth::check())
+            <div class="relative inline-block">
+            <button id="mobileUserDropdownToggle"
+                    class="flex items-center gap-2 px-2 py-1 focus:outline-none">
+                @if ($authUser->foto)
+                <img src="{{ asset('uploads/foto/' . $authUser->foto) }}"
+                    class="w-8 h-8 rounded-full object-cover border border-gray-300 shadow">
+                @else
+                <img src="{{ asset('uploads/foto/default-avatar.jpg') }}"
+                    class="w-8 h-8 rounded-full object-cover border border-gray-300 shadow">
+                @endif
+            </button>
+            <ul id="mobileUserDropdownMenu"
+                class="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-lg hidden z-50">
+                <li>
+                <a href="{{ url('/profile') }}"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profil</a>
+                </li>
+                <li>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit"
+                            class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 cursor-pointer">
+                    Logout
+                    </button>
+                </form>
+                </li>
+            </ul>
+        </div>
+    @else
         <a href="{{ url('login') }}"
-           class="bg-greenPrimary text-white px-3 py-1 rounded hover:bg-greenshade1 transition text-sm whitespace-nowrap">
-          Masuk
+        class="bg-greenPrimary text-white px-3 py-1 rounded hover:bg-greenshade1 transition text-sm whitespace-nowrap">
+        Masuk
         </a>
-      @endif
+    @endif
     </div>
   </div>
 </header>
@@ -107,19 +136,22 @@
 @push('js')
 <script>
   document.addEventListener('DOMContentLoaded', () => {
+    const header = document.getElementById('header');
     const hamburgerToggle = document.getElementById('hamburgerToggle');
     const hamburgerMenu = document.getElementById('hamburgerMenu');
-    const header = document.getElementById('header');
     const userDropdownToggle = document.getElementById('userDropdownToggle');
     const userDropdownMenu = document.getElementById('userDropdownMenu');
+    const mobileUserToggle = document.getElementById('mobileUserDropdownToggle');
+    const mobileUserMenu = document.getElementById('mobileUserDropdownMenu');
 
-    // Hamburger toggle
+    //Update posisi dropdown hamburger saat scroll atau resize
     function updateDropdownPosition() {
       const headerHeight = header.offsetHeight;
       hamburgerMenu.style.top = `${headerHeight}px`;
     }
 
-    hamburgerToggle.addEventListener('click', () => {
+    //Toggle hamburger menu
+    hamburgerToggle?.addEventListener('click', () => {
       const isVisible = !hamburgerMenu.classList.contains('hidden');
       if (isVisible) {
         hamburgerMenu.classList.add('hidden');
@@ -141,25 +173,40 @@
       }
     });
 
+    //Toggle user dropdown (desktop)
     userDropdownToggle?.addEventListener('click', (e) => {
       e.stopPropagation();
       userDropdownMenu.classList.toggle('hidden');
     });
 
+    //Toggle user dropdown (mobile)
+    mobileUserToggle?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      mobileUserMenu.classList.toggle('hidden');
+    });
+
+    //Klik di luar menutup semua dropdown
     document.addEventListener('click', (e) => {
       if (
-        !userDropdownToggle.contains(e.target) &&
-        !userDropdownMenu.contains(e.target)
+        !userDropdownToggle?.contains(e.target) &&
+        !userDropdownMenu?.contains(e.target)
       ) {
-        userDropdownMenu.classList.add('hidden');
+        userDropdownMenu?.classList.add('hidden');
+      }
+
+      if (
+        !mobileUserToggle?.contains(e.target) &&
+        !mobileUserMenu?.contains(e.target)
+      ) {
+        mobileUserMenu?.classList.add('hidden');
       }
     });
 
-    // Header shrink
+    //Header shrink saat scroll
     function adjustHeaderOnScroll() {
-      if (window.scrollY > 20 && !header.classList.contains('scale-y-98')) {
+      if (window.scrollY > 20) {
         header.classList.add('scale-y-98');
-      } else if (window.scrollY <= 20 && header.classList.contains('scale-y-98')) {
+      } else {
         header.classList.remove('scale-y-98');
       }
     }
@@ -169,4 +216,5 @@
   });
 </script>
 @endpush
+
 
