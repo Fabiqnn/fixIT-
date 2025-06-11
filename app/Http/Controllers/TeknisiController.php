@@ -88,33 +88,33 @@ class TeknisiController extends Controller
             })
 
             ->addColumn('kode_laporan', function ($row) {
-                return $row->alternatif->first()?->laporan?->kode_laporan ?? '-';
+                return $row->alternatif->laporan?->kode_laporan;
             })
 
             ->addColumn('nama_fasilitas', function ($row) {
-                return $row->alternatif->first()?->laporan?->fasilitas?->nama_fasilitas ?? '-';
+                return $row->alternatif->laporan?->fasilitas?->nama_fasilitas;
             })
 
             ->addColumn('nama_ruangan', function ($row) {
-                return $row->alternatif->first()?->laporan?->fasilitas?->ruangan?->keterangan ?? '-';
+                return $row->alternatif->laporan?->fasilitas?->ruangan?->keterangan;
             })
 
             ->addColumn('nama_gedung', function ($row) {
-                return $row->alternatif->first()?->laporan?->fasilitas?->ruangan?->gedung?->gedung_nama ?? '-';
+                return $row->alternatif->laporan?->fasilitas?->ruangan?->gedung?->gedung_nama;
             })
 
             ->addColumn('nama_lantai', function ($row) {
-                return $row->alternatif->first()?->laporan?->fasilitas?->ruangan?->lantai?->nama_lantai ?? '-';
+                return $row->alternatif->laporan?->fasilitas?->ruangan?->lantai?->nama_lantai;
             })
 
             ->addColumn('status_perbaikan', function ($row) {
-                return $row->alternatif->first()?->laporan?->status_perbaikan ?? '-';
+                return $row->alternatif->laporan?->status_perbaikan;
             })
 
             ->addColumn('aksi', function ($row) {
-                $laporanId = $row->alternatif->first()?->laporan?->laporan_id ?? null;
+                $laporanId = $row->alternatif->laporan?->laporan_id;
                 if (!$laporanId) return '-';
-                $fasilitasId = $row->alternatif->first()?->laporan?->fasilitas_id ?? null;
+                $fasilitasId = $row->alternatif->laporan?->fasilitas_id;
 
                 $detailBtn = '<button onclick="modalAction(\'' . url('/teknisi/list_diproses/' . $laporanId . '/show') . '\')" class="px-3 py-1 button-info cursor-pointer">Detail</button>';
                 // $konfirmasiBtn = '<button onclick="modalAction(\'' . url('/teknisi/laporan/' . $laporanId . '/confirm_tuntas') . '\')" class="px-3 py-1 button2 bg-green-600 text-white hover:bg-green-700 cursor-pointer">Update</button>';
