@@ -27,7 +27,7 @@
 
         {{-- konten utama --}}
         <div id="mainContent"
-             class="flex-1 flex flex-col transition-all duration-300 sm:ml-64 ml-0">
+     class="flex-1 flex flex-col transition-all duration-300 sm:ml-64 ml-0">
             @include('layouts.header')
 
             <main class="h-screen m-2 border border-gray-300 p-6 rounded-lg shadow-md font-inter overflow-auto">
@@ -52,65 +52,71 @@
 
     {{-- === SIDEBAR & RESPONSIVE HANDLER === --}}
     <script>
-        const sidebar   = document.getElementById('sidebar');
-        const main      = document.getElementById('mainContent');
-        const overlay   = document.getElementById('overlay');
-        const toggleBtn = document.getElementById('toggleSidebar');
+    const sidebar     = document.getElementById('sidebar');
+    const mainContent = document.getElementById('mainContent');   // konsisten
+    const overlay     = document.getElementById('overlay');
+    const toggleBtn   = document.getElementById('toggleSidebar');
 
-        /** Buka / tutup sidebar */
-        function setSidebar(open) {
-            const isDesktop = window.innerWidth >= 640;
+    /** Buka / tutup sidebar */
+    function setSidebar(open) {
+        const isDesktop = window.innerWidth >= 640;
+        console.log('🔍 setSidebar:', { open, isDesktop });
 
-            if (open) {
-                sidebar.classList.remove('-translate-x-full');
-                overlay.classList.remove('opacity-0', 'pointer-events-none');
+        if (open) {                                // ==== BUKA ====
+            sidebar.classList.remove('-translate-x-full', 'sm:-translate-x-full');
+            sidebar.classList.add('translate-x-0', 'sm:translate-x-0');
 
-                /* Beri margin di desktop */
-                if (isDesktop) main.classList.add('sm:ml-64');
+            if (isDesktop) {
+                mainContent.classList.add('ml-64');
+                overlay.classList.add('hidden');
             } else {
-                sidebar.classList.add('-translate-x-full');
-                overlay.classList.add('opacity-0', 'pointer-events-none');
-
-                /* Hapus margin di desktop */
-                main.classList.remove('sm:ml-64');
+                mainContent.classList.remove('ml-64');
+                overlay.classList.remove('hidden');
             }
+        } else {                                   // ==== TUTUP ====
+            sidebar.classList.add('-translate-x-full', 'sm:-translate-x-full');
+            sidebar.classList.remove('translate-x-0', 'sm:translate-x-0');
+
+            mainContent.classList.remove('ml-64');
+            overlay.classList.add('hidden');
         }
+    }
 
-        /** Dropdown di sidebar (gedung / lantai / dst.) */
-        function toggleMenu(menuId) {
-            const menu   = document.getElementById(menuId);
-            const parent = menu.closest('.group');
-            menu.classList.toggle('hidden');
-            parent.classList.toggle('open');
-        }
+    /** Dropdown di sidebar */
+    function toggleMenu(menuId) {
+        const menu   = document.getElementById(menuId);
+        const parent = menu.closest('.group');
+        menu.classList.toggle('hidden');
+        parent.classList.toggle('open');
+    }
 
-        /** Set item aktif di sidebar */
-        function setActive(el) {
-            document.querySelectorAll('#sidebar a')
-                    .forEach(a => a.classList.remove('bg-green-600', 'text-white'));
-            el.classList.add('bg-green-600', 'text-white');
-        }
+    /** Menu aktif */
+    function setActive(el) {
+        document.querySelectorAll('#sidebar a')
+                .forEach(a => a.classList.remove('bg-green-600', 'text-white'));
+        el.classList.add('bg-green-600', 'text-white');
+    }
 
-        /* ===================== INIT ===================== */
-        document.addEventListener('DOMContentLoaded', () => {
-            /* Mobile: sidebar tertutup saat awal buka */
-            if (window.innerWidth < 640) setSidebar(false);
-        });
+    /* INIT: tutup di mobile saat page load */
+    document.addEventListener('DOMContentLoaded', () => {
+        if (window.innerWidth < 640) setSidebar(false);
+        
+    });
 
-        /* ===================== EVENTS =================== */
-        toggleBtn?.addEventListener('click', () => {
-            const closed = sidebar.classList.contains('-translate-x-full');
-            setSidebar(closed);
-        });
+    /* Toggle klik */
+    toggleBtn?.addEventListener('click', () => {
+        const isClosed = sidebar.classList.contains('-translate-x-full');
+        setSidebar(isClosed);          // jika tertutup -> buka, sebaliknya tutup
+    });
 
-        overlay.addEventListener('click', () => setSidebar(false));
+    /* Klik overlay */
+    overlay.addEventListener('click', () => setSidebar(false));
 
-        /* Tutup sidebar otomatis ketika resize ke mobile */
-        window.addEventListener('resize', () => {
-            if (window.innerWidth < 640) setSidebar(false);
-        });
-    </script>
-
+    /* Saat resize → jika masuk mobile, auto-tutup */
+    window.addEventListener('resize', () => {
+        if (window.innerWidth < 640) setSidebar(false);
+    });
+</script>
     @stack('js')
 </body>
 </html>
