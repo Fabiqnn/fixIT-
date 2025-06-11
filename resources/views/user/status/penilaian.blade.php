@@ -24,7 +24,7 @@
         </div>
         <div class="p-6 space-y-3">
             <div id="star-rating" class="flex space-x-1 justify-center flex-row-reverse">
-                @for ($i = 0; $i < 5; $i++)
+                @for ($i = 5; $i >= 1; $i--)
                     <input type="radio" id="star{{$i}}" name="skala_kepuasan" value="{{$i}}" hidden>
                     <label for="star{{$i}}" class="star text-5xl text-gray-300 cursor-pointer">&#9733;</label>
                 @endfor
@@ -89,8 +89,9 @@
                                 icon: 'success',
                                 title: 'Berhasil',
                                 text: response.message
+                            }).then(() => {
+                                location.reload();
                             });
-                            location.ajax.reload();
                         } else {
                             $('.error-text').text('');
                             $.each(response.msgField, function(prefix, val) {

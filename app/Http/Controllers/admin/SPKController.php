@@ -118,7 +118,7 @@ class SPKController extends Controller
                             'ranking' => $item['ranking'],
                             'periode_id' => $request->input('periode'),
                         ]);
-                        LaporanModel::where('fasilitas_id', $alternatif->laporan->fasilitas->fasilitas_id)->where('status_acc', 'disetujui')->update([
+                        LaporanModel::where('fasilitas_id', $alternatif->laporan->fasilitas->fasilitas_id)->where('status_acc', 'disetujui')->whereNull('status_perbaikan')->update([
                             'status_perbaikan' => 'diproses'
                         ]);
                         PenilaianModel::truncate();

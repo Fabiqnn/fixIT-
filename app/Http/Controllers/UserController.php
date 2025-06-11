@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\LaporanModel;
+use App\Models\PeriodeModel;
 use App\Models\RekomendasiModel;
 use App\Models\UmpanBalikModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+
+use function PHPSTORM_META\map;
 
 class UserController extends Controller
 {
@@ -15,13 +18,14 @@ class UserController extends Controller
     public function index()
     {
         $rekomendasi = RekomendasiModel::with('alternatif.laporan.fasilitas')->with('umpanBalik')->get();
+        $periode = PeriodeModel::all();
 
         $user = Auth::user();
-        return view('user.dashboard',['rekomendasi' => $rekomendasi] , compact('user'));
+        return view('user.dashboard',['rekomendasi' => $rekomendasi, 'periode' => $periode] , compact('user'));
     }
 
     public function showDetail($id) {
-        $rekomendasi = RekomendasiModel::with('alternatif.laporan.fasilitas.ruangan.lantai', 'alternatif.laporan.fasilitas.ruangan.gedung')
+        $rekomendasi = RekomendasiModel::with('alternatif.laporan.fasilitas.ruangan.lantai', 'alternatif.laporan.fasilitas.ruangan.gedung', 'umpanBalik.user')
             ->find($id);
 
         $alt = $rekomendasi->alternatif;
@@ -35,6 +39,15 @@ class UserController extends Controller
             'gedung' => $alt->laporan->fasilitas->ruangan->gedung->gedung_nama,
             'lantai' => $alt->laporan->fasilitas->ruangan->lantai->nama_lantai,
             'kode_ruangan' => $alt->laporan->fasilitas->ruangan->kode_ruangan,
+            'umpan_balik' => $rekomendasi->umpanBalik->map(function ($feedback) {
+                return [
+                    'foto_profile' => $feedback->user->foto,
+                    'nama' => $feedback->user->nama_lengkap,
+                    'komentar' => $feedback->komentar,
+                    'skala_kepuasan' => $feedback->skala_kepuasan,
+                    'tanggal' => $feedback->created_at->format('Y-m-d')
+                ];
+            }),
         ]);
     }
 

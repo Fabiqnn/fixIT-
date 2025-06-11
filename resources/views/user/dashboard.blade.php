@@ -21,19 +21,19 @@
             <div class="flex justify-between border-b">
                 <div class="p-4 font-semibold text-green-700 text-lg">Menu</div>
                 <div class="my-auto mr-3">
-                    <select id="gedung_id" name="gedung_id"
+                    <select id="periode_id" name="periode_id"
                         class="border border-green-700 rounded text-gray-700 p-2 outline-none">
                         <option value="">- Filter -</option>
-                        {{-- @foreach ($gedung as $g)
-                            <option value="{{ $g->gedung_id }}">{{ $g->gedung_nama }}</option>
-                        @endforeach --}}
+                        @foreach ($periode as $p)
+                            <option value="{{ $p->periode_id }}">{{ $p->nama_periode }}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
             <ul id="menuList" class="flex-1 overflow-y-auto divide-y divide-gray-200">
                 @foreach ($rekomendasi as $item)
                     @if($item->alternatif)
-                        <li onclick="loadItem({{ $item->rekomendasi_id }})" class="cursor-pointer hover:bg-green-50 px-5 py-4 transition-colors space-y-3">
+                        <li onclick="loadItem({{ $item->rekomendasi_id }})" class="cursor-pointer hover:bg-green-50 px-5 py-4 transition-colors space-y-3" data-periode-id="{{ $item->periode_id }}">
                             <div class="font-medium">{{$item->alternatif->laporan->fasilitas->nama_fasilitas}} </div>
                             @if ($item->alternatif->laporan->status_perbaikan == 'tuntas')
                                 <div class="flex justify-between">
@@ -51,7 +51,7 @@
                                     <div class="px-3 py-1 rounded-2xl bg-info text-white text-sm w-1/4 text-center">
                                         {{$item->alternatif->laporan->status_perbaikan}}
                                     </div>
-                                    <ul class="flex font-light text-sm space-x-3">
+                                    <ul class="flex text-gray-500 text-sm space-x-3">
                                         <li>{{$item->alternatif->laporan->fasilitas->ruangan->gedung->gedung_nama}}</li>
                                         <li>{{$item->alternatif->laporan->fasilitas->ruangan->lantai->nama_lantai}}</li>
                                         <li>{{$item->alternatif->laporan->fasilitas->ruangan->kode_ruangan}}</li>
@@ -91,6 +91,26 @@
 
 @push('js')
     <script>
+        document.getElementById('periode_id').addEventListener('change', function () {
+            const periodeId = this.value;
+            filterRekomendasiByPeriode(periodeId);
+        });
+
+        function filterRekomendasiByPeriode(periodeId) {
+            const menuItems = document.querySelectorAll('#menuList > li');
+
+            menuItems.forEach(item => {
+                const itemPeriodeId = item.getAttribute('data-periode-id');
+
+                if (!periodeId || itemPeriodeId === periodeId) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        const assetBaseFoto = "{{asset('uploads/foto')}}";
         function loadItem($id) {
             const url = `{{ url('/detail-rekomendasi') }}/` + $id;
 
@@ -107,18 +127,26 @@
                     </h2>
                     <div class="mb-5 pb-4">
                         <div class="flex w-full space-x-5 justify-between">
-                            <div class="flex space-x-5 items-end">
-                                <div class="px-3 py-1 rounded-2xl bg-success text-white text-sm text-center">
-                                    <i class="fa-solid fa-check"></i> ${data.status}
-                                </div>
-                                <p class="font-light">Info Fasilitas</p>
-                            </div>`;
+                            <div class="flex space-x-5 items-end">`;
+                                if (data.status === 'tuntas') {
+                                    html += `<div class="px-3 py-1 rounded-2xl bg-success text-white text-sm text-center">
+                                                    <i class="fa-solid fa-check"></i> ${data.status}
+                                                </div>
+                                                <p class="font-light">Info Fasilitas</p>
+                                            </div>`;
+                                } else {
+                                    html += `<div class="px-3 py-1 rounded-2xl bg-info text-white text-sm text-center">
+                                                    <i class="fa-solid fa-check"></i> ${data.status}
+                                                </div>
+                                                <p class="font-light">Info Fasilitas</p>
+                                            </div>`;
+                                }
                 if (data.status === 'tuntas') {
                     html += `<button class="button1 cursor-pointer text-right outline-none" onclick="modalAction('{{ url('/penilaian/${data.rekomendasi_id}') }}')">
                                 <span class="text-md mr-2"><i class="fa-regular fa-star"></i></span> Beri Penilaian
                             </button>`;
                 } else {
-                    html += `<button class="button1 cursor-pointer text-right outline-none" disabled>
+                    html += `<button class="bg-gray-400 px-3 py-[6px] text-white rounded-sm cursor-pointer text-right outline-none" disabled>
                                 <span class="text-md mr-2"><i class="fa-regular fa-star"></i></span> Beri Penilaian
                             </button>`;
                 }
@@ -146,13 +174,41 @@
                     <div>
                         <h2 class="text-xl font-semibold text-green-700 mb-4">
                         Komentar User
-                        </h2>
-                        @empty($rekomendasi->umpanBalik)
+                        </h2>`;
+                        if (data.umpan_balik.length === 0) {
+                            html += `
                             <div class="w-full flex flex-col justify-center items-center text-gray-400 bg-gray-100 h-20 border-y-1">
                                 <i class="fa-regular fa-pen-to-square text-lg mb-1"></i>
                                 <p>Belum ada feedback dari user</p>
-                            </div>
-                        @endempty
+                            </div>`;
+                        } else {
+                            data.umpan_balik.forEach(item => {
+                                const foto = item.foto_profile
+                                    ? `${assetBaseFoto}/${item.foto_profile}`
+                                    : `${assetBaseFoto}/default-avatar.jpg`;
+
+                                let stars = '';
+                                const rating = item.skala_kepuasan;
+                                for (let i = 1; i <= 5; i++) {
+                                    stars += `<label class="star text-xl sm:text-2xl text-gray-300 ${i <= rating ? 'text-yellow-400' : ''}">&#9733;</label>`;
+                                }
+                                html += 
+                                `<div class="w-full mb-1">
+                                    <div class="flex space-x-2 items-center">
+                                        <img src="${foto}" class="w-10 h-10 rounded-full object-cover border border-gray-300 shadow">
+                                        <p>${item.nama}</p>
+                                    </div>
+                                    <div class="flex space-x-5 items-center">
+                                        <div class="flex space-x-1">${stars}</div>
+                                        <p class="text-sm text-gray-500">${item.tanggal}</p>
+                                    </div>
+                                    <div class="w-full min-h-10">
+                                        <p class="text-gray-700">${item.komentar}</p>
+                                    </div>
+                                </div>`;
+                            });
+                        }
+                html += `
                     </div>`;
 
                 document.getElementById('detail-content').innerHTML = html;
