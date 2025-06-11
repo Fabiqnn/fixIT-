@@ -10,11 +10,7 @@
         </div>
 
         <div class="flex-1 space-y-3">
-            <h2 class="text-2xl font-bold text-gray-900">{{ $laporan->kode_laporan }}</h2>
-
-            <p class="text-gray-700"><strong>Nomor Induk :</strong> {{ $laporan->no_induk }}</p>
-            <p class="text-gray-700"><strong>Pelapor :</strong> {{ $laporan->user->nama_lengkap ?? $laporan->no_induk }}
-            </p>
+            <h2 class="text-2xl font-bold text-gray-900">{{ $laporan->fasilitas->nama_fasilitas }}</h2>
             <p class="text-gray-700"><strong>Tanggal :</strong>
                 {{ \Carbon\Carbon::parse($laporan->tanggal_laporan)->translatedFormat('d F Y') }}</p>
             <p class="text-gray-700"><strong>Gedung :</strong>

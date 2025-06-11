@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Run the migrations. 
      */
     public function up(): void
     {
@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('prodi_id')->nullable();
             $table->unsignedBigInteger('jurusan_id')->nullable();
             $table->string('password');
-            $table->string('nama_lengkap');
+            $table->string('nama_lengkap'); 
             $table->string('email')->nullable();
             $table->string('nomor_telp')->nullable();
             $table->timestamps();

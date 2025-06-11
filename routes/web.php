@@ -15,6 +15,7 @@ use App\Http\Controllers\admin\UserManajemenController;
 use App\Http\Controllers\PelaporanController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\admin\RuanganController;
+use App\Http\Controllers\admin\SPKController;
 use App\Http\Controllers\TeknisiController;
 use App\Http\Controllers\ProfileController;
 
@@ -24,6 +25,9 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/profile', [AdminController::class, 'profile'])->name('profile.show');
+    Route::get('/profile/{id}/edit', [AdminController::class, 'edit_profile']);
+    Route::put('/profile/update_ajax/{id}', [AdminController::class, 'update_profile']);
     Route::prefix('fasilitas')->group(function () {
         Route::get('/', [FasilitasController::class, 'fasilitas']);
         Route::get('/list', [FasilitasController::class, 'list_fasilitas']);
@@ -107,6 +111,9 @@ Route::middleware('auth')->prefix('admin')->group(function () {
         Route::get('/list-penilaian', [PrioritasController::class, 'list_penilaian']);
         Route::get('/create-alternatif', [PrioritasController::class, 'tambah_alternatif']);
         Route::post('/store-alternatif', [PrioritasController::class, 'store_alternatif']);
+        Route::get('/process', [SPKController::class, 'operasiMABAC']);
+        Route::get('/tugaskan', [SPKController::class, 'deploy_tech']);
+        Route::post('/deploy', [SPKController::class, 'deploy_store']);
         Route::get('/get-laporan/{id}', [PrioritasController::class, 'getLaporan']);
         Route::get('/{id}/edit-kriteria', [PrioritasController::class, 'edit_kriteria']);
         Route::put('/{id}/update-kriteria', [PrioritasController::class, 'update_kriteria']);
@@ -120,13 +127,15 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::prefix('teknisi')->group(function () {
         Route::get('/', [TeknisiController::class, 'index'])->name('teknisi.dashboard');
-        Route::get('/tugasDiproses', [TeknisiController::class, 'sedangDiproses']);
         Route::get('/list_diproses', [TeknisiController::class, 'list_diproses']);
         Route::get('/list_selesai', [TeknisiController::class, 'list_selesai']);
         Route::get('/selesai', [TeknisiController::class, 'selesai']);
         Route::get('/list_diproses/{id}/show', [TeknisiController::class, 'show']);
         Route::get('/laporan/{id}/confirm_tuntas', [TeknisiController::class, 'confirmTuntas']);
         Route::post('/laporan/{id}/selesai', [TeknisiController::class, 'markTuntas']);
+        Route::get('/profile', [TeknisiController::class, 'profile'])->name('profile.show');
+        Route::get('/profile/{id}/edit', [TeknisiController::class, 'edit_profile']);
+        Route::put('/profile/update_ajax/{id}', [TeknisiController::class, 'update_profile']);
     });
 });
 
@@ -143,9 +152,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/ajax/fasilitas', [PelaporanController::class, 'getFasilitas']);
     Route::post('/pelaporan', [PelaporanController::class, 'store'])->name('laporan.store');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::get('/status/{id}/show', [StatusController::class, 'show'])->name('show.detail');
     Route::get('/profile/edit_ajax/{id}', [ProfileController::class, 'edit_ajax'])->name('profile.edit_ajax');
-    Route::put('/profile/update_ajax/{id}', [ProfileController::class, 'update_ajax'])->name('profile.update_ajax');
-
+    Route::put('/profile/update_ajax/{no_induk}', [ProfileController::class, 'update_ajax'])->name('profile.update_ajax');
 });
 // Route::get('/dosen/dashboard', [DosenController::class, 'index'])->name('dosen.dashboard');
 
@@ -158,3 +167,4 @@ Route::post('/logout', function () {
 
 
 Route::get('/', [AuthController::class, 'landing'])->name('landing');
+Route::get('/test-tabelKeputusan', [SPKController::class, 'operasiMABAC']);
