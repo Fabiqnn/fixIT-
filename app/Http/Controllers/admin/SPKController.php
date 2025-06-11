@@ -55,7 +55,7 @@ class SPKController extends Controller
 
         $namaFasilitas = [];
         foreach ($alternatif as $alt) {
-            $fasilitas = $alt->laporan->fasilitas->nama_fasilitas ?? 'Nama Fasilitas Tidak Diketahui'; 
+            $fasilitas = $alt->laporan->fasilitas->nama_fasilitas ?? 'Nama Fasilitas Tidak Diketahui';
             $namaFasilitas[$alt->alternatif_id] = $fasilitas;
         }
 
@@ -78,21 +78,23 @@ class SPKController extends Controller
         return view('admin.prioritas.step', ['hasil' => $hasil_rank, 'namaFasilitas' => $namaFasilitas]);
     }
 
-    public function deploy_tech() {
+    public function deploy_tech()
+    {
         $alternatif = AlternatifModel::with('laporan.fasilitas')->get();
         $periode = PeriodeModel::all();
         $hasilRekomendasi = session('hasilRekomendasi');
 
         $namaFasilitas = [];
         foreach ($alternatif as $alt) {
-            $fasilitas = $alt->laporan->fasilitas->nama_fasilitas ?? 'Nama Fasilitas Tidak Diketahui'; 
+            $fasilitas = $alt->laporan->fasilitas->nama_fasilitas ?? 'Nama Fasilitas Tidak Diketahui';
             $namaFasilitas[$alt->alternatif_id] = $fasilitas;
         }
 
         return view('admin.prioritas.deploy', ['hasil' => $hasilRekomendasi, 'namaFasilitas' => $namaFasilitas, 'periode' => $periode]);
     }
 
-    public function deploy_store(Request $request) {
+    public function deploy_store(Request $request)
+    {
         if ($request->ajax() || $request->wantsJson()) {
             if (!$request->has('arr_rekomendasi')) {
                 return response()->json([
@@ -111,7 +113,7 @@ class SPKController extends Controller
                             'message' => 'Format data salah'
                         ]);
                     } else {
-                        $alternatif = AlternatifModel::with('laporan.fasilitas')->where('alternatif_id', $item['alternatif_id'])->first(); 
+                        $alternatif = AlternatifModel::with('laporan.fasilitas')->where('alternatif_id', $item['alternatif_id'])->first();
                         RekomendasiModel::create([
                             'alternatif_id' => $item['alternatif_id'],
                             'nilai_akhir' => $item['nilai_q'],
