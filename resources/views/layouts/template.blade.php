@@ -16,16 +16,12 @@
 <body class="bg-white h-screen ">
     <div class="flex h-full">
         @include('layouts.sidebar')
-
-        {{-- Overlay untuk hp --}}
         <div id="overlay" class="fixed inset-0 opacity-50 hidden z-20 sm:hidden"></div>
 
-
-        <div id="mainContent"
-             class="flex-1 flex flex-col ml-0 sm:ml-64 transition-all duration-300">
+        <div id="mainContent" class="flex-1 flex flex-col ml-64 transition-all duration-300 ">
             @include('layouts.header')
-
-            <main class="h-screen m-2 border border-gray-300 p-6 rounded-lg shadow-md font-inter overflow-auto">
+            <main
+                class="h-screen ml-2 mt-2 mr-2 mb-2 border border-gray-300 p-6 rounded-lg shadow-md font-inter overflow-auto">
                 @yield('content')
             </main>
         </div>
@@ -47,64 +43,68 @@
     </script>
     <script src="//cdn.datatables.net/2.3.1/js/dataTables.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const toggleBtn = document.getElementById('toggleSidebar');
-            const sidebar   = document.getElementById('sidebar');
-            const overlay   = document.getElementById('overlay');
+        const toggleBtn = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        let sidebarVisible = true;
+        const overlay = document.getElementById('overlay');
+        const dropdownSidebar = document.getElementById('bangunan');
 
-            let sidebarVisible = window.innerWidth >= 640;
+        function toggleMenu(menuId) {
+            const menu = document.getElementById(menuId);
+            const parent = menu.closest('.group');
+            menu.classList.toggle('hidden');
+            parent.classList.toggle('open');
+        }
 
-            function applySidebarState() {
-                const isDesktop = window.innerWidth >= 640;
-                if (sidebarVisible) {
-                    sidebar.classList.remove('-translate-x-full');
-                    overlay.classList.toggle('hidden', isDesktop); // overlay hanya untuk mobile
-                    // Geser tombol hamburger ke kanan saat sidebar terbuka di mobile
-                    if (!isDesktop) toggleBtn.classList.add('ml-64');
+        function toggleSidebar(show) {
+            const isMobile = window.innerWidth < 640;
+            const isDesktop = window.innerWidth >= 640;
+
+            sidebarVisible = show;
+
+            if (show) {
+                sidebar.classList.remove('-translate-x-full');
+                sidebar.classList.add('translate-x-0');
+                if (isDesktop) {
+                    mainContent.classList.add('ml-64');
+                    mainContent.classList.remove('ml-0');
                 } else {
-                    sidebar.classList.add('-translate-x-full');
-                    overlay.classList.add('hidden');
-                    toggleBtn.classList.remove('ml-64');
+                    mainContent.classList.add('ml-0');
+                    mainContent.classList.remove('ml-64');
+                    overlay.classList.remove('hidden');
                 }
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                sidebar.classList.remove('translate-x-0');
+                mainContent.classList.remove('ml-64');
+                mainContent.classList.add('ml-0');
+                overlay.classList.add('hidden');
             }
+        }
 
-            // Inisialisasi saat halaman dimuat
-            applySidebarState();
-
-            toggleBtn.addEventListener('click', () => {
-                sidebarVisible = !sidebarVisible;
-                applySidebarState();
-            });
-
-            overlay.addEventListener('click', () => {
-                if (window.innerWidth < 640) {
-                    sidebarVisible = false;
-                    applySidebarState();
-                }
-            });
-
-            window.addEventListener('resize', () => {
-                applySidebarState(); // tidak memaksa buka, hanya menyesuaikan tampilan
-            });
-
-            // Dropdown sidebar
-            window.toggleMenu = (menuId) => {
-                const menu   = document.getElementById(menuId);
-                const parent = menu.closest('.group');
-                menu.classList.toggle('hidden');
-                parent.classList.toggle('open');
-            };
-
-            // Highlight menu aktif
-            window.setActive = (element) => {
-                document.querySelectorAll('#sidebar a')
-                        .forEach(a => a.classList.remove('bg-green-600', 'text-white'));
-                element.classList.add('bg-green-600', 'text-white');
-            };
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.innerWidth < 640) {
+                toggleSidebar(false);
+            }
         });
-</script>
 
+        toggleBtn.addEventListener('click', () => {
+            toggleSidebar(!sidebarVisible);
+        });
 
+        overlay.addEventListener('click', () => {
+            if (window.innerWidth < 640) {
+                toggleSidebar(false);
+            }
+        });
+
+        function setActive(element) {
+            const menuItems = document.querySelectorAll('a');
+            menuItems.forEach(item => item.classList.remove('bg-green-600', 'text-white'));
+            element.classList.add('bg-green-600', 'text-white');
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @stack('js')
 

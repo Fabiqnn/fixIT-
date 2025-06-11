@@ -1,8 +1,5 @@
 <aside id="sidebar"
-    class="absolute sm:fixed w-64 h-screen overflow-y-auto bg-white py-2 px-5 space-y-4
-           transition-transform duration-300
-           -translate-x-full sm:translate-x-0  
-           z-50">
+    class="absolute sm:fixed w-64 h-screen overflow-y-auto bg-white py-2 px-5 space-y-4 transition-transform duration-300 translate-x-0 z-50 ">
 
     <div class="logo flex items-center gap-2 h-12">
         <img src="{{ asset('assets/mechanic-hijau-tua.png') }}" alt="logo" class="h-12 w-auto object-contain">
