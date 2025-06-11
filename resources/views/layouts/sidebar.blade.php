@@ -1,8 +1,11 @@
 <aside id="sidebar"
-    class="absolute sm:fixed w-64 h-screen overflow-y-auto bg-white py-2 px-5 space-y-4 transition-transform duration-300 translate-x-0 z-50 ">
+       class="fixed inset-y-0 left-0 w-64 z-50 bg-white overflow-y-auto py-2 px-5 space-y-4
+              transform -translate-x-full sm:translate-x-0             {{-- **UPDATED** --}}
+              transition-transform duration-300">
 
     <div class="logo flex items-center gap-2 h-12">
-        <img src="{{ asset('assets/mechanic-hijau-tua.png') }}" alt="logo" class="h-12 w-auto object-contain">
+        <img src="{{ asset('assets/mechanic-hijau-tua.png') }}"
+             alt="logo" class="h-12 w-auto object-contain">
         <a href="#" class="text-lg font-bold text-gray-800">fixIT!</a>
     </div>
 
