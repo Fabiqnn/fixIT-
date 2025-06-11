@@ -13,12 +13,12 @@ use App\Http\Controllers\admin\PelaporanController as AdminPelaporanController;
 use App\Http\Controllers\admin\PrioritasController;
 use App\Http\Controllers\admin\UserManajemenController;
 use App\Http\Controllers\PelaporanController;
-use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\admin\RuanganController;
 use App\Http\Controllers\admin\SPKController;
 use App\Http\Controllers\admin\PeriodeController;
 use App\Http\Controllers\TeknisiController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 
@@ -156,7 +156,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/panduan', [PanduanController::class, 'index'])->name('panduan.index');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
+    Route::get('/dashboard', [UserController::class, 'index'])->name('mahasiswa.dashboard');
     Route::get('/laporan', [StatusController::class, 'index']);
     Route::get('/pelaporan', [PelaporanController::class, 'index']);
     Route::get('/ajax/lantai', [PelaporanController::class, 'getLantai']);
@@ -164,6 +164,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/ajax/fasilitas', [PelaporanController::class, 'getFasilitas']);
     Route::post('/pelaporan', [PelaporanController::class, 'store'])->name('laporan.store');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::post('/tambah-umpan-balik', [UserController::class, 'umpanBalik']);
+    Route::get('/detail-rekomendasi/{id}', [UserController::class, 'showDetail']);
+    Route::get('/penilaian/{id}', [UserController::class, 'penilaian']);
     Route::get('/status/{id}/show', [StatusController::class, 'show'])->name('show.detail');
     Route::get('/profile/edit_ajax/{id}', [ProfileController::class, 'edit_ajax'])->name('profile.edit_ajax');
     Route::put('/profile/update_ajax/{no_induk}', [ProfileController::class, 'update_ajax'])->name('profile.update_ajax');
@@ -179,4 +182,3 @@ Route::post('/logout', function () {
 
 
 Route::get('/', [AuthController::class, 'landing'])->name('landing');
-Route::get('/test-tabelKeputusan', [SPKController::class, 'operasiMABAC']);

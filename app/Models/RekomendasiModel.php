@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class RekomendasiModel extends Model
 {
@@ -27,7 +28,11 @@ class RekomendasiModel extends Model
         return $this->belongsTo(PeriodeModel::class, 'periode_id', 'periode_id');
     }
 
-    public function alternatif(): HasMany {
-        return $this->hasMany(AlternatifModel::class, 'alternatif_id', 'alternatif_id');
+    public function alternatif(): BelongsTo {
+        return $this->belongsTo(AlternatifModel::class, 'alternatif_id', 'alternatif_id');
+    }
+
+    public function umpanBalik(): HasMany {
+        return $this->hasMany(UmpanBalikModel::class, 'rekomendasi_id', 'rekomendasi_id');
     }
 }
