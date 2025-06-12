@@ -54,6 +54,7 @@ class TeknisiController extends Controller
             'alternatif.laporan.fasilitas.ruangan.gedung',
             'periode'
         ])
+
             ->whereHas('alternatif.laporan', function ($q) {
                 $q->where('status_perbaikan', 'diproses');
             });
@@ -133,39 +134,40 @@ class TeknisiController extends Controller
 
     public function list_selesai(Request $request)
     {
-        $subquery = DB::table('table_laporan as l1')
-            ->select(DB::raw('MAX(l1.laporan_id) as max_id'))
-            ->where('status_perbaikan', 'tuntas')
-            ->groupBy('fasilitas_id');
-
-        $query = LaporanModel::with(['fasilitas.ruangan.gedung', 'rekomendasi.periode'])
-            ->whereIn('laporan_id', $subquery);
+        $query = RekomendasiModel::with([
+            'alternatif.laporan.fasilitas.ruangan.gedung',
+            'periode'
+        ])
+            ->whereHas('alternatif.laporan', function ($q) {
+                $q->where('status_perbaikan', 'tuntas');
+            });
 
         if ($request->has('periode_id') && $request->periode_id != '') {
-            $query->whereHas('rekomendasi', function ($q) use ($request) {
-                $q->where('periode_id', $request->periode_id);
-            });
+            $query->where('periode_id', $request->periode_id);
         }
-
 
 
         return DataTables::of($query)
             ->addIndexColumn()
             ->addColumn('fasilitas_nama', function ($row) {
-                return $row->fasilitas->nama_fasilitas ?? '-';
+                return $row->alternatif->laporan->fasilitas->nama_fasilitas ?? '-';
             })
             ->addColumn('ruangan_nama', function ($row) {
-                return $row->fasilitas->ruangan->keterangan ?? '-';
+                return $row->alternatif->laporan->fasilitas->ruangan->keterangan ?? '-';
             })
             ->addColumn('gedung_nama', function ($row) {
-                return $row->fasilitas->ruangan->gedung->gedung_nama ?? '-';
+                return $row->alternatif->laporan->fasilitas->ruangan->gedung->gedung_nama ?? '-';
             })
             ->addColumn('lantai', function ($row) {
-                return $row->fasilitas->ruangan->lantai->nama_lantai ?? '-';
+                return $row->alternatif->laporan->fasilitas->ruangan->lantai->nama_lantai ?? '-';
             })
             ->addColumn('periode_nama', function ($row) {
-                return $row->rekomendasi->periode->nama_periode ?? '-';
+                return $row->periode->nama_periode ?? '-';
             })
+            ->addColumn('status_perbaikan', function ($row) {
+                return $row->alternatif->laporan->status_perbaikan ?? '-';
+            })
+
 
             ->addColumn('aksi', function ($row) {
                 $url = url('/teknisi/list_diproses/' . $row->laporan_id . '/show');

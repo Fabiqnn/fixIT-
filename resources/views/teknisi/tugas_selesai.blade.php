@@ -26,7 +26,6 @@
                         <th class="px-4 py-3">Ruangan</th>
                         <th class="px-4 py-3">Gedung</th>
                         <th class="px-4 py-3">Lantai</th>
-                        <th class="px-4 py-3">Tanggal</th>
                         <th class="px-4 py-3">Status</th>
                         <th class="px-4 py-3">Periode</th>
 
@@ -102,9 +101,6 @@
                     },
                     {
                         data: "lantai"
-                    },
-                    {
-                        data: "tanggal_laporan"
                     },
                     {
                         data: "status_perbaikan"

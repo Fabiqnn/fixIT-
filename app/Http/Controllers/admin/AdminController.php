@@ -29,7 +29,6 @@ class AdminController extends Controller
             $data[$periode->nama_periode] = ['tuntas' => 0, 'diproses' => 0];
         }
 
-        // Ambil data laporan
         $rows = DB::table('table_periode as p')
             ->leftJoin('table_rekomendasi as r', 'r.periode_id', '=', 'p.periode_id')
             ->leftJoin('table_alternatif as a', 'a.alternatif_id', '=', 'r.alternatif_id')
@@ -61,10 +60,6 @@ class AdminController extends Controller
 
         return view('admin.dashboard', compact('labels', 'tuntas', 'diproses', 'page', 'activeMenu'));
     }
-
-
-
-
 
 
     public function profile()
