@@ -53,11 +53,9 @@ class TeknisiController extends Controller
         $query = RekomendasiModel::with([
             'alternatif.laporan.fasilitas.ruangan.gedung',
             'periode'
-        ])
-
-            ->whereHas('alternatif.laporan', function ($q) {
-                $q->where('status_perbaikan', 'diproses');
-            });
+        ])->whereHas('alternatif.laporan', function ($q) {
+            $q->where('status_perbaikan', 'diproses');
+        });
         if ($request->has('order')) {
             $columns = [
                 'id',
@@ -113,14 +111,10 @@ class TeknisiController extends Controller
             })
 
             ->addColumn('aksi', function ($row) {
-                $laporanId = $row->alternatif->laporan?->laporan_id;
-                if (!$laporanId) return '-';
                 $fasilitasId = $row->alternatif->laporan?->fasilitas_id;
 
-                $detailBtn = '<button onclick="modalAction(\'' . url('/teknisi/list_diproses/' . $laporanId . '/show') . '\')" class="px-3 py-1 button-info cursor-pointer">Detail</button>';
-                // $konfirmasiBtn = '<button onclick="modalAction(\'' . url('/teknisi/laporan/' . $laporanId . '/confirm_tuntas') . '\')" class="px-3 py-1 button2 bg-green-600 text-white hover:bg-green-700 cursor-pointer">Update</button>';
+                $detailBtn = '<button onclick="modalAction(\'' . url('/teknisi/list_diproses/' . $row->rekomendasi_id . '/show') . '\')" class="px-3 py-1 button-info cursor-pointer">Detail</button>';
                 $konfirmasiBtn = '<button onclick="modalAction(\'' . url('/teknisi/laporan/' . $fasilitasId . '/confirm_tuntas') . '\')" class="px-3 py-1 button2 bg-green-600 text-white hover:bg-green-700 cursor-pointer">Update</button>';
-
                 return '
                 <div class="flex justify-end gap-2">
                     ' . $detailBtn . '
@@ -170,7 +164,7 @@ class TeknisiController extends Controller
 
 
             ->addColumn('aksi', function ($row) {
-                $url = url('/teknisi/list_diproses/' . $row->laporan_id . '/show');
+                $url = url('/teknisi/list_selesai/' . $row->rekomendasi_id . '/show');
                 return '<button onclick="modalAction(\'' . $url . '\')" class="px-3 py-1 button-info cursor-pointer">Detail</button>';
             })
             ->rawColumns(['aksi'])
@@ -210,13 +204,21 @@ class TeknisiController extends Controller
 
     public function show($id)
     {
-        $laporan = LaporanModel::with([
-            'user',
-            'fasilitas.ruangan.gedung',
-            'fasilitas.ruangan.lantai'
+        $rekomendasi = RekomendasiModel::with([
+            'alternatif.laporan.fasilitas.ruangan.gedung',
+            'periode'
         ])->findOrFail($id);
 
-        return view('teknisi.show', compact('laporan'));
+        return view('teknisi.show_diproses', compact('rekomendasi'));
+    }
+    public function show_selesai($id)
+    {
+        $rekomendasi = RekomendasiModel::with([
+            'alternatif.laporan.fasilitas.ruangan.gedung',
+            'periode'
+        ])->findOrFail($id);
+
+        return view('teknisi.show', compact('rekomendasi'));
     }
 
     public function profile()
