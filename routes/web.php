@@ -143,6 +143,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/list_selesai', [TeknisiController::class, 'list_selesai']);
         Route::get('/selesai', [TeknisiController::class, 'selesai']);
         Route::get('/list_diproses/{id}/show', [TeknisiController::class, 'show']);
+        Route::get('/list_selesai/{id}/show', [TeknisiController::class, 'show_selesai']);
         Route::get('/laporan/{id}/confirm_tuntas', [TeknisiController::class, 'confirmTuntas']);
         Route::post('/laporan/{id}/selesai', [TeknisiController::class, 'markTuntas']);
         Route::get('/profile', [TeknisiController::class, 'profile'])->name('profile.show');

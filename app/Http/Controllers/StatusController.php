@@ -25,7 +25,7 @@ class StatusController extends Controller
 {
     $pelaporan = PelaporanModel::findOrFail($id);
 
-    // Khusus untuk AJAX: return view isi konten saja (tanpa @extends)
+  
     return view('user.status.detailPelaporan', compact('pelaporan'));
 }
 

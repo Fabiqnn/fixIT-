@@ -6,10 +6,9 @@
         </div>
         <div class="p-6 space-y-3">
             <div class="form-group">
-                <label class="block mb-1 font-semibold">Nama Lantai</label>
+                <label class="block mb-1 font-semibold">Nama Periode</label>
                 <input type="text" name="nama_periode" id="nama_periode"
-                    class="w-full border border-green-200 rounded p-2 outline-none"
-                    placeholder="Januari 2025" required>
+                    class="w-full border border-green-200 rounded p-2 outline-none" placeholder="Januari 2025" required>
             </div>
             <div class="form-group">
                 <label class="block mb-1 font-semibold">Tanngal Mulai</label>
@@ -22,13 +21,14 @@
                     class="w-full border border-green-200 rounded p-2 outline-none" required>
             </div>
             <div class="flex justify-end mt-6">
-                <button type="submit" class="bg-green-700 text-white px-6 py-2 rounded hover:bg-green-800 transition cursor-pointer">Tambah</button>
+                <button type="submit"
+                    class="bg-green-700 text-white px-6 py-2 rounded hover:bg-green-800 transition cursor-pointer">Tambah</button>
             </div>
         </div>
     </div>
 </form>
 <script>
-    function initTambahValidasi() {  
+    function initTambahValidasi() {
         if (typeof $.fn.validate !== 'function') {
             console.error("jQuery Validate belum ter-load!");
             return;
