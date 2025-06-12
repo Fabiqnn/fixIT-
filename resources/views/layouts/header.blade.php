@@ -1,7 +1,7 @@
 <header class="bg-white p-4 flex items-center gap-4 h-16">
     {{-- button toggle sidebar --}}
     <button id="toggleSidebar"
-            class="text-2xl p-2 rounded hover:bg-gray-200/70 focus:outline-none">
+            class="text-2xl p-2 rounded hover:bg-gray-200/70 focus:outline-none sm:hidden">
         ☰
     </button>
 

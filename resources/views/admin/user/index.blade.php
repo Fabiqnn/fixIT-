@@ -5,14 +5,13 @@
 @section('header', $page->header)
 @section('content')
     <div class="font-inter">
-        <div class="flex justify-between items-center my-5">
-            <h1 class="font-bold text-xl">Daftar User</h1>
-            <div class="flex items-center gap-4">
-                <div class="flex items-center gap-2">
-                    <label for="filter_user" class="text-lg font-bold">Filter</label>
-                    <select id="filter_user" name="filter_user"
-                        class="border border-success rounded text-D_grey p-2 outline-none w-50">
-                        <option value="">- Semua -</option>
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center my-5 gap-3 md:gap-0">
+        <h1 class="font-bold text-xl">Daftar User</h1>
+        <div class="flex items-center gap-2">
+            <label for="filter_user" class="text-lg font-bold">Filter</label>
+            <select id="filter_user" name="filter_user"
+                class="border border-success rounded text-D_grey p-2 outline-none w-full md:w-50">
+                <option value="">- Semua -</option>
                     </select>
                 </div>
                 <button class="button1 cursor-pointer" onclick="modalAction('{{ url('/admin/user/create') }}')">
