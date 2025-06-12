@@ -1,122 +1,100 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="overflow-x-hidden">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'fixIT')</title>
-
-    {{-- Tailwind + Vite --}}
     @vite('resources/css/app.css')
 
-    {{-- Font-Awesome & DataTables --}}
+    <!-- Fonts & Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
           integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="//cdn.datatables.net/2.3.1/css/dataTables.dataTables.min.css">
 </head>
 
-<body class="bg-white h-screen">
-    <div class="flex h-full">
+<body class="bg-white h-screen overflow-hidden font-inter">
+    <div class="flex h-full w-full">
+
         @include('layouts.sidebar')
 
-        {{-- overlay – hanya di mobile --}}
-        <div id="overlay"
-             class="fixed inset-0 bg-black/40 opacity-0 pointer-events-none
-                    transition-opacity duration-300 sm:hidden"></div>
+        <!-- Overlay (mobile only) -->
+        <div id="overlay" class="fixed inset-0 bg-black opacity-50 z-20 hidden sm:hidden"></div>
 
-        {{-- konten utama --}}
-        <div id="mainContent"
-     class="flex-1 flex flex-col transition-all duration-300 sm:ml-64 ml-0">
+        <!-- Main Content -->
+        <div id="mainContent" class="flex flex-col flex-grow overflow-hidden sm:ml-64 transition-all duration-300">
             @include('layouts.header')
 
-            <main class="h-screen m-2 border border-gray-300 p-6 rounded-lg shadow-md font-inter overflow-auto">
-                @yield('content')
+            <main class="flex-grow overflow-auto p-6 bg-white">
+                <div class="max-w-full mx-auto border border-gray-300 p-6 rounded-lg shadow-md">
+                    @yield('content')
+                </div>
             </main>
         </div>
     </div>
 
-    {{-- LIBRARY JS --}}
+    <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="//cdn.datatables.net/2.3.1/js/dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.min.js"></script>
+    <script src="//cdn.datatables.net/2.3.1/js/dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    {{-- AJAX CSRF --}}
     <script>
+        // Setup CSRF token for AJAX
         $.ajaxSetup({
-            headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content }
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        // Sidebar toggle
+        const toggleBtn = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        let sidebarVisible = true;
+
+        function toggleSidebar(show) {
+            const isMobile = window.innerWidth < 640;
+            sidebarVisible = show;
+
+            sidebar.classList.toggle('-translate-x-full', !show);
+            sidebar.classList.toggle('translate-x-0', show);
+
+            if (isMobile) {
+                overlay.classList.toggle('hidden', !show);
+            }
+        }
+
+        function setActive(element) {
+            document.querySelectorAll('a').forEach(item =>
+                item.classList.remove('bg-green-600', 'text-white')
+            );
+            element.classList.add('bg-green-600', 'text-white');
+        }
+
+        function toggleMenu(menuId) {
+            const menu = document.getElementById(menuId);
+            const parent = menu.closest('.group');
+            menu.classList.toggle('hidden');
+            parent.classList.toggle('open');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.innerWidth < 640) toggleSidebar(false);
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 640 && !sidebarVisible) toggleSidebar(true);
+        });
+
+        toggleBtn?.addEventListener('click', () => toggleSidebar(!sidebarVisible));
+        overlay?.addEventListener('click', () => {
+            if (window.innerWidth < 640) toggleSidebar(false);
         });
     </script>
 
-    {{-- === SIDEBAR & RESPONSIVE HANDLER === --}}
-    <script>
-    const sidebar     = document.getElementById('sidebar');
-    const mainContent = document.getElementById('mainContent');   // konsisten
-    const overlay     = document.getElementById('overlay');
-    const toggleBtn   = document.getElementById('toggleSidebar');
-
-    /** Buka / tutup sidebar */
-    function setSidebar(open) {
-        const isDesktop = window.innerWidth >= 640;
-        console.log('🔍 setSidebar:', { open, isDesktop });
-
-        if (open) {                                // ==== BUKA ====
-            sidebar.classList.remove('-translate-x-full', 'sm:-translate-x-full');
-            sidebar.classList.add('translate-x-0', 'sm:translate-x-0');
-
-            if (isDesktop) {
-                mainContent.classList.add('ml-64');
-                overlay.classList.add('hidden');
-            } else {
-                mainContent.classList.remove('ml-64');
-                overlay.classList.remove('hidden');
-            }
-        } else {                                   // ==== TUTUP ====
-            sidebar.classList.add('-translate-x-full', 'sm:-translate-x-full');
-            sidebar.classList.remove('translate-x-0', 'sm:translate-x-0');
-
-            mainContent.classList.remove('ml-64');
-            overlay.classList.add('hidden');
-        }
-    }
-
-    /** Dropdown di sidebar */
-    function toggleMenu(menuId) {
-        const menu   = document.getElementById(menuId);
-        const parent = menu.closest('.group');
-        menu.classList.toggle('hidden');
-        parent.classList.toggle('open');
-    }
-
-    /** Menu aktif */
-    function setActive(el) {
-        document.querySelectorAll('#sidebar a')
-                .forEach(a => a.classList.remove('bg-green-600', 'text-white'));
-        el.classList.add('bg-green-600', 'text-white');
-    }
-
-    /* INIT: tutup di mobile saat page load */
-    document.addEventListener('DOMContentLoaded', () => {
-        if (window.innerWidth < 640) setSidebar(false);
-        
-    });
-
-    /* Toggle klik */
-    toggleBtn?.addEventListener('click', () => {
-        const isClosed = sidebar.classList.contains('-translate-x-full');
-        setSidebar(isClosed);          // jika tertutup -> buka, sebaliknya tutup
-    });
-
-    /* Klik overlay */
-    overlay.addEventListener('click', () => setSidebar(false));
-
-    /* Saat resize → jika masuk mobile, auto-tutup */
-    window.addEventListener('resize', () => {
-        if (window.innerWidth < 640) setSidebar(false);
-    });
-</script>
     @stack('js')
 </body>
 </html>
