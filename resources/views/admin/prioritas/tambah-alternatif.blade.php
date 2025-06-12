@@ -12,7 +12,7 @@
                 </div>
                 <p>Jika pekerjaan teknisi belum tuntas seutuhnya, akan ada kemungkinan fasilitas yang sedang diperbaiki tidak muncul dalam pilihan</p>
             </div>
-            <div>
+            <div class="form-group">
                 <label class="block mb-1 font-semibold">Pilih Laporan</label>
                 <select name="laporan_id" id="laporan_id" class="border-1 border-green-200 rounded w-full text-D_grey p-2 outline-none" data-url="{{url('admin/prioritas/get-laporan')}}" required>
                     <option value="">Pilih Laporan</option>
@@ -22,8 +22,8 @@
                 </select>
             </div>
             <div>
-                <label class="block mb-1 font-semibold">Nama Fasilitas</label>
-                <h1 id="nama_fasilitas" class=" rounded w-full text-D_grey p-2 outline-none bg-gray-200">
+                <label class="block mb-1 font-semibold">Kode Laporan</label>
+                <h1 id="kode_laporan" class=" rounded w-full text-D_grey p-2 outline-none bg-gray-200">
                     Pilih Laporan
                 </h1>
             </div>
@@ -70,7 +70,7 @@
                     <option value="5">5</option>
                 </select>
             </div>
-            <div>
+            <div class="form-group">
                 <label class="block mb-1 font-semibold">Estimasi Biaya Perbaikan</label>
                 <input type="number" id="K4" name="K4" placeholder="1000000" class="w-full border border-green-200 rounded p-2 outline-none" required>
             </div>
@@ -102,6 +102,7 @@
             if (laporan_id) {
                 $.get(`${base_url}/${laporan_id}`, function(response) {
                     if (response.status) {
+                        $('#kode_laporan').text(response.data.kode_laporan);
                         $('#nama_fasilitas').text(response.data.nama_fasilitas);
                         $('#gedung_nama').text(response.data.gedung_nama);
                         $('#lantai_nama').text(response.data.lantai_nama);
@@ -150,7 +151,7 @@
                 K4: {
                     required: true,
                     number: true,
-                    max: 18446744073709551615
+                    max: 1000000000000
                 },
                 K5: {
                     required: true,

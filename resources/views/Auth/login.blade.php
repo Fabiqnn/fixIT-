@@ -60,7 +60,7 @@
                         </div>
 
                         <button type="submit"
-                            class="w-full bg-green-700 text-white py-2 rounded hover:bg-green-800 transition">
+                            class="w-full bg-green-700 text-white py-2 rounded hover:bg-green-800 transition cursor-pointer">
                             Masuk
                         </button>
                     </form>
