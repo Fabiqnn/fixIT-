@@ -23,7 +23,7 @@
                 @include('user.laporan.partials.deskripsi')
         
                 <div class="mt-8 flex justify-end">
-                    <button class="bg-green-700 text-white px-6 py-2 rounded-md hover:bg-green-800 transition" type="submit">
+                    <button class="bg-green-700 text-white px-6 py-2 rounded-md hover:bg-green-800 transition cursor-pointer" type="submit">
                         Kirim
                     </button>
                 </div>

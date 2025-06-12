@@ -6,6 +6,7 @@ use App\Models\admin\FasilitasModel;
 use App\Models\admin\GedungModel;
 use App\Models\admin\LantaiModel;
 use App\Models\admin\RuanganModel;
+use App\Models\LaporanModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -62,6 +63,19 @@ class PelaporanController extends Controller
         ]);
 
         $user = Auth::user();
+
+        $check = LaporanModel::where('no_induk', $user->no_induk)
+            ->where('fasilitas_id', $request->fasilitas_id)
+            ->where(function ($query) {
+                $query->whereNull('status_perbaikan')
+                    ->orWhere('status_perbaikan', '!=', 'tuntas');
+            })
+            ->exists();
+
+        if ($check) {
+            return redirect()->back()->with('failed', 'Anda sudah mengirimkan laporan fasilitas ini, silahkan tunggu verifikasi dari Admin');
+        } 
+        
         $fotoPath = null;
 
         if ($request->hasFile('foto')) {
@@ -97,16 +111,16 @@ class PelaporanController extends Controller
         // Format kode laporan baru, misal: LAP-001
         $newKodeLaporan = 'LAP-' . str_pad($newNumber, 3, '0', STR_PAD_LEFT);
 
-        DB::table('table_laporan')->insert([
-            'kode_laporan' => $newKodeLaporan,
-            'no_induk' => $user->no_induk,
-            'fasilitas_id' => $request->fasilitas_id,
-            'tanggal_laporan' => now(),
-            'deskripsi_kerusakan' => $request->deskripsi,
-            'status_acc' => 'pending',
-            'foto_kerusakan' => $fotoPath,
-        ]);
+            DB::table('table_laporan')->insert([
+                'kode_laporan' => $newKodeLaporan,
+                'no_induk' => $user->no_induk,
+                'fasilitas_id' => $request->fasilitas_id,
+                'tanggal_laporan' => now(),
+                'deskripsi_kerusakan' => $request->deskripsi,
+                'status_acc' => 'pending',
+                'foto_kerusakan' => $fotoPath,
+            ]);
 
-        return redirect()->back()->with('success', 'Laporan berhasil dikirim!');
+            return redirect()->back()->with('success', 'Laporan berhasil dikirim!');
     }
 }

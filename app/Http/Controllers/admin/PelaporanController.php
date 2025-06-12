@@ -8,6 +8,8 @@ use App\Models\admin\GedungModel;
 use App\Models\admin\LantaiModel;
 use App\Models\admin\PelaporanModel;
 use App\Models\admin\RuanganModel;
+use App\Models\LaporanModel;
+use App\Models\SPK\PenilaianModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
@@ -190,6 +192,14 @@ class PelaporanController extends Controller
     }
 
     public function update_acc(Request $request, $id) {
+        $check = PenilaianModel::exists();
+        if ($check) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Lanjutkan pemrosesan data hingga ke Teknisi terlebih dahulu'
+            ]);
+        }
+
         if ($request->ajax() || $request->wantsJson()) {
             $laporan = PelaporanModel::find($id);
             $fasilitas_id = $laporan->fasilitas->fasilitas_id;

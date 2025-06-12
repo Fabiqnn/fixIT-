@@ -97,8 +97,11 @@ class PrioritasController extends Controller
             $idFasilitas = $item->alternatif->laporan->fasilitas_id;
 
             $K1 = LaporanModel::where('fasilitas_id', $idFasilitas)
-                ->distinct('no_induk')
-                ->count('no_induk');
+            ->where('status_acc', 'disetujui')
+            ->whereNull('status_perbaikan')
+            ->select('no_induk')
+            ->distinct()
+            ->count();
 
             if (!isset($matrix[$altId])) {
                 $matrix[$altId] = [
@@ -270,6 +273,7 @@ class PrioritasController extends Controller
         return response()->json([
             'status' => true,
             'data' => [
+                'kode_laporan' => $laporan->kode_laporan,
                 'nama_fasilitas' => $laporan->fasilitas->nama_fasilitas ?? '-',
                 'gedung_nama' => $laporan->fasilitas->ruangan->gedung->gedung_nama ?? '-',
                 'lantai_nama' => $laporan->fasilitas->ruangan->lantai->nama_lantai ?? '-',

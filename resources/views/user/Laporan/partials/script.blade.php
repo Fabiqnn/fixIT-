@@ -43,14 +43,21 @@ function dropdownForm() {
 
 
         init() {
-             @if (session('success'))
-            Swal.fire({
-                title: 'Berhasil!',
-                text: '{{ session('success') }}',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            });
-        @endif
+            @if (session('success'))
+                Swal.fire({
+                    title: 'Berhasil!',
+                    text: '{{ session('success') }}',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            @elseif (session('failed'))
+                Swal.fire({
+                    title: 'Gagal!',
+                    text: '{{ session('failed') }}',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            @endif
         }
     }
 }

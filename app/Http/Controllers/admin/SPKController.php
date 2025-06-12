@@ -37,8 +37,11 @@ class SPKController extends Controller
     public function hitungTotalPelapor($fasilitas_id)
     {
         $laporan = LaporanModel::where('fasilitas_id', $fasilitas_id)
-            ->distinct('no_induk')
-            ->count('no_induk');
+            ->where('status_acc', 'disetujui')
+            ->whereNull('status_perbaikan')
+            ->select('no_induk')
+            ->distinct()
+            ->count();
 
         return $laporan;
     }
