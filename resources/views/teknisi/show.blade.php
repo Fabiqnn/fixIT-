@@ -5,7 +5,7 @@
 
     <div class="p-6 flex flex-col md:flex-row gap-6">
         <div class="flex-shrink-0 w-full md:w-1/3">
-            <img src="{{ asset('storage/foto/' . $rekomendasi->alternatif->laporan->foto_kerusakan) }}"
+            <img src="{{ asset('/' . $rekomendasi->alternatif->laporan->foto_kerusakan) }}"
                 alt="Foto Kerusakan" class="w-full h-auto rounded-lg object-cover">
         </div>
 
