@@ -4,7 +4,7 @@
 
 @section('content')
     {{-- Card 1: Hero Section --}}
-    <div name="card1" class="bg-silver w-full">
+    <div name="card1" class="bg-silver w-full fade-in">
         <div class="flex flex-col md:flex-row items-center justify-between px-5 md:px-20 py-20 md:py-40 w-full max-w-[1400px] mx-auto autoShow1">
             <div class="space-y-2 tracking-wide text-center md:text-left mb-10 md:mb-0">
                 <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-D_grey">Lapor Mudah,</h1>
@@ -94,4 +94,23 @@
             </a>
         </div>
     </div>
+
+    <style>
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add the 'visible' class to trigger the fade-in effect
+            document.querySelectorAll('.fade-in').forEach(function(element) {
+                element.classList.add('visible');
+            });
+        });
+    </script>
 @endsection
