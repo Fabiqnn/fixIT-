@@ -5,18 +5,25 @@
             Tambah Data Alternatif
         </div>
         <div class="p-6 space-y-3">
-            <div>
+            <div class="p-5 bg-warning text-blackshade1 rounded space-y-3">
+                <div class="flex space-x-5 items-center">
+                    <i class="fa-solid fa-ban "></i>
+                    <h1 class="font-semibold">KONFIRMASI!!!</h1>
+                </div>
+                <p>Jika pekerjaan teknisi belum tuntas seutuhnya, akan ada kemungkinan fasilitas yang sedang diperbaiki tidak muncul dalam pilihan</p>
+            </div>
+            <div class="form-group">
                 <label class="block mb-1 font-semibold">Pilih Laporan</label>
                 <select name="laporan_id" id="laporan_id" class="border-1 border-green-200 rounded w-full text-D_grey p-2 outline-none" data-url="{{url('admin/prioritas/get-laporan')}}" required>
                     <option value="">Pilih Laporan</option>
                     @foreach ($pelaporan as $p)
-                        <option value="{{ $p->laporan_id }}">{{ $p->kode_laporan }}</option>
+                        <option value="{{ $p->laporan_id }}">{{ $namaFasilitas[$p->laporan_id] }}</option>
                     @endforeach
                 </select>
             </div>
             <div>
-                <label class="block mb-1 font-semibold">Nama Fasilitas</label>
-                <h1 id="nama_fasilitas" class=" rounded w-full text-D_grey p-2 outline-none bg-gray-200">
+                <label class="block mb-1 font-semibold">Kode Laporan</label>
+                <h1 id="kode_laporan" class=" rounded w-full text-D_grey p-2 outline-none bg-gray-200">
                     Pilih Laporan
                 </h1>
             </div>
@@ -63,9 +70,20 @@
                     <option value="5">5</option>
                 </select>
             </div>
-            <div>
+            <div class="form-group">
                 <label class="block mb-1 font-semibold">Estimasi Biaya Perbaikan</label>
                 <input type="number" id="K4" name="K4" placeholder="1000000" class="w-full border border-green-200 rounded p-2 outline-none" required>
+            </div>
+            <div class="form-group">
+                <label class="block mb-1 font-semibold">Urgensi Perbaikan</label>
+                <select name="K5" id="K5" class="border-1 border-green-200 rounded w-full text-D_grey p-2 outline-none" required>
+                    <option value="">Tidak Terlalu Signifikan 1 - 5 Sangat Signifikan</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
             </div>
             <div class="flex justify-end mt-6">
                 <button type="submit" class="bg-green-700 text-white px-6 py-2 rounded hover:bg-green-800 transition cursor-pointer">Tambah</button>
@@ -84,6 +102,7 @@
             if (laporan_id) {
                 $.get(`${base_url}/${laporan_id}`, function(response) {
                     if (response.status) {
+                        $('#kode_laporan').text(response.data.kode_laporan);
                         $('#nama_fasilitas').text(response.data.nama_fasilitas);
                         $('#gedung_nama').text(response.data.gedung_nama);
                         $('#lantai_nama').text(response.data.lantai_nama);
@@ -121,15 +140,23 @@
                 },
                 K2: {
                     required: true,
-                    number: true
+                    number: true,
+                    max: 5
                 },
                 K3: {
                     required: true,
-                    number: true
+                    number: true,
+                    max: 5
                 },
                 K4: {
                     required: true,
-                    number: true
+                    number: true,
+                    max: 1000000000000
+                },
+                K5: {
+                    required: true,
+                    number: true,
+                    max: 5
                 },
             },
             submitHandler: function(form) {
@@ -171,11 +198,11 @@
             },
             highlight: function(element, errorClass, validClass) {
                 $(element).addClass('is-invalid');
-                $(element).removeClass('border-1 border-green-200');
+                $('h1').removeClass('border-1 border-green-200');
             },
             unhighlight: function(element, errorClass, validClass) {
                 $(element).removeClass('is-invalid');
-                $(element).addClass('border-1 border-green-200');
+                $('h1').addClass('border-1 border-green-200');
             }
         });
     }

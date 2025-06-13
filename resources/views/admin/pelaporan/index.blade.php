@@ -4,21 +4,20 @@
 
 @section('content')
     <div>
-        <div class="flex justify-between items-center my-5">
-            <h1 class="font-bold text-xl">Daftar Laporan Pending</h1>
-            <div class="flex items-center gap-4">
-                <div class="flex items-center gap-2">
-                    <label for="gedung_id_pending" class="text-lg font-bold">Filter</label>
-                    <select id="gedung_id_pending" name="gedung_id"
-                        class="border border-success rounded text-D_grey p-2 outline-none w-50">
-                        <option value="">- Semua -</option>
-                        @foreach ($gedung as $g)
-                            <option value="{{ $g->gedung_id }}">{{ $g->gedung_nama }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center my-5 gap-3 md:gap-0">
+        <h1 class="font-bold text-xl">Daftar Laporan Pending</h1>
+        <div class="flex items-center gap-2">
+            <label for="gedung_id_pending" class="text-lg font-bold">Filter</label>
+            <select id="gedung_id_pending" name="gedung_id"
+                class="border border-success rounded text-D_grey p-2 outline-none w-full md:w-50">
+                <option value="">- Semua -</option>
+                @foreach ($gedung as $g)
+                    <option value="{{ $g->gedung_id }}">{{ $g->gedung_nama }}</option>
+                @endforeach
+            </select>
         </div>
+    </div>
+
 
         <div class="overflow-x-auto border-y-1 border-gray1">
             <table class="min-w-full text-sm text-left text-gray-700" id="table_laporan_pending">
@@ -42,14 +41,13 @@
     </div>
 
     <div>
-        <div class="flex justify-between items-center my-5">
-            <h1 class="font-bold text-xl">Daftar Laporan Acc</h1>
-            <div class="flex items-center gap-4">
-                <div class="flex items-center gap-2">
-                    <label for="gedung_id_acc" class="text-lg font-bold">Filter</label>
-                    <select id="gedung_id_acc" name="gedung_id"
-                        class="border border-success rounded text-D_grey p-2 outline-none w-50">
-                        <option value="">- Semua -</option>
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center my-5 gap-3 md:gap-0">
+        <h1 class="font-bold text-xl">Daftar Laporan Acc</h1>
+        <div class="flex items-center gap-2">
+            <label for="gedung_id_acc" class="text-lg font-bold">Filter</label>
+            <select id="gedung_id_acc" name="gedung_id"
+                class="border border-success rounded text-D_grey p-2 outline-none w-full md:w-50">
+                <option value="">- Semua -</option>
                         @foreach ($gedung as $g)
                             <option value="{{ $g->gedung_id }}">{{ $g->gedung_nama }}</option>
                         @endforeach
@@ -80,14 +78,13 @@
     </div>
 
     <div>
-        <div class="flex justify-between items-center my-5">
-            <h1 class="font-bold text-xl">Daftar Laporan Dec</h1>
-            <div class="flex items-center gap-4">
-                <div class="flex items-center gap-2">
-                    <label for="gedung_id_dec" class="text-lg font-bold">Filter</label>
-                    <select id="gedung_id_dec" name="gedung_id"
-                        class="border border-success rounded text-D_grey p-2 outline-none w-50">
-                        <option value="">- Semua -</option>
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center my-5 gap-3 md:gap-0">
+        <h1 class="font-bold text-xl">Daftar Laporan Dec</h1>
+        <div class="flex items-center gap-2">
+            <label for="gedung_id_dec" class="text-lg font-bold">Filter</label>
+            <select id="gedung_id_dec" name="gedung_id"
+                class="border border-success rounded text-D_grey p-2 outline-none w-full md:w-50">
+                <option value="">- Semua -</option>
                         @foreach ($gedung as $g)
                             <option value="{{ $g->gedung_id }}">{{ $g->gedung_nama }}</option>
                         @endforeach

@@ -6,7 +6,7 @@
         <div class="overflow-x-auto">
             <p class="text-gray-700 leading-relaxed">
                 Konfirmasi apakah tugas
-                <span class="font-semibold text-gray-900">{{ $laporan->kode_laporan }}</span>
+                <span class="font-semibold text-gray-900">{{ $fasilitas->nama_fasilitas }}</span>
                 <span class="font-semibold text-green-700">selesai</span>?
             </p>
         </div>
@@ -18,7 +18,7 @@
                 Batal
             </button>
 
-            <button onclick="submitTuntas({{ $laporan->laporan_id }})"
+            <button onclick="submitTuntas({{ $fasilitas->fasilitas_id }})"
                 class="cursor-pointer px-5 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition-all duration-150">
                 Ya, Selesai
             </button>
@@ -28,7 +28,9 @@
 
 <script>
     function submitTuntas(id) {
-        fetch(`/teknisi/laporan/${id}/selesai`, {
+        const url = `{{ url('/teknisi/laporan') }}/${id}/selesai`;
+
+        fetch(url, {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',

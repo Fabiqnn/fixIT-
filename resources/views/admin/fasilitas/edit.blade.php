@@ -47,7 +47,7 @@
             </div>
             <div>
                 <label class="block mb-1 font-semibold">Status Fasilitas</label>
-                <select name="status" id="status" class="border-1 border-green-200 rounded w-full text-D_grey p-2 outline-none">
+                <select name="status" id="status" name="status" class="border-1 border-green-200 rounded w-full text-D_grey p-2 outline-none">
                     <option {{$fasilitas->status == 'baik' ? 'selected' : ''}} value="baik">Baik</option>
                     <option {{$fasilitas->status == 'rusak' ? 'selected' : ''}} value="rusak">Rusak</option>
                     <option {{$fasilitas->status == 'dalam perbaikan' ? 'selected' : ''}} value="dalam perbaikan">Dalam Perbaikan</option>

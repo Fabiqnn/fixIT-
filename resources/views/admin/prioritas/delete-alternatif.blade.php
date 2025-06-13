@@ -107,6 +107,13 @@
                             {{ $nilaiLama['K4'] }}
                         </h1>
                     </div>
+                    <div class="form-group">
+                        <label class="block mb-1 font-semibold">Urgensi Perbaikan</label>
+                        <h1 name="K5" id="K5"
+                            class="border-1 border-green-200 rounded w-full text-D_grey p-2 outline-none">
+                            {{ $nilaiLama['K5'] }}
+                        </h1>
+                    </div>
                 </div>
                 <div class="flex justify-end space-x-4">
                     <button type="button" class="button-warning" onclick="closeModal()">Batal</button>

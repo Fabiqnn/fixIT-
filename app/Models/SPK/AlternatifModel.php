@@ -3,9 +3,12 @@
 namespace App\Models\SPK;
 
 use App\Models\LaporanModel;
+use App\Models\RekomendasiModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class AlternatifModel extends Model
 {
@@ -24,5 +27,9 @@ class AlternatifModel extends Model
     public function penilaian()
     {
         return $this->hasMany(PenilaianModel::class, 'alternatif_id');
+    }
+
+    public function rekomendasi(): HasOne {
+        return $this->HasOne(RekomendasiModel::class, 'rekomendasi_id', 'rekomendasi_id');
     }
 }

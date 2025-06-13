@@ -25,7 +25,7 @@ class ProfileController extends Controller
         $prodi = ProdiModel::select('prodi_id', 'prodi_nama')->get();
         $role = LevelModel::select('level_id', 'level_nama')->get();
 
-        return view('admin.user.edit_ajax', ['user' => $user, 'jurusan' => $jurusan, 'prodi' => $prodi, 'level' => $role]);
+        return view('user.profile.editProfile', ['user' => $user, 'jurusan' => $jurusan, 'prodi' => $prodi, 'level' => $role]);
     }
 
     public function update_ajax(Request $request, $no_induk)
@@ -38,6 +38,7 @@ class ProfileController extends Controller
                 'level_id' => 'required|integer',
                 'email' => 'nullable|email|max:100',
                 'nomor_telp' => 'nullable|string|max:15',
+                'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             ];
 
             if ((int) $request->level_id === $MAHASISWA_LEVEL_ID) {
@@ -80,7 +81,12 @@ class ProfileController extends Controller
             if ($request->filled('password')) {
                 $data['password'] = bcrypt($request->password);
             }
-
+            if ($request->hasFile('foto')) {
+                $file = $request->file('foto');
+                $namaFile = $user->no_induk . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('uploads/foto'), $namaFile);
+                $data['foto'] = $namaFile;
+            }
             $user->update($data);
 
             return response()->json([

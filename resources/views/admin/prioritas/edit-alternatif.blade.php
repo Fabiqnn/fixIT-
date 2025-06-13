@@ -81,6 +81,18 @@
                 <label class="block mb-1 font-semibold">Estimasi Biaya Perbaikan</label>
                 <input type="number" id="K4" name="K4" placeholder="1000000" class="w-full border border-green-200 rounded p-2 outline-none" value="{{ old('K4', $nilaiLama['K4'] ?? '') }}" required>
             </div>
+            <div class="form-group">
+                <label class="block mb-1 font-semibold">Urgensi Perbaikan</label>
+                <select name="K5" id="K5" class="border-1 border-green-200 rounded w-full text-D_grey p-2 outline-none" required>
+                    <option value="">Tidak Terlalu Signifikan 1 - 5 Sangat Signifikan</option>
+                    @for ($i = 1; $i <= 5; $i++)
+                        <option value="{{ $i }}"
+                            {{ old('K5', $nilaiLama['K5'] ?? '') == $i ? 'selected' : '' }}>
+                            {{ $i }}
+                        </option>
+                    @endfor
+                </select>
+            </div>
             <div class="flex justify-end mt-6">
                 <button type="submit" class="bg-green-700 text-white px-6 py-2 rounded hover:bg-green-800 transition cursor-pointer">Simpan</button>
             </div>
@@ -135,16 +147,24 @@
                 },
                 K2: {
                     required: true,
-                    number: true
+                    number: true,
+                    max: 5
                 },
                 K3: {
                     required: true,
-                    number: true
+                    number: true,
+                    max: 5
                 },
                 K4: {
                     required: true,
-                    number: true
-                }
+                    number: true,
+                    max: 18446744073709551615
+                },
+                K5: {
+                    required: true,
+                    number: true,
+                    max: 5
+                },
             },
             submitHandler: function(form) {
                 console.log("Validasi")
