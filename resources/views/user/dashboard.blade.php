@@ -94,6 +94,13 @@
     .fade-in.visible {
         opacity: 1;
     }
+    .fade-out {
+        opacity: 1;
+        transition: opacity 0.5s ease-in-out;
+    }
+    .fade-out.hidden {
+        opacity: 0;
+    }
 </style>
 
 @push('js')
@@ -224,9 +231,15 @@
     }
 
     function closeModal() {
-        document.getElementById('modalContainer').classList.remove('flex');
-        document.getElementById('modalContainer').classList.add('hidden');
-        document.getElementById('modalContent').innerHTML = '';
+        
+        const modalContainer = document.getElementById('modalContainer');
+        modalContainer.classList.add('fade-out');
+        setTimeout(() => {
+            modalContainer.classList.remove('flex');
+            modalContainer.classList.add('hidden');
+            modalContainer.classList.remove('fade-out');
+            document.getElementById('modalContent').innerHTML = '';
+        }, 500); // Match the timeout with the CSS transition duration
     }
 </script>
 @endpush
