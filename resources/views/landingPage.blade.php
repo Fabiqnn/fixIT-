@@ -107,7 +107,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Add the 'visible' class to trigger the fade-in effect
+        
             document.querySelectorAll('.fade-in').forEach(function(element) {
                 element.classList.add('visible');
             });
