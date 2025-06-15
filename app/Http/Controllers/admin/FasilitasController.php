@@ -151,11 +151,11 @@ class FasilitasController extends Controller
     public function update(Request $request, $id) {
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
-                'ruangan_id' => 'required|integer',
-                'kode_fasilitas' => 'required|string|min:3|unique:table_fasilitas,kode_fasilitas',
+                'ruangan_id' => 'integer',
+                'kode_fasilitas' => 'required|string|min:3|unique:table_fasilitas,kode_fasilitas,' . $id . ',fasilitas_id',
                 'nama_fasilitas' => 'required|string|max:100',
                 'tanggal_pengadaan' => 'required|date',
-                'status' => 'string'
+                'status' => 'required|string'
             ];
             $validator = Validator::make($request->all(), $rules);
 

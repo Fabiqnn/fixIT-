@@ -6,7 +6,7 @@
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @endpush
 
-    <div class="container mx-auto px-4 py-10 animate-fade-in">
+    <div class="container px-4 py-10 animate-fade-in w-full max-w-[1400px] mx-auto">
         <h1 class="text-4xl font-bold mb-8 text-gray-800 flex items-center gap-2">
             Panduan Penggunaan <span class="text-green-600">fixIT!</span>
         </h1>

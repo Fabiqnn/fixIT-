@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\LaporanModel;
 use App\Models\GedungModel;
 use Illuminate\Support\Facades\Auth;
+use App\Models\admin\PelaporanModel;
 
 class StatusController extends Controller
 {
@@ -19,6 +20,13 @@ class StatusController extends Controller
 
    
     return view('user.status.statusPelaporan', compact('laporan'));
+}
+ public function show($id)
+{
+    $pelaporan = PelaporanModel::findOrFail($id);
+
+  
+    return view('user.status.detailPelaporan', compact('pelaporan'));
 }
 
 }

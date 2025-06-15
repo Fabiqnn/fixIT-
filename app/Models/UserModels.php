@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -14,7 +15,7 @@ class UserModels extends Authenticatable
     public $incrementing = false;
     protected $keyType = 'string';
 
-    public $timestamps = false; 
+    public $timestamps = false;
 
     protected $fillable = [
         'no_induk',
@@ -25,6 +26,7 @@ class UserModels extends Authenticatable
         'nama_lengkap',
         'email',
         'nomor_telp',
+        'foto',
     ];
 
     protected $hidden = [
@@ -45,5 +47,9 @@ class UserModels extends Authenticatable
     public function prodi()
     {
         return $this->belongsTo(ProdiModel::class, 'prodi_id');
+    }
+
+    public function UmpanBalik(): HasMany {
+        return $this->hasMany(UmpanBalikModel::class, 'no_induk', 'no_induk');
     }
 }
