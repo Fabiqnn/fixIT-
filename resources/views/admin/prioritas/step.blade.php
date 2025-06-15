@@ -5,7 +5,7 @@
     <div class="p-3 gap-6">
         <div class="mx-auto space-y-3 mb-3">
             <div class="space-y-5">
-                <label class="font-semibold">Matriks Normalisasi</label>
+                <span class="font-semibold">Matriks Normalisasi</span>
                 <div class="p-3 w-full border border-success rounded">
                     <table class="min-w-full text-sm text-left text-gray-700">
                     <thead class="text-D_grey font-semibold uppercase text-xs border-b-1">
@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="space-y-5">
-                <label class="font-semibold">Matriks Tertimbang (V)</label>
+                <span class="font-semibold">Matriks Tertimbang (V)</span>
                 <div class="p-3 w-full border border-success rounded">
                     <table class="min-w-full text-sm text-left text-gray-700">
                         <thead class="text-D_grey font-semibold uppercase text-xs border-b-1">
@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="space-y-5">
-                <label class="font-semibold">Matriks Area Perkiraan Perbatasan (G)</label>
+                <span class="font-semibold">Matriks Area Perkiraan Perbatasan (G)</span>
                 <div class="p-3 w-full border border-success rounded">
                     <table class="min-w-full text-sm text-left text-gray-700">
                         <thead class="text-D_grey font-semibold uppercase text-xs border-b-1">
@@ -76,7 +76,7 @@
                 </div>
             </div>
             <div class="space-y-5">
-                <label class="font-semibold">Perangkingan</label>
+                <span class="font-semibold">Perangkingan</span>
                 <div class="p-3 w-full border border-success rounded">
                     <table class="min-w-full text-sm text-left text-gray-700">
                         <thead class="text-D_grey font-semibold uppercase text-xs border-b-1">

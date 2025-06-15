@@ -14,7 +14,7 @@
                     Alternatif yang telah diteruskan akan dihapus</p>
             </div>
             <div class="mx-auto space-y-3">
-                <label class="font-semibold">Perangkingan</label>
+                <span class="font-semibold">Perangkingan</span>
                 <div class="p-3 w-full border border-success rounded">
                     <table class="min-w-full text-sm text-left text-gray-700">
                         <thead class="text-D_grey font-semibold uppercase text-xs border-b-1">
@@ -35,7 +35,7 @@
                 </div>
 
                 <div>
-                    <label class="block mb-1 font-semibold">Periode</label>
+                    <span class="block mb-1 font-semibold">Periode</span>
                     <select name="periode" id="periode" class="border-1 border-green-200 rounded w-full text-D_grey p-2 outline-none"  data-url="{{url('admin/fasilitas/get-lantai')}}" required>
                         <option value="">Pilih Periode</option>
                         @foreach ($periode as $p)
