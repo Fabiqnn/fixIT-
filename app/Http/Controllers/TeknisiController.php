@@ -215,7 +215,8 @@ class TeknisiController extends Controller
     {
         $rekomendasi = RekomendasiModel::with([
             'alternatif.laporan.fasilitas.ruangan.gedung',
-            'periode'
+            'periode',
+            'umpanBalik'
         ])->findOrFail($id);
 
         return view('teknisi.show', compact('rekomendasi'));
