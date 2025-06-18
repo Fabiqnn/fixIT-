@@ -21,6 +21,7 @@
                             <th class="px-3">Rangking</th>
                             <th class="px-3">Alternatif</th>
                             <th class="px-3">Nilai Q</th>
+                            <th class="px-3">Select</th>
                         </thead>
                         <tbody class="bg-white">
                             @foreach ($hasil['rangking'] as $item)
@@ -28,6 +29,7 @@
                                     <td class="px-3">{{ $item['ranking'] }} </td>
                                     <td class="px-3">{{ $namaFasilitas[$item['alternatif_id']] }} </td>
                                     <td class="px-3">{{ $item['nilai_q'] }} </td>
+                                    <td class="px-3 text-center"><input type="checkbox" class="cursor-pointer" name="selected_rangking[]" value="{{$item['alternatif_id']}}"> </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -36,7 +38,7 @@
 
                 <div>
                     <span class="block mb-1 font-semibold">Periode</span>
-                    <select name="periode" id="periode" class="border-1 border-green-200 rounded w-full text-D_grey p-2 outline-none"  data-url="{{url('admin/fasilitas/get-lantai')}}" required>
+                    <select name="periode" id="periode" class="border-1 border-green-200 rounded w-full text-D_grey p-2 outline-none" required>
                         <option value="">Pilih Periode</option>
                         @foreach ($periode as $p)
                             <option value="{{ $p->periode_id }}">{{ $p->nama_periode }}</option>
@@ -58,6 +60,9 @@
     function initTugaskanValidasi() {
         $("#form-tugas").validate({
             rules: {
+                'selected_rangking[]': {
+                    required: true,
+                },
                 periode: {
                     required: true,
                     date: true
@@ -96,8 +101,12 @@
                     },
                     errorElement: 'span',
                     errorPlacement: function(error, element) {
-                        const id = element.attr('name');
-                        $('#error-' + id).text(error.text());
+                        if (element.attr('name') === 'selected_rangking[]') {
+                            $('#error-selected_rangking').html(error.text());
+                        } else {
+                            const id = element.attr('name');
+                            $('#error-' + id).text(error.text());
+                        }
                     },
                     highlight: function(element) {
                         $(element).addClass('is-invalid');

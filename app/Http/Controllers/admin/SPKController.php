@@ -99,7 +99,7 @@ class SPKController extends Controller
     public function deploy_store(Request $request)
     {
         if ($request->ajax() || $request->wantsJson()) {
-            if (!$request->has('arr_rekomendasi')) {
+            if (!$request->has('arr_rekomendasi') || !$request->has('selected_rangking')) {
                 return response()->json([
                     'status' => false,
                     'message' => 'Field arr_rekomendasi tidak ditemukan dalam request.'
@@ -107,9 +107,27 @@ class SPKController extends Controller
             }
 
             try {
-                $data = json_decode($request->input('arr_rekomendasi'), true);
+                $rekomendasi = RekomendasiModel::where('periode_id', $request->input('periode'))->exists();
+                if ($rekomendasi) {
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'Sudah ada data pada periode ini'
+                    ]);
+                }
+                $selected = $request->input('selected_rangking');
+                if (!$selected || count($selected) === 0) {
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'Tidak ada data alternatif yang dipilih'
+                    ]);
+                }
 
-                foreach ($data as $item) {
+                $data = json_decode($request->input('arr_rekomendasi'), true);
+                $filterRekomendasi = array_filter($data, function($item) use ($selected) {
+                    return in_array($item['alternatif_id'], $selected);
+                });
+
+                foreach ($filterRekomendasi as $item) {
                     if (!isset($item['alternatif_id'], $item['ranking'], $item['nilai_q'])) {
                         return response()->json([
                             'status' => false,
@@ -126,7 +144,7 @@ class SPKController extends Controller
                         LaporanModel::where('fasilitas_id', $alternatif->laporan->fasilitas->fasilitas_id)->where('status_acc', 'disetujui')->whereNull('status_perbaikan')->update([
                             'status_perbaikan' => 'diproses'
                         ]);
-                        PenilaianModel::truncate();
+                        PenilaianModel::where('alternatif_id', $item['alternatif_id'])->delete();
                     }
                 }
                 return response()->json([

@@ -43,7 +43,7 @@
     </div>
 
     <div id="modalContainer" class="fixed inset-0 z-50 justify-center items-center bg-black/50 backdrop-blur-sm hidden">
-        <div class="bg-white rounded shadow-lg max-w-4xl w-full relative" id="modal-box">
+        <div class="bg-white rounded shadow-lg max-w-screen-xl w-full relative" id="modal-box">
             <button onclick="closeModal()"
                 class="absolute top-4.5 right-6 text-white hover:text-gray-700 text-2xl font-bold cursor-pointer">
                 &times;
