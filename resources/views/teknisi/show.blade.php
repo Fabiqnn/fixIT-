@@ -33,6 +33,32 @@
                     {{ $rekomendasi->alternatif->laporan->deskripsi_kerusakan }}
                 </div>
             </div>
+
+                    <div class="pt-4 space-y-2">
+                        <p class="text-gray-700 font-semibold">Rating dan Umpan Balik:</p>
+
+                        @forelse ($rekomendasi->umpanBalik as $umpan)
+                            <div class="bg-gray-100 p-3 rounded-md text-gray-800 space-y-1">
+                                {{-- <p><strong>Dari:</strong> {{ $umpan->user->nama_lengkap ?? $umpan->no_induk }}</p> --}}
+                                <p class="flex items-center gap-1">
+                                    <strong>Rating:</strong>
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        @if ($i <= $umpan->skala_kepuasan)
+                                            <span class="text-yellow-400">&#9733;</span>
+                                        @else
+                                            <span class="text-gray-300">&#9733;</span>
+                                        @endif
+                                    @endfor
+                                </p>
+                                <p><strong>Komentar:</strong></p>
+                                <div class="bg-white p-2 rounded border border-gray-300 max-h-40 overflow-y-auto whitespace-pre-line">
+                                    {{ $umpan->komentar }}
+                                </div>
+                            </div>
+                        @empty
+                            <p class="text-gray-500">Belum ada umpan balik.</p>
+                        @endforelse
+                    </div>
         </div>
     </div>
 </div>
