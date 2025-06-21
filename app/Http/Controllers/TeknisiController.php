@@ -130,7 +130,8 @@ class TeknisiController extends Controller
     {
         $query = RekomendasiModel::with([
             'alternatif.laporan.fasilitas.ruangan.gedung',
-            'periode'
+            'periode',
+            'umpanbalik'
         ])
             ->whereHas('alternatif.laporan', function ($q) {
                 $q->where('status_perbaikan', 'tuntas');
@@ -161,13 +162,24 @@ class TeknisiController extends Controller
             ->addColumn('status_perbaikan', function ($row) {
                 return $row->alternatif->laporan->status_perbaikan ?? '-';
             })
+            ->addColumn('skala_kepuasan', function ($row) {
+                $rating = $row->umpanbalik->first()->skala_kepuasan ?? 0;
+                $stars = '';
+                for ($i = 1; $i <= 5; $i++) {
+                    $stars .= $i <= $rating
+                        ? '<span class="text-yellow-400">&#9733;</span>'
+                        : '<span class="text-gray-300">&#9733;</span>';
+                }
+                return $stars;
+            })
+
 
 
             ->addColumn('aksi', function ($row) {
                 $url = url('/teknisi/list_selesai/' . $row->rekomendasi_id . '/show');
                 return '<button onclick="modalAction(\'' . $url . '\')" class="px-3 py-1 button-info cursor-pointer">Detail</button>';
             })
-            ->rawColumns(['aksi'])
+            ->rawColumns(['skala_kepuasan', 'aksi'])
             ->make(true);
     }
 

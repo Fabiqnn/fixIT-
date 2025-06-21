@@ -28,6 +28,7 @@
                         <th class="px-4 py-3">Lantai</th>
                         <th class="px-4 py-3">Status</th>
                         <th class="px-4 py-3">Periode</th>
+                        <th class="px-4 py-3">Skala</th>
 
                         <th class="px-4 py-3">Aksi</th>
                     </tr>
@@ -107,6 +108,9 @@
                     },
                     {
                         data: "periode_nama"
+                    },
+                    {
+                        data: "skala_kepuasan"
                     },
 
                     {

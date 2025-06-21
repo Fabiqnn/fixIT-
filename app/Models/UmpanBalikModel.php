@@ -21,11 +21,12 @@ class UmpanBalikModel extends Model
         'skala_kepuasan'
     ];
 
-    public function rekomendasi(): BelongsTo {
+    public function rekomendasi(): BelongsTo
+    {
         return $this->belongsTo(RekomendasiModel::class, 'rekomendasi_id', 'rekomendasi_id');
     }
-
-    public function user(): BelongsTo {
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(UserModels::class, 'no_induk', 'no_induk');
-    } 
+    }
 }
