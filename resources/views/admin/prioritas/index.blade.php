@@ -6,6 +6,13 @@
     <div>
         <div class="flex justify-between items-center my-5">
             <h1 class="font-bold text-xl">Daftar Kriteria</h1>
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <button class="button1 cursor-pointer" onclick="modalAction('{{ url('/admin/prioritas/process') }}')">
+                        <span class="text-xl mr-2">+</span> Buat Tabel Rekomendasi
+                    </button>
+                </div>
+            </div>
         </div>
 
         <div class="overflow-x-auto border-y-1 border-gray1">
@@ -26,14 +33,13 @@
     </div>
 
     <div>
-        <div class="flex justify-between items-center my-5">
-            <h1 class="font-bold text-xl">Daftar Alternatif</h1>
-            <div class="flex items-center gap-4">
-                <div class="flex items-center gap-2">
-                    <label for="gedung_id" class="text-lg font-bold">Filter</label>
-                    <select id="gedung_id" name="gedung_id"
-                        class="border border-success rounded text-D_grey p-2 outline-none w-50">
-                        <option value="">- Semua -</option>
+       <div class="flex flex-col md:flex-row justify-between items-start md:items-center my-5 gap-3 md:gap-0">
+        <h1 class="font-bold text-xl">Daftar Alternatif</h1>
+        <div class="flex items-center gap-2">
+            <label for="gedung_id" class="text-lg font-bold">Filter</label>
+            <select id="gedung_id" name="gedung_id"
+                class="border border-success rounded text-D_grey p-2 outline-none w-full md:w-50">
+                <option value="">- Semua -</option>
                         @foreach ($gedung as $g)
                             <option value="{{ $g->gedung_id }}">{{ $g->gedung_nama }}</option>
                         @endforeach
@@ -123,6 +129,10 @@
 
                     if (typeof initEditValidasi === "function") {
                         initEditValidasi();
+                    }
+
+                    if (typeof initTugaskanValidasi === "function") {
+                        initTugaskanValidasi();
                     }
                 })
                 .catch(error => {

@@ -4,7 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\LaporanModel;
+use App\Models\RekomendasiModel;
+use App\Models\admin\FasilitasModel;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use App\Models\LevelModel;
+use App\Models\UserModels;
+
 
 
 
@@ -28,16 +35,6 @@ class TeknisiController extends Controller
         return view('teknisi.tugas-baru');
     }
 
-    public function sedangDiproses()
-    {
-        $page = (object) [
-            'title' => 'Tugas Diproses',
-            'header' => 'Tugas Diproses'
-        ];
-
-        $activeMenu = 'tugasDiproses';
-        return view('teknisi.tugas_diproses', ['page' => $page, 'activeMenu' => $activeMenu]);
-    }
 
     public function selesai()
     {
@@ -45,105 +42,260 @@ class TeknisiController extends Controller
             'title' => 'Tugas Diproses',
             'header' => 'Tugas Diproses'
         ];
-
+        $periodeList = DB::table('table_periode')->orderBy('tanggal_mulai', 'desc')->get();
         $activeMenu = 'selesai';
-        return view('teknisi.tugas_selesai', ['page' => $page, 'activeMenu' => $activeMenu]);
+        return view('teknisi.tugas_selesai', ['page' => $page, 'activeMenu' => $activeMenu], compact('periodeList'));
     }
 
 
     public function list_diproses(Request $request)
     {
-        $query = LaporanModel::with('fasilitas.ruangan.gedung')
-            ->where('status_perbaikan', 'diproses');
+        $query = RekomendasiModel::with([
+            'alternatif.laporan.fasilitas.ruangan.gedung',
+            'periode'
+        ])->whereHas('alternatif.laporan', function ($q) {
+            $q->where('status_perbaikan', 'diproses');
+        });
+        if ($request->has('order')) {
+            $columns = [
+                'id',
+                'ranking',
+                'kode_laporan',
+                'nama_fasilitas',
+                'nama_ruangan',
+                'nama_gedung',
+                'nama_lantai',
+                'status_perbaikan',
+                'aksi'
+            ];
 
-        if ($request->has('status_perbaikan') && $request->status_perbaikan != '') {
-            $query->where('status_perbaikan', $request->status_perbaikan);
+            $orderColIndex = $request->input('order.0.column');
+            $orderDir = $request->input('order.0.dir');
+
+            if (isset($columns[$orderColIndex]) && $columns[$orderColIndex] === 'ranking') {
+                $query->orderBy('ranking', $orderDir);
+            }
+        } else {
+            $query->orderBy('ranking', 'asc');
         }
 
         return DataTables::of($query)
             ->addIndexColumn()
 
-            ->addColumn('fasilitas_nama', function ($row) {
-                return $row->fasilitas->nama_fasilitas ?? '-';
+            ->addColumn('ranking', function ($row) {
+                return (int) $row->ranking;
             })
 
-            ->addColumn('gedung_nama', function ($row) {
-                return $row->fasilitas->ruangan->gedung->gedung_nama ?? '-';
+            ->addColumn('kode_laporan', function ($row) {
+                return $row->alternatif->laporan?->kode_laporan;
+            })
+
+            ->addColumn('nama_fasilitas', function ($row) {
+                return $row->alternatif->laporan?->fasilitas?->nama_fasilitas;
+            })
+
+            ->addColumn('nama_ruangan', function ($row) {
+                return $row->alternatif->laporan?->fasilitas?->ruangan?->keterangan;
+            })
+
+            ->addColumn('nama_gedung', function ($row) {
+                return $row->alternatif->laporan?->fasilitas?->ruangan?->gedung?->gedung_nama;
+            })
+
+            ->addColumn('nama_lantai', function ($row) {
+                return $row->alternatif->laporan?->fasilitas?->ruangan?->lantai?->nama_lantai;
+            })
+
+            ->addColumn('status_perbaikan', function ($row) {
+                return $row->alternatif->laporan?->status_perbaikan;
             })
 
             ->addColumn('aksi', function ($row) {
-                $detailBtn = '<button onclick="modalAction(\'' . url('/teknisi/list_diproses/' . $row->laporan_id . '/show') . '\')" class="px-3 py-1 button-info cursor-pointer">Detail</button>';
-                $konfirmasiBtn = '<button onclick="modalAction(\'' . url('/teknisi/laporan/' . $row->laporan_id . '/confirm_tuntas') . '\')" class="px-3 py-1 button2 bg-green-600 text-white hover:bg-green-700 cursor-pointer">Update</button>';
+                $fasilitasId = $row->alternatif->laporan?->fasilitas_id;
 
+                $detailBtn = '<button onclick="modalAction(\'' . url('/teknisi/list_diproses/' . $row->rekomendasi_id . '/show') . '\')" class="px-3 py-1 button-info cursor-pointer">Detail</button>';
+                $konfirmasiBtn = '<button onclick="modalAction(\'' . url('/teknisi/laporan/' . $fasilitasId . '/confirm_tuntas') . '\')" class="px-3 py-1 button2 bg-green-600 text-white hover:bg-green-700 cursor-pointer">Update</button>';
                 return '
-        <div class="flex justify-end gap-2">
-            ' . $detailBtn . '
-            ' . $konfirmasiBtn . '
-        </div>
-    ';
+                <div class="flex justify-end gap-2">
+                    ' . $detailBtn . '
+                    ' . $konfirmasiBtn . '
+                </div>';
             })
-
 
             ->rawColumns(['aksi'])
             ->make(true);
     }
 
-
     public function list_selesai(Request $request)
     {
-        $query = LaporanModel::with('fasilitas.ruangan.gedung')
-            ->where('status_perbaikan', 'tuntas');
+        $query = RekomendasiModel::with([
+            'alternatif.laporan.fasilitas.ruangan.gedung',
+            'periode',
+            'umpanbalik'
+        ])
+            ->whereHas('alternatif.laporan', function ($q) {
+                $q->where('status_perbaikan', 'tuntas');
+            });
 
-        if ($request->has('status_perbaikan') && $request->status_perbaikan != '') {
-            $query->where('status_perbaikan', $request->status_perbaikan);
+        if ($request->has('periode_id') && $request->periode_id != '') {
+            $query->where('periode_id', $request->periode_id);
         }
+
 
         return DataTables::of($query)
             ->addIndexColumn()
             ->addColumn('fasilitas_nama', function ($row) {
-                return $row->fasilitas->nama_fasilitas ?? '-';
+                return $row->alternatif->laporan->fasilitas->nama_fasilitas ?? '-';
+            })
+            ->addColumn('ruangan_nama', function ($row) {
+                return $row->alternatif->laporan->fasilitas->ruangan->keterangan ?? '-';
             })
             ->addColumn('gedung_nama', function ($row) {
-                return $row->fasilitas->ruangan->gedung->gedung_nama ?? '-';
+                return $row->alternatif->laporan->fasilitas->ruangan->gedung->gedung_nama ?? '-';
+            })
+            ->addColumn('lantai', function ($row) {
+                return $row->alternatif->laporan->fasilitas->ruangan->lantai->nama_lantai ?? '-';
+            })
+            ->addColumn('periode_nama', function ($row) {
+                return $row->periode->nama_periode ?? '-';
+            })
+            ->addColumn('status_perbaikan', function ($row) {
+                return $row->alternatif->laporan->status_perbaikan ?? '-';
+            })
+            ->addColumn('skala_kepuasan', function ($row) {
+                $rating = $row->umpanbalik->first()->skala_kepuasan ?? 0;
+                $stars = '';
+                for ($i = 1; $i <= 5; $i++) {
+                    $stars .= $i <= $rating
+                        ? '<span class="text-yellow-400">&#9733;</span>'
+                        : '<span class="text-gray-300">&#9733;</span>';
+                }
+                return $stars;
             })
 
+
+
             ->addColumn('aksi', function ($row) {
-                $url = url('/teknisi/list_diproses/' . $row->laporan_id . '/show');
+                $url = url('/teknisi/list_selesai/' . $row->rekomendasi_id . '/show');
                 return '<button onclick="modalAction(\'' . $url . '\')" class="px-3 py-1 button-info cursor-pointer">Detail</button>';
             })
-            ->rawColumns(['aksi'])
+            ->rawColumns(['skala_kepuasan', 'aksi'])
             ->make(true);
     }
 
     public function confirmTuntas($id)
     {
-        $laporan = LaporanModel::findOrFail($id);
-        return view('teknisi.confirm_ajax', compact('laporan'));
+        $fasilitas = FasilitasModel::findOrFail($id);
+        return view('teknisi.confirm_ajax', compact('fasilitas'));
     }
-    public function markTuntas($id)
-    {
-        $laporan = LaporanModel::findOrFail($id);
 
-        if ($laporan->status_perbaikan !== 'diproses') {
-            return response()->json(['success' => false, 'message' => 'Status tidak valid']);
+
+    public function markTuntas($fasilitasId)
+    {
+        $updated = LaporanModel::where('fasilitas_id', $fasilitasId)
+            ->where(function ($q) {
+                $q->where('status_perbaikan', 'diproses');
+            })
+            ->update(['status_perbaikan' => 'tuntas']);
+        FasilitasModel::find($fasilitasId)->update([
+            'status' => 'baik'
+        ]);
+
+        if ($updated === 0) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Tidak ada laporan yang bisa diupdate.'
+            ]);
         }
 
-        $laporan->status_perbaikan = 'tuntas';
-        $laporan->save();
-
-        return response()->json(['success' => true]);
+        return response()->json([
+            'success' => true,
+            'updated' => $updated
+        ]);
     }
-
-
 
     public function show($id)
     {
-        $laporan = LaporanModel::with([
-            'user',
-            'fasilitas.ruangan.gedung',
-            'fasilitas.ruangan.lantai'
+        $rekomendasi = RekomendasiModel::with([
+            'alternatif.laporan.fasilitas.ruangan.gedung',
+            'periode'
         ])->findOrFail($id);
 
-        return view('teknisi.show', compact('laporan'));
+        return view('teknisi.show_diproses', compact('rekomendasi'));
+    }
+    public function show_selesai($id)
+    {
+        $rekomendasi = RekomendasiModel::with([
+            'alternatif.laporan.fasilitas.ruangan.gedung',
+            'periode',
+            'umpanBalik'
+        ])->findOrFail($id);
+
+        return view('teknisi.show', compact('rekomendasi'));
+    }
+
+    public function profile()
+    {
+        $user = auth()->user();
+        $activeMenu = '';
+        return view('teknisi.profile', compact('user'), ['activeMenu' => $activeMenu]);
+    }
+
+    public function edit_profile($id)
+    {
+        $user = UserModels::find($id);
+        $role = LevelModel::select('level_id', 'level_nama')->get();
+
+        return view('teknisi.edit', ['user' => $user, 'level' => $role]);
+    }
+    public function update_profile(Request $request, $no_induk)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
+            $rules = [
+                'nama_lengkap' => 'required|string|max:100',
+                'email' => 'nullable|email|max:100',
+                'nomor_telp' => 'nullable|string|max:15',
+                'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            ];
+
+            if ($request->filled('password')) {
+                $rules['password'] = 'min:6';
+            }
+
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Validasi Gagal',
+                    'msgField' => $validator->errors()
+                ]);
+            }
+
+            $user = UserModels::where('no_induk', $no_induk)->first();
+            if (!$user) {
+                return response()->json(['status' => false, 'message' => 'User tidak ditemukan']);
+            }
+
+            $data = $request->only(['nama_lengkap', 'email', 'nomor_telp']);
+
+            if ($request->filled('password')) {
+                $data['password'] = bcrypt($request->password);
+            }
+
+            if ($request->hasFile('foto')) {
+                $foto = $request->file('foto');
+                $namaFile = $user->no_induk . '.' . $foto->getClientOriginalExtension();
+                $foto->move(public_path('uploads/foto'), $namaFile);
+                $data['foto'] = $namaFile;
+            }
+
+            $user->update($data);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Data profil berhasil diperbarui'
+            ]);
+        }
     }
 }

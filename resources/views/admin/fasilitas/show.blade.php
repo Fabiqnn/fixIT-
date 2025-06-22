@@ -3,8 +3,8 @@
         Detail Fasilitas
     </div>
     <div class="p-3 flex flex-col justify-center gap-6">
-        <div class="mx-auto space-y-3">
-            <table class="table-auto min-w-max  divide-y divide-gray-200 text-sm text-left text-gray-700" id="table_fasilitas">
+        <div class="mx-auto w-full overflow-x-auto">
+            <table class="table-auto min-w-max  divide-y divide-gray-200 text-sm text-left text-gray-700 justify-self-center" id="table_fasilitas">
                 <thead class="bg-gray-100 text-gray-600 uppercase text-xs font-semibold">
                     <tr class="table-row">
                         <th class="px-5 py-3">Nama Fasilitas</th>

@@ -1,5 +1,5 @@
 <aside id="sidebar"
-    class="absolute sm:fixed w-64 h-screen overflow-y-auto bg-white py-2 px-5 space-y-4 transition-transform duration-300 translate-x-0 z-50 ">
+       class="fixed inset-y-0 left-0 z-50 w-64 h-screen bg-white py-4 px-5 transform transition-transform duration-300 -translate-x-full sm:translate-x-0">
 
     <div class="logo flex items-center gap-2 h-12">
         <img src="{{ asset('assets/mechanic-hijau-tua.png') }}" alt="logo" class="h-12 w-auto object-contain">
@@ -13,14 +13,6 @@
                 class="flex items-center gap-2 px-3 py-2 hover:bg-green-600 hover:text-white rounded {{ $activeMenu == 'dashboard' ? 'bg-green-600 text-white' : '' }}">
                 <i class="fa-solid fa-chart-pie w-5"></i>
                 Dashboard
-            </a>
-        </li>
-
-        <li>
-            <a href="{{ url('teknisi/tugasDiproses') }}"
-                class="flex items-center gap-2 px-3 py-2 hover:bg-green-600 hover:text-white rounded {{ $activeMenu == 'tugasDiproses' ? 'bg-green-600 text-white' : '' }}">
-                <i class="fa-solid fa-cart-shopping w-5"></i>
-                Tugas Diproses
             </a>
         </li>
 

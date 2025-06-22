@@ -1,9 +1,9 @@
 <aside id="sidebar"
-    class="absolute sm:fixed w-64 h-screen overflow-y-auto bg-white py-2 px-5 space-y-4 transition-transform duration-300 translate-x-0 z-50 ">
+       class="fixed inset-y-0 left-0 z-50 w-64 h-screen bg-white py-4 px-5 transform transition-transform duration-300 -translate-x-full sm:translate-x-0">
 
-    <div class="logo flex items-center gap-2 h-12">
+    <div class="flex items-center gap-2 h-12">
         <img src="{{ asset('assets/mechanic-hijau-tua.png') }}" alt="logo" class="h-12 w-auto object-contain">
-        <a href="#" class="text-lg font-bold text-gray-800">fixIT!</a>
+        <span class="text-lg font-bold text-gray-800">fixIT!</span>
     </div>
 
     <ul class="space-y-2 mt-4 text-gray-700 font-medium">
@@ -28,19 +28,13 @@
                         d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z" />
                 </svg>
                 Pengguna</a></li>
-        <li><a href="{{ url('admin/fasilitas') }}"
-                class="flex items-center gap-2 px-3 py-2 hover:bg-green-600 hover:text-white rounded {{ $activeMenu == 'fasilitas' ? 'sidebar-active' : '' }}"
-                onclick="setActive(this)">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                    fill="#000000">
-                    <path
-                        d="M360-160v-240h240v240H360Zm80-80h80v-80h-80v80ZM88-440l-48-64 440-336 160 122v-82h120v174l160 122-48 64-392-299L88-440Zm392 160Z" />
-                </svg>
-                Fasilitas</a></li>
         <li class="relative group">
             <button onclick="toggleMenu('menuBangunan')"
                 class="flex justify-between items-center w-full px-3 py-2 rounded hover:bg-green-600 cursor-pointer mb-1">
-                <span class="flex gap-2 items-center"><i class="fa-solid fa-building-columns" style="width: 24px"></i>
+                <span class="flex gap-2 items-center">
+                    <div class="w-[24px] text-center">
+                        <i class="fa-solid fa-building-columns"></i>
+                    </div>
                     Bangunan</span>
                 <svg class="w-4 h-4 transform transition-transform group-[.open]:rotate-90"
                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -69,8 +63,24 @@
                         class="flex items-center gap-2 px-3 py-2 hover:bg-green-600 hover:text-white rounded {{ $activeMenu == 'ruangan' ? 'sidebar-active' : '' }}"><i
                             class="fa-solid fa-door-open" style="width: 24px"></i>Ruangan</a>
                 </li>
+                <li><a href="{{ url('admin/fasilitas') }}"
+                    class="flex items-center gap-2 px-3 py-2 hover:bg-green-600 hover:text-white rounded {{ $activeMenu == 'fasilitas' ? 'sidebar-active' : '' }}"
+                    onclick="setActive(this)">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                        fill="#000000">
+                        <path
+                            d="M360-160v-240h240v240H360Zm80-80h80v-80h-80v80ZM88-440l-48-64 440-336 160 122v-82h120v174l160 122-48 64-392-299L88-440Zm392 160Z" />
+                    </svg>
+                Fasilitas</a></li>
             </ul>
         </li>
+        <li><a href="{{ url('admin/periode') }}"
+                class="flex items-center gap-2 px-3 py-2 hover:bg-green-600 hover:text-white rounded {{ $activeMenu == 'periode' ? 'sidebar-active' : '' }}"
+                onclick="setActive(this)">
+                <div class="text-center w-[24px]">
+                    <i class="fa-solid fa-clock" style="width: 100%"></i>
+                </div>
+                Periode</a></li>
         <li><a href="{{ url('admin/pelaporan') }}"
                 class="flex items-center gap-2 px-3 py-2 hover:bg-green-600 hover:text-white rounded {{ $activeMenu == 'laporan' ? 'sidebar-active' : '' }}"
                 onclick="setActive(this)">

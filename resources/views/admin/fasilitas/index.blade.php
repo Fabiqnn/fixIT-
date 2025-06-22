@@ -3,20 +3,18 @@
 @section('header', $page->header)
 
 @section('content')
-        <div class="flex justify-between items-center my-5">
-            <h1 class="font-bold text-xl">Daftar Fasilitas Kampus</h1>
-            <div class="flex items-center gap-4">
-                <div class="flex items-center gap-2">
-                    <label for="gedung_id" class="text-lg font-bold">Filter</label>
-                    <select id="gedung_id" name="gedung_id"
-                        class="border border-success rounded text-D_grey p-2 outline-none w-50">
-                        <option value="">- Semua -</option>
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center my-5 gap-3 md:gap-0">
+        <h1 class="font-bold text-xl">Daftar Fasilitas Kampus</h1>
+        <div class="flex items-center gap-2">
+            <label for="gedung_id" class="text-lg font-bold">Filter</label>
+            <select id="gedung_id" name="gedung_id"
+                class="border border-success rounded text-D_grey p-2 outline-none w-full md:w-50">
+                <option value="">- Semua -</option>
                         @foreach ($gedung as $g)
                             <option value="{{ $g->gedung_id }}">{{ $g->gedung_nama }}</option>
                         @endforeach
                     </select>
                 </div>
-                <button class="button2 cursor-pointer w-"> Import</button>
                 <button class="button1 cursor-pointer" onclick="modalAction('{{ url('/admin/fasilitas/create') }}')">
                     <i class="fa-solid fa-plus"></i> Tambah
                 </button>
@@ -45,7 +43,7 @@
     </div>
 
     <div id="modalContainer" class="fixed inset-0 z-50 justify-center items-center bg-black/50 backdrop-blur-sm hidden">
-        <div class="bg-white rounded shadow-lg max-w-4xl w-full relative" id="modal-box">
+        <div class="bg-white rounded shadow-lg max-w-screen-xl w-full relative" id="modal-box">
             <button onclick="closeModal()"
                 class="absolute top-4.5 right-6 text-white hover:text-gray-700 text-2xl font-bold cursor-pointer">
                 &times;

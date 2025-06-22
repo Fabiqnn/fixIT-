@@ -7,20 +7,29 @@
         <div class="flex justify-between items-center my-5">
             <h1 class="font-bold text-xl">Daftar Laporan</h1>
             <div class="flex items-center gap-4">
+                <select id="filter_periode" class="border p-2 rounded">
+                    <option value="">-- Semua Periode --</option>
+                    @foreach ($periodeList as $periode)
+                        <option value="{{ $periode->periode_id }}">{{ $periode->nama_periode }}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
 
         <div class="overflow-x-auto border-y-1 border-gray1">
             <table class="min-w-full text-sm text-left text-gray-700" id="tableLaporan">
+
                 <thead class="text-D_grey font-semibold uppercase text-xs">
                     <tr>
                         <th class="w-[50px] px-4 py-3 text-center">No</th>
-                        <th class="px-2 py-3">Kode Laporan</th>
-                        <th class="px-4 py-3 text-left">No Induk</th>
                         <th class="px-4 py-3">Fasilitas</th>
+                        <th class="px-4 py-3">Ruangan</th>
                         <th class="px-4 py-3">Gedung</th>
-                        <th class="px-4 py-3">Tanggal</th>
+                        <th class="px-4 py-3">Lantai</th>
                         <th class="px-4 py-3">Status</th>
+                        <th class="px-4 py-3">Periode</th>
+                        <th class="px-4 py-3">Skala</th>
+
                         <th class="px-4 py-3">Aksi</th>
                     </tr>
                 </thead>
@@ -72,7 +81,9 @@
                     type: "GET",
                     data: function(d) {
                         d.status_perbaikan = $('#filter_status').val();
+                        d.periode_id = $('#filter_periode').val();
                     }
+
                 },
                 columns: [{
                         data: "DT_RowIndex",
@@ -81,37 +92,43 @@
                         searchable: false
                     },
                     {
-                        data: "kode_laporan"
-                    },
-                    {
-                        data: "no_induk",
-                        className: "text-left",
-                        orderable: false,
-                        searchable: false
-                    },
-                    {
                         data: "fasilitas_nama"
+                    },
+                    {
+                        data: "ruangan_nama"
                     },
                     {
                         data: "gedung_nama"
                     },
                     {
-                        data: "tanggal_laporan"
+                        data: "lantai"
                     },
                     {
                         data: "status_perbaikan"
                     },
+                    {
+                        data: "periode_nama"
+                    },
+                    {
+                        data: "skala_kepuasan"
+                    },
+
                     {
                         data: "aksi",
                         orderable: false,
                         searchable: false
                     }
                 ]
+
             });
 
             $('#filter_status').change(function() {
                 dataLaporan.ajax.reload();
             });
+            $('#filter_periode').change(function() {
+                dataLaporan.ajax.reload();
+            });
+
         });
     </script>
 @endpush
