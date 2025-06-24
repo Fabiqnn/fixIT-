@@ -18,7 +18,8 @@ class UmpanBalikModel extends Model
         'rekomendasi_id',
         'no_induk',
         'komentar',
-        'skala_kepuasan'
+        'skala_kepuasan',
+        'picture'
     ];
 
     public function rekomendasi(): BelongsTo
