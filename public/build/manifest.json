@@ -1,0 +1,16 @@
+{
+  "public/assets/fonts/glacial-indifference.bold.otf": {
+    "file": "assets/glacial-indifference.bold-b9007828.otf",
+    "src": "public/assets/fonts/glacial-indifference.bold.otf"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-404e2137.css",
+    "isEntry": true,
+    "src": "resources/css/app.css"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-4ec864e5.js",
+    "isEntry": true,
+    "src": "resources/js/app.js"
+  }
+}
